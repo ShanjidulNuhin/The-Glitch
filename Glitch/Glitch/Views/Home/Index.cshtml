@@ -1,8 +1,1736 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Glitch - Home";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glitch — Your Game Store</title>
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --border: #2a2a4a;
+            --text: #ffffff;
+            --text-muted: #888;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ── Navbar ───────────────────────────────────────────── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 40px;
+            background: rgba(15,15,26,0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            gap: 16px;
+        }
+
+        /* Logo */
+        .navbar-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .navbar-logo span { color: #fff; }
+
+        /* Search bar - middle */
+        .navbar-search {
+            flex: 1;
+            max-width: 460px;
+            position: relative;
+        }
+
+        .navbar-search input {
+            width: 100%;
+            padding: 9px 16px 9px 40px;
+            background: rgba(42,42,74,0.6);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s, background 0.2s;
+        }
+
+        .navbar-search input::placeholder { color: var(--text-muted); }
+
+        .navbar-search input:focus {
+            border-color: var(--primary);
+            background: rgba(42,42,74,0.9);
+        }
+
+        /* Search icon inside input */
+        .navbar-search .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        /* Search results dropdown */
+        .search-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            background: #1a1a2e;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 9999;
+            display: none;
+            overflow: hidden;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .search-dropdown.open { display: block; }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.15s;
+            border-bottom: 1px solid rgba(42,42,74,0.5);
+        }
+
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background: rgba(99,102,241,0.1); }
+
+        .search-result-icon {
+            font-size: 26px;
+            width: 40px;
+            height: 40px;
+            background: var(--bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .search-result-info { flex: 1; }
+
+        .search-result-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .search-result-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .search-result-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .search-no-results {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Highlight matched text */
+        .highlight {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* Navbar right buttons */
+        .navbar-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .btn-outline {
+            padding: 8px 18px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-outline:hover { background: var(--primary); color: #fff; }
+
+        .btn-filled {
+            padding: 8px 18px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-filled:hover { background: var(--primary-dark); }
+
+        /* ── Hero Slider ──────────────────────────────────────── */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: transform 0.7s cubic-bezier(0.77,0,0.175,1), opacity 0.7s ease;
+            z-index: 1;
+        }
+
+        .slide.active { opacity: 1; transform: translateX(0%); z-index: 2; }
+
+        .slide.exit { opacity: 0; transform: translateX(-100%); z-index: 1; }
+
+        /* Faded background image overlay */
+        .slide-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            /* Faded look */
+            opacity: 0.18;
+            filter: blur(2px) saturate(1.4);
+        }
+
+        /* Dark overlay on top of faded bg */
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(15,15,26,0.98) 0%,
+                rgba(15,15,26,0.80) 50%,
+                rgba(15,15,26,0.50) 100%
+            );
+            z-index: 1;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 3;
+            max-width: 520px;
+        }
+
+        .slide-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .slide-title {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide-description {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .slide-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .slide-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .slide-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #fbbf24;
+        }
+
+        .slide-genre {
+            font-size: 12px;
+            background: var(--border);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+
+        .slide-buttons { display: flex; gap: 12px; }
+
+        .btn-buy {
+            padding: 12px 28px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 0 24px rgba(99,102,241,0.4);
+        }
+
+        .btn-buy:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        .btn-wishlist {
+            padding: 12px 28px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-wishlist:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Faded game cover on the right */
+        .slide-image {
+            position: relative;
+            z-index: 3;
+            flex-shrink: 0;
+        }
+
+        .game-cover-placeholder {
+            width: 280px;
+            height: 360px;
+            background: linear-gradient(135deg, #1e1e3a, #2a2a4a);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            /* Faded effect */
+            opacity: 0.7;
+            box-shadow: 0 0 60px rgba(99,102,241,0.2);
+            border: 1px solid rgba(99,102,241,0.15);
+            filter: blur(0.5px);
+        }
+
+        /* Slider controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 80px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .slider-dots { display: flex; gap: 8px; }
+
+        .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active { background: var(--primary); width: 24px; border-radius: 4px; }
+
+        .slider-arrows { display: flex; gap: 8px; }
+
+        .arrow-btn {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(26,26,46,0.8);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .arrow-btn:hover { border-color: var(--primary); background: var(--primary); }
+
+        .slider-progress {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 3px;
+            background: var(--primary);
+            z-index: 10;
+            animation: progressBar 5s linear infinite;
+        }
+
+        @@keyframes progressBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* ── Games Section ────────────────────────────────────── */
+        .games-section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header { margin-bottom: 30px; }
+        .section-header h2 { font-size: 22px; font-weight: 800; }
+        .section-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+        /* Category tabs */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .tab-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        /* Category block */
+        .category-block {
+            margin-bottom: 60px;
+            display: none;
+        }
+
+        .category-block.visible { display: block; }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        /* Scroll arrows for each category row */
+        .row-arrows { display: flex; gap: 8px; }
+
+        .row-arrow {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .row-arrow:hover { border-color: var(--primary); background: var(--primary); }
+
+        /* Scrollable row wrapper */
+        .games-row-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* The actual scrollable row */
+        .games-row {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 12px;
+            cursor: grab;
+            user-select: none;
+            /* Hide scrollbar */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .games-row::-webkit-scrollbar { display: none; }
+        .games-row.dragging { cursor: grabbing; }
+
+        /* Game card */
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            flex-shrink: 0;
+            width: 210px;
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 40px rgba(99,102,241,0.2);
+        }
+
+        /* Faded game image placeholder */
+        .game-card-thumb-placeholder {
+            width: 100%;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Each game has a unique faded gradient background */
+        .game-card-thumb-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.35;
+        }
+
+        /* Faded overlay on card image */
+        .game-card-thumb-placeholder::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, var(--card-bg) 100%);
+        }
+
+        .game-card-thumb-placeholder .emoji {
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+            opacity: 0.85;
+        }
+
+        /* Color themes per category */
+        .theme-action::before { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+        .theme-adventure::before { background: linear-gradient(135deg, #10b981, #34d399); }
+        .theme-rpg::before { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .theme-racing::before { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .theme-horror::before { background: linear-gradient(135deg, #374151, #6b7280); }
+        .theme-sports::before { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .theme-strategy::before { background: linear-gradient(135deg, #0891b2, #22d3ee); }
+        .theme-shooter::before { background: linear-gradient(135deg, #dc2626, #ef4444); }
+
+        .game-card-body { padding: 12px; }
+
+        .game-card-name {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .game-card-price { font-size: 14px; font-weight: 800; color: var(--primary); }
+
+        .game-card-genre {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 3px 8px;
+            border-radius: 50px;
+        }
+
+        .game-card-actions { display: flex; gap: 6px; }
+
+        .btn-card-buy {
+            flex: 1;
+            padding: 7px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-card-buy:hover { background: var(--primary-dark); }
+
+        .btn-card-fav {
+            padding: 7px 10px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-card-fav:hover { border-color: #f43f5e; color: #f43f5e; }
+
+        /* Search results section */
+        .search-results-section {
+            display: none;
+            padding: 80px 40px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .search-results-section.visible { display: block; }
+
+        .search-results-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* ── Footer ───────────────────────────────────────────── */
+        .footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 50px 40px 30px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-brand h2 { font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+        .footer-brand p { font-size: 13px; color: var(--text-muted); max-width: 220px; line-height: 1.6; }
+        .footer-links h4 { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+        .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-links ul a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-links ul a:hover { color: var(--primary); }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p { font-size: 13px; color: var(--text-muted); }
+        .footer-bottom-links { display: flex; gap: 20px; }
+        .footer-bottom-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .footer-bottom-links a:hover { color: var(--primary); }
+
+    </style>
+</head>
+<body>
+
+    <!-- ── Navbar ──────────────────────────────────────────────── -->
+    <nav class="navbar">
+
+        <a href="/" class="navbar-logo">🎮 Game<span>Vault</span></a>
+
+        <!-- Search bar -->
+        <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text"
+                   id="searchInput"
+                   placeholder="Search by name, category or price..."
+                   autocomplete="off"
+                   oninput="handleSearch(this.value)"
+                   onfocus="showDropdown()"
+                   onblur="hideDropdown()" />
+            <!-- Search dropdown -->
+            <div class="search-dropdown" id="searchDropdown"></div>
+        </div>
+
+        <div class="navbar-actions">
+            <a href="/Account/Login" class="btn-outline">Login</a>
+            <a href="/Account/Register" class="btn-filled">Register</a>
+        </div>
+
+    </nav>
+
+    <!-- ── Hero Slider ─────────────────────────────────────────── -->
+    <div class="hero-slider" id="heroSlider">
+
+        <!-- Slide 1 - Action -->
+        <div class="slide active" data-index="0">
+            <div class="slide-bg" style="background: radial-gradient(ellipse at center, #f43f5e33 0%, #0f0f1a 70%);"></div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-badge">🔥 Featured Game</div>
+                <h1 class="slide-title">Cyber Legends</h1>
+                <p class="slide-description">Dive into a neon-lit dystopian future where you fight for survival in a city controlled by mega-corporations. Open world, stunning visuals, endless freedom.</p>
+                <div class="slide-meta">
+                    <div class="slide-price">$29.99</div>
+                    <div class="slide-rating">★★★★★ <span style="color:var(--text-muted)">4.9</span></div>
+                    <div class="slide-genre">Action</div>
+                </div>
+                <div class="slide-buttons">
+                    <a href="/Account/Register" class="btn-buy">🛒 Buy Now</a>
+                    <a href="#games" class="btn-wishlist">❤️ Wishlist</a>
+                </div>
+            </div>
+            <div class="slide-image">
+                <div class="game-cover-placeholder">🎮</div>
+            </div>
+        </div>
+
+        <!-- Slide 2 - RPG -->
+        <div class="slide" data-index="1">
+            <div class="slide-bg" style="background: radial-gradient(ellipse at center, #8b5cf633 0%, #0f0f1a 70%);"></div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-badge">⚔️ Top Rated</div>
+                <h1 class="slide-title">Shadow Realm</h1>
+                <p class="slide-description">A dark fantasy RPG where your choices shape the world. Battle ancient demons, forge powerful alliances, and uncover the truth behind the Shadow Realm.</p>
+                <div class="slide-meta">
+                    <div class="slide-price">$19.99</div>
+                    <div class="slide-rating">★★★★☆ <span style="color:var(--text-muted)">4.7</span></div>
+                    <div class="slide-genre">RPG</div>
+                </div>
+                <div class="slide-buttons">
+                    <a href="/Account/Register" class="btn-buy">🛒 Buy Now</a>
+                    <a href="#games" class="btn-wishlist">❤️ Wishlist</a>
+                </div>
+            </div>
+            <div class="slide-image">
+                <div class="game-cover-placeholder">⚔️</div>
+            </div>
+        </div>
+
+        <!-- Slide 3 - Adventure -->
+        <div class="slide" data-index="2">
+            <div class="slide-bg" style="background: radial-gradient(ellipse at center, #10b98133 0%, #0f0f1a 70%);"></div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-badge">🚀 New Release</div>
+                <h1 class="slide-title">Space Odyssey</h1>
+                <p class="slide-description">Explore the infinite cosmos in this breathtaking space adventure. Build ships, colonize planets, and fight alien civilizations across the galaxy.</p>
+                <div class="slide-meta">
+                    <div class="slide-price">$39.99</div>
+                    <div class="slide-rating">★★★★★ <span style="color:var(--text-muted)">4.8</span></div>
+                    <div class="slide-genre">Adventure</div>
+                </div>
+                <div class="slide-buttons">
+                    <a href="/Account/Register" class="btn-buy">🛒 Buy Now</a>
+                    <a href="#games" class="btn-wishlist">❤️ Wishlist</a>
+                </div>
+            </div>
+            <div class="slide-image">
+                <div class="game-cover-placeholder">🚀</div>
+            </div>
+        </div>
+
+        <!-- Slide 4 - Horror -->
+        <div class="slide" data-index="3">
+            <div class="slide-bg" style="background: radial-gradient(ellipse at center, #37415133 0%, #0f0f1a 70%);"></div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <div class="slide-badge">😱 Most Thrilling</div>
+                <h1 class="slide-title">Dark Asylum</h1>
+                <p class="slide-description">Survive the night in this terrifying horror experience. Solve puzzles, escape monsters, and uncover the dark secrets buried within the asylum walls.</p>
+                <div class="slide-meta">
+                    <div class="slide-price">$24.99</div>
+                    <div class="slide-rating">★★★★☆ <span style="color:var(--text-muted)">4.6</span></div>
+                    <div class="slide-genre">Horror</div>
+                </div>
+                <div class="slide-buttons">
+                    <a href="/Account/Register" class="btn-buy">🛒 Buy Now</a>
+                    <a href="#games" class="btn-wishlist">❤️ Wishlist</a>
+                </div>
+            </div>
+            <div class="slide-image">
+                <div class="game-cover-placeholder">👻</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="slider-controls">
+            <div class="slider-dots">
+                <div class="dot active" onclick="goToSlide(0)"></div>
+                <div class="dot" onclick="goToSlide(1)"></div>
+                <div class="dot" onclick="goToSlide(2)"></div>
+                <div class="dot" onclick="goToSlide(3)"></div>
+            </div>
+            <div class="slider-arrows">
+                <button class="arrow-btn" onclick="prevSlide()">&#8592;</button>
+                <button class="arrow-btn" onclick="nextSlide()">&#8594;</button>
+            </div>
+        </div>
+
+        <div class="slider-progress" id="sliderProgress"></div>
+
+    </div>
+
+    <!-- ── Games By Category ───────────────────────────────────── -->
+    <section id="games" class="games-section">
+
+        <div class="section-header">
+            <h2>Browse Games</h2>
+            <p>Explore our full collection — drag or use arrows to scroll each category</p>
+        </div>
+
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="filterCategory('all', this)">🎮 All</button>
+            <button class="tab-btn" onclick="filterCategory('action', this)">💥 Action</button>
+            <button class="tab-btn" onclick="filterCategory('adventure', this)">🌍 Adventure</button>
+            <button class="tab-btn" onclick="filterCategory('rpg', this)">🧙 RPG</button>
+            <button class="tab-btn" onclick="filterCategory('racing', this)">🏎️ Racing</button>
+            <button class="tab-btn" onclick="filterCategory('horror', this)">👻 Horror</button>
+            <button class="tab-btn" onclick="filterCategory('sports', this)">⚽ Sports</button>
+            <button class="tab-btn" onclick="filterCategory('strategy', this)">♟️ Strategy</button>
+            <button class="tab-btn" onclick="filterCategory('shooter', this)">🔫 Shooter</button>
+        </div>
+
+        <!-- ACTION -->
+        <div class="category-block visible" id="cat-action">
+            <div class="category-header">
+                <div class="category-title"><span>💥</span> Action</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-action', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-action', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-action">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-action"><span class="emoji">🎮</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Cyber Legends</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$29.99</span>
+                                <span class="game-card-genre">Action</span>
+                            </div>
+                            <div class="game-card-actions">
+                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                <button class="btn-card-fav">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-action"><span class="emoji">⚡</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Thunder Strike</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$19.99</span>
+                                <span class="game-card-genre">Action</span>
+                            </div>
+                            <div class="game-card-actions">
+                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                <button class="btn-card-fav">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-action"><span class="emoji">🥊</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Iron Fist</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$14.99</span>
+                                <span class="game-card-genre">Action</span>
+                            </div>
+                            <div class="game-card-actions">
+                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                <button class="btn-card-fav">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-action"><span class="emoji">🔥</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Blaze Runner</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$24.99</span>
+                                <span class="game-card-genre">Action</span>
+                            </div>
+                            <div class="game-card-actions">
+                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                <button class="btn-card-fav">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-action"><span class="emoji">💀</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Death March</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$22.99</span>
+                                <span class="game-card-genre">Action</span>
+                            </div>
+                            <div class="game-card-actions">
+                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                <button class="btn-card-fav">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-action"><span class="emoji">🗡️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Blade Master</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$31.99</span>
+                                <span class="game-card-genre">Action</span>
+                            </div>
+                            <div class="game-card-actions">
+                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                <button class="btn-card-fav">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVENTURE -->
+        <div class="category-block visible" id="cat-adventure">
+            <div class="category-header">
+                <div class="category-title"><span>🌍</span> Adventure</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-adventure', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-adventure', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-adventure">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-adventure"><span class="emoji">🚀</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Space Odyssey</div>
+                            <div class="game-card-footer"><span class="game-card-price">$39.99</span><span class="game-card-genre">Adventure</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-adventure"><span class="emoji">🏔️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Lost Peaks</div>
+                            <div class="game-card-footer"><span class="game-card-price">$22.99</span><span class="game-card-genre">Adventure</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-adventure"><span class="emoji">🌊</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Deep Blue</div>
+                            <div class="game-card-footer"><span class="game-card-price">$17.99</span><span class="game-card-genre">Adventure</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-adventure"><span class="emoji">🗺️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Ancient Maps</div>
+                            <div class="game-card-footer"><span class="game-card-price">$29.99</span><span class="game-card-genre">Adventure</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-adventure"><span class="emoji">🌋</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Volcano Run</div>
+                            <div class="game-card-footer"><span class="game-card-price">$18.99</span><span class="game-card-genre">Adventure</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-adventure"><span class="emoji">🧭</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Jungle Quest</div>
+                            <div class="game-card-footer"><span class="game-card-price">$25.99</span><span class="game-card-genre">Adventure</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RPG -->
+        <div class="category-block visible" id="cat-rpg">
+            <div class="category-header">
+                <div class="category-title"><span>🧙</span> RPG</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-rpg', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-rpg', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-rpg">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-rpg"><span class="emoji">⚔️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Shadow Realm</div>
+                            <div class="game-card-footer"><span class="game-card-price">$19.99</span><span class="game-card-genre">RPG</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-rpg"><span class="emoji">🐉</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Dragon Age</div>
+                            <div class="game-card-footer"><span class="game-card-price">$44.99</span><span class="game-card-genre">RPG</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-rpg"><span class="emoji">🧝</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Elven Chronicles</div>
+                            <div class="game-card-footer"><span class="game-card-price">$34.99</span><span class="game-card-genre">RPG</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-rpg"><span class="emoji">🏰</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Kingdom Fall</div>
+                            <div class="game-card-footer"><span class="game-card-price">$27.99</span><span class="game-card-genre">RPG</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-rpg"><span class="emoji">🔮</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Mystic Arts</div>
+                            <div class="game-card-footer"><span class="game-card-price">$32.99</span><span class="game-card-genre">RPG</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-rpg"><span class="emoji">👑</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Royal Blood</div>
+                            <div class="game-card-footer"><span class="game-card-price">$38.99</span><span class="game-card-genre">RPG</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RACING -->
+        <div class="category-block visible" id="cat-racing">
+            <div class="category-header">
+                <div class="category-title"><span>🏎️</span> Racing</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-racing', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-racing', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-racing">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-racing"><span class="emoji">🏎️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Turbo Rush</div>
+                            <div class="game-card-footer"><span class="game-card-price">$14.99</span><span class="game-card-genre">Racing</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-racing"><span class="emoji">🚗</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Street Kings</div>
+                            <div class="game-card-footer"><span class="game-card-price">$19.99</span><span class="game-card-genre">Racing</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-racing"><span class="emoji">🏍️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Moto Fever</div>
+                            <div class="game-card-footer"><span class="game-card-price">$12.99</span><span class="game-card-genre">Racing</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-racing"><span class="emoji">✈️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Sky Racers</div>
+                            <div class="game-card-footer"><span class="game-card-price">$16.99</span><span class="game-card-genre">Racing</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-racing"><span class="emoji">🚀</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Rocket League X</div>
+                            <div class="game-card-footer"><span class="game-card-price">$21.99</span><span class="game-card-genre">Racing</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-racing"><span class="emoji">🏁</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Grand Prix</div>
+                            <div class="game-card-footer"><span class="game-card-price">$34.99</span><span class="game-card-genre">Racing</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HORROR -->
+        <div class="category-block visible" id="cat-horror">
+            <div class="category-header">
+                <div class="category-title"><span>👻</span> Horror</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-horror', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-horror', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-horror">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-horror"><span class="emoji">👻</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Dark Asylum</div>
+                            <div class="game-card-footer"><span class="game-card-price">$24.99</span><span class="game-card-genre">Horror</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-horror"><span class="emoji">🕯️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Last Light</div>
+                            <div class="game-card-footer"><span class="game-card-price">$18.99</span><span class="game-card-genre">Horror</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-horror"><span class="emoji">🧟</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Dead Zone</div>
+                            <div class="game-card-footer"><span class="game-card-price">$21.99</span><span class="game-card-genre">Horror</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-horror"><span class="emoji">🕸️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Cursed Manor</div>
+                            <div class="game-card-footer"><span class="game-card-price">$15.99</span><span class="game-card-genre">Horror</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-horror"><span class="emoji">🦇</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Night Terror</div>
+                            <div class="game-card-footer"><span class="game-card-price">$27.99</span><span class="game-card-genre">Horror</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-horror"><span class="emoji">💀</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Bone Chiller</div>
+                            <div class="game-card-footer"><span class="game-card-price">$19.99</span><span class="game-card-genre">Horror</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPORTS -->
+        <div class="category-block visible" id="cat-sports">
+            <div class="category-header">
+                <div class="category-title"><span>⚽</span> Sports</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-sports', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-sports', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-sports">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-sports"><span class="emoji">⚽</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">World Soccer</div>
+                            <div class="game-card-footer"><span class="game-card-price">$34.99</span><span class="game-card-genre">Sports</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-sports"><span class="emoji">🏀</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Slam Dunk</div>
+                            <div class="game-card-footer"><span class="game-card-price">$29.99</span><span class="game-card-genre">Sports</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-sports"><span class="emoji">🎾</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Ace Tennis</div>
+                            <div class="game-card-footer"><span class="game-card-price">$19.99</span><span class="game-card-genre">Sports</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-sports"><span class="emoji">🏈</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Grid Iron</div>
+                            <div class="game-card-footer"><span class="game-card-price">$39.99</span><span class="game-card-genre">Sports</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-sports"><span class="emoji">🥊</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Fight Night</div>
+                            <div class="game-card-footer"><span class="game-card-price">$24.99</span><span class="game-card-genre">Sports</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-sports"><span class="emoji">🏊</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Olympic Gold</div>
+                            <div class="game-card-footer"><span class="game-card-price">$44.99</span><span class="game-card-genre">Sports</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STRATEGY -->
+        <div class="category-block visible" id="cat-strategy">
+            <div class="category-header">
+                <div class="category-title"><span>♟️</span> Strategy</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-strategy', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-strategy', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-strategy">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-strategy"><span class="emoji">♟️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Empire Wars</div>
+                            <div class="game-card-footer"><span class="game-card-price">$32.99</span><span class="game-card-genre">Strategy</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-strategy"><span class="emoji">🏙️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">City Builder</div>
+                            <div class="game-card-footer"><span class="game-card-price">$27.99</span><span class="game-card-genre">Strategy</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-strategy"><span class="emoji">⚙️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Gear Factory</div>
+                            <div class="game-card-footer"><span class="game-card-price">$22.99</span><span class="game-card-genre">Strategy</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-strategy"><span class="emoji">🌐</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Global Domination</div>
+                            <div class="game-card-footer"><span class="game-card-price">$44.99</span><span class="game-card-genre">Strategy</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-strategy"><span class="emoji">🗺️</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">War Maps</div>
+                            <div class="game-card-footer"><span class="game-card-price">$29.99</span><span class="game-card-genre">Strategy</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-strategy"><span class="emoji">🏯</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Castle Siege</div>
+                            <div class="game-card-footer"><span class="game-card-price">$36.99</span><span class="game-card-genre">Strategy</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SHOOTER -->
+        <div class="category-block visible" id="cat-shooter">
+            <div class="category-header">
+                <div class="category-title"><span>🔫</span> Shooter</div>
+                <div class="row-arrows">
+                    <button class="row-arrow" onclick="scrollRow('row-shooter', -300)">&#8592;</button>
+                    <button class="row-arrow" onclick="scrollRow('row-shooter', 300)">&#8594;</button>
+                </div>
+            </div>
+            <div class="games-row-wrapper">
+                <div class="games-row" id="row-shooter">
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-shooter"><span class="emoji">🔫</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Strike Force</div>
+                            <div class="game-card-footer"><span class="game-card-price">$34.99</span><span class="game-card-genre">Shooter</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-shooter"><span class="emoji">🎯</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Sniper Elite</div>
+                            <div class="game-card-footer"><span class="game-card-price">$28.99</span><span class="game-card-genre">Shooter</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-shooter"><span class="emoji">💣</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Warzone X</div>
+                            <div class="game-card-footer"><span class="game-card-price">$39.99</span><span class="game-card-genre">Shooter</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-shooter"><span class="emoji">🛸</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Alien Invasion</div>
+                            <div class="game-card-footer"><span class="game-card-price">$23.99</span><span class="game-card-genre">Shooter</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-shooter"><span class="emoji">🚁</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Heli Combat</div>
+                            <div class="game-card-footer"><span class="game-card-price">$26.99</span><span class="game-card-genre">Shooter</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-card-thumb-placeholder theme-shooter"><span class="emoji">⚡</span></div>
+                        <div class="game-card-body">
+                            <div class="game-card-name">Plasma Wars</div>
+                            <div class="game-card-footer"><span class="game-card-price">$31.99</span><span class="game-card-genre">Shooter</span></div>
+                            <div class="game-card-actions"><a href="/Account/Register" class="btn-card-buy">🛒 Buy</a><button class="btn-card-fav">❤️</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ── Footer ──────────────────────────────────────────────── -->
+    <footer id="about" class="footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <h2>🎮 Glitch</h2>
+                <p>Your personal game store. Buy, download and manage your game library with ease.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#games">Browse Games</a></li>
+                    <li><a href="/Account/Register">Register</a></li>
+                    <li><a href="/Account/Login">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#games">Action</a></li>
+                    <li><a href="#games">RPG</a></li>
+                    <li><a href="#games">Horror</a></li>
+                    <li><a href="#games">Racing</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="/Account/Register">Create Account</a></li>
+                    <li><a href="/Account/Login">Sign In</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Glitch. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ── JavaScript ──────────────────────────────────────────── -->
+    <script>
+
+        // ═══════════════════════════════════════════════════════
+        // GAME DATA - used for search
+        // ═══════════════════════════════════════════════════════
+        const allGames = [
+            { name: "Cyber Legends",     category: "Action",    price: 29.99, emoji: "🎮" },
+            { name: "Thunder Strike",    category: "Action",    price: 19.99, emoji: "⚡" },
+            { name: "Iron Fist",         category: "Action",    price: 14.99, emoji: "🥊" },
+            { name: "Blaze Runner",      category: "Action",    price: 24.99, emoji: "🔥" },
+            { name: "Death March",       category: "Action",    price: 22.99, emoji: "💀" },
+            { name: "Blade Master",      category: "Action",    price: 31.99, emoji: "🗡️" },
+            { name: "Space Odyssey",     category: "Adventure", price: 39.99, emoji: "🚀" },
+            { name: "Lost Peaks",        category: "Adventure", price: 22.99, emoji: "🏔️" },
+            { name: "Deep Blue",         category: "Adventure", price: 17.99, emoji: "🌊" },
+            { name: "Ancient Maps",      category: "Adventure", price: 29.99, emoji: "🗺️" },
+            { name: "Volcano Run",       category: "Adventure", price: 18.99, emoji: "🌋" },
+            { name: "Jungle Quest",      category: "Adventure", price: 25.99, emoji: "🧭" },
+            { name: "Shadow Realm",      category: "RPG",       price: 19.99, emoji: "⚔️" },
+            { name: "Dragon Age",        category: "RPG",       price: 44.99, emoji: "🐉" },
+            { name: "Elven Chronicles",  category: "RPG",       price: 34.99, emoji: "🧝" },
+            { name: "Kingdom Fall",      category: "RPG",       price: 27.99, emoji: "🏰" },
+            { name: "Mystic Arts",       category: "RPG",       price: 32.99, emoji: "🔮" },
+            { name: "Royal Blood",       category: "RPG",       price: 38.99, emoji: "👑" },
+            { name: "Turbo Rush",        category: "Racing",    price: 14.99, emoji: "🏎️" },
+            { name: "Street Kings",      category: "Racing",    price: 19.99, emoji: "🚗" },
+            { name: "Moto Fever",        category: "Racing",    price: 12.99, emoji: "🏍️" },
+            { name: "Sky Racers",        category: "Racing",    price: 16.99, emoji: "✈️" },
+            { name: "Rocket League X",   category: "Racing",    price: 21.99, emoji: "🚀" },
+            { name: "Grand Prix",        category: "Racing",    price: 34.99, emoji: "🏁" },
+            { name: "Dark Asylum",       category: "Horror",    price: 24.99, emoji: "👻" },
+            { name: "Last Light",        category: "Horror",    price: 18.99, emoji: "🕯️" },
+            { name: "Dead Zone",         category: "Horror",    price: 21.99, emoji: "🧟" },
+            { name: "Cursed Manor",      category: "Horror",    price: 15.99, emoji: "🕸️" },
+            { name: "Night Terror",      category: "Horror",    price: 27.99, emoji: "🦇" },
+            { name: "Bone Chiller",      category: "Horror",    price: 19.99, emoji: "💀" },
+            { name: "World Soccer",      category: "Sports",    price: 34.99, emoji: "⚽" },
+            { name: "Slam Dunk",         category: "Sports",    price: 29.99, emoji: "🏀" },
+            { name: "Ace Tennis",        category: "Sports",    price: 19.99, emoji: "🎾" },
+            { name: "Grid Iron",         category: "Sports",    price: 39.99, emoji: "🏈" },
+            { name: "Fight Night",       category: "Sports",    price: 24.99, emoji: "🥊" },
+            { name: "Olympic Gold",      category: "Sports",    price: 44.99, emoji: "🏊" },
+            { name: "Empire Wars",       category: "Strategy",  price: 32.99, emoji: "♟️" },
+            { name: "City Builder",      category: "Strategy",  price: 27.99, emoji: "🏙️" },
+            { name: "Gear Factory",      category: "Strategy",  price: 22.99, emoji: "⚙️" },
+            { name: "Global Domination", category: "Strategy",  price: 44.99, emoji: "🌐" },
+            { name: "War Maps",          category: "Strategy",  price: 29.99, emoji: "🗺️" },
+            { name: "Castle Siege",      category: "Strategy",  price: 36.99, emoji: "🏯" },
+            { name: "Strike Force",      category: "Shooter",   price: 34.99, emoji: "🔫" },
+            { name: "Sniper Elite",      category: "Shooter",   price: 28.99, emoji: "🎯" },
+            { name: "Warzone X",         category: "Shooter",   price: 39.99, emoji: "💣" },
+            { name: "Alien Invasion",    category: "Shooter",   price: 23.99, emoji: "🛸" },
+            { name: "Heli Combat",       category: "Shooter",   price: 26.99, emoji: "🚁" },
+            { name: "Plasma Wars",       category: "Shooter",   price: 31.99, emoji: "⚡" },
+        ];
+
+        // ═══════════════════════════════════════════════════════
+        // SEARCH LOGIC
+        // ═══════════════════════════════════════════════════════
+        let searchTimeout;
+
+        function handleSearch(query) {
+            // Clear previous timeout - prevents searching on every keystroke
+            clearTimeout(searchTimeout);
+
+            // Wait 200ms after user stops typing before searching
+            searchTimeout = setTimeout(() => {
+                const dropdown = document.getElementById('searchDropdown');
+                const q = query.trim().toLowerCase();
+
+                // If empty, close dropdown
+                if (q === '') {
+                    dropdown.classList.remove('open');
+                    dropdown.innerHTML = '';
+                    return;
+                }
+
+                // Filter games by name, category or price
+                const results = allGames.filter(game => {
+                    const nameMatch     = game.name.toLowerCase().includes(q);
+                    const categoryMatch = game.category.toLowerCase().includes(q);
+                    // Price match: user types "29" and it matches "$29.99"
+                    const priceMatch    = game.price.toString().includes(q);
+                    return nameMatch || categoryMatch || priceMatch;
+                });
+
+                // Build dropdown HTML
+                if (results.length === 0) {
+                    dropdown.innerHTML = `<div class="search-no-results">😕 No games found for "${query}"</div>`;
+                } else {
+                    dropdown.innerHTML = results.slice(0, 8).map(game => `
+                        <div class="search-result-item" onclick="selectGame('${game.name}')">
+                            <div class="search-result-icon">${game.emoji}</div>
+                            <div class="search-result-info">
+                                <div class="search-result-name">${highlightText(game.name, q)}</div>
+                                <div class="search-result-meta">
+                                    <span>${highlightText(game.category, q)}</span>
+                                </div>
+                            </div>
+                            <div class="search-result-price">$${game.price.toFixed(2)}</div>
+                        </div>
+                    `).join('');
+                }
+
+                dropdown.classList.add('open');
+            }, 200);
+        }
+
+        // Highlight matching text in search results
+        function highlightText(text, query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // When user clicks a search result
+        function selectGame(name) {
+            document.getElementById('searchInput').value = name;
+            document.getElementById('searchDropdown').classList.remove('open');
+            // Scroll to games section
+            document.getElementById('games').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show dropdown when input is focused
+        function showDropdown() {
+            const q = document.getElementById('searchInput').value.trim();
+            if (q !== '') {
+                document.getElementById('searchDropdown').classList.add('open');
+            }
+        }
+
+        // Hide dropdown when input loses focus (small delay so click registers)
+        function hideDropdown() {
+            setTimeout(() => {
+                document.getElementById('searchDropdown').classList.remove('open');
+            }, 200);
+        }
+
+        // ═══════════════════════════════════════════════════════
+        // HERO SLIDER
+        // ═══════════════════════════════════════════════════════
+        const slides    = document.querySelectorAll('.slide');
+        const dots      = document.querySelectorAll('.dot');
+        const progress  = document.getElementById('sliderProgress');
+        let current     = 0;
+        let timer;
+        const duration  = 5000;
+
+        function goToSlide(index) {
+            slides[current].classList.remove('active');
+            slides[current].classList.add('exit');
+            const exiting = slides[current];
+            setTimeout(() => exiting.classList.remove('exit'), 700);
+            dots[current].classList.remove('active');
+            current = index;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
+            // Reset progress bar
+            progress.style.animation = 'none';
+            progress.offsetHeight;
+            progress.style.animation = `progressBar ${duration/1000}s linear`;
+        }
+
+        function nextSlide() { goToSlide((current + 1) % slides.length); }
+        function prevSlide() { goToSlide((current - 1 + slides.length) % slides.length); }
+
+        function resetTimer() { clearInterval(timer); timer = setInterval(nextSlide, duration); }
+        function startTimer() { timer = setInterval(nextSlide, duration); }
+
+        // Override goToSlide to also reset timer
+        const _goToSlide = goToSlide;
+
+        startTimer();
+
+        // ═══════════════════════════════════════════════════════
+        // CATEGORY FILTER
+        // ═══════════════════════════════════════════════════════
+        function filterCategory(category, btn) {
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const blocks = document.querySelectorAll('.category-block');
+
+            if (category === 'all') {
+                blocks.forEach(b => b.classList.add('visible'));
+            } else {
+                blocks.forEach(b => b.classList.remove('visible'));
+                const target = document.getElementById('cat-' + category);
+                if (target) target.classList.add('visible');
+            }
+
+            document.getElementById('games').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ═══════════════════════════════════════════════════════
+        // ROW SCROLL (arrow buttons)
+        // ═══════════════════════════════════════════════════════
+        function scrollRow(rowId, amount) {
+            const row = document.getElementById(rowId);
+            // Smooth scroll the row left or right by amount pixels
+            row.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+
+        // ═══════════════════════════════════════════════════════
+        // DRAG TO SCROLL (mouse drag on rows)
+        // ═══════════════════════════════════════════════════════
+        document.querySelectorAll('.games-row').forEach(row => {
+
+            let isDown    = false;   // Is mouse button held down?
+            let startX;              // Where the drag started
+            let scrollLeft;          // How far row was scrolled when drag started
+
+            // Mouse pressed down on row
+            row.addEventListener('mousedown', e => {
+                isDown = true;
+                row.classList.add('dragging');
+                startX     = e.pageX - row.offsetLeft;
+                scrollLeft = row.scrollLeft;
+            });
+
+            // Mouse released anywhere
+            row.addEventListener('mouseleave', () => {
+                isDown = false;
+                row.classList.remove('dragging');
+            });
+
+            row.addEventListener('mouseup', () => {
+                isDown = false;
+                row.classList.remove('dragging');
+            });
+
+            // Mouse moving while held down = drag scroll
+            row.addEventListener('mousemove', e => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x    = e.pageX - row.offsetLeft;
+                const walk = (x - startX) * 2; // multiply for faster scroll
+                row.scrollLeft = scrollLeft - walk;
+            });
+
+            // Touch support for mobile
+            let touchStartX;
+            let touchScrollLeft;
+
+            row.addEventListener('touchstart', e => {
+                touchStartX    = e.touches[0].pageX - row.offsetLeft;
+                touchScrollLeft = row.scrollLeft;
+            });
+
+            row.addEventListener('touchmove', e => {
+                const x    = e.touches[0].pageX - row.offsetLeft;
+                const walk = (x - touchStartX) * 2;
+                row.scrollLeft = touchScrollLeft - walk;
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
