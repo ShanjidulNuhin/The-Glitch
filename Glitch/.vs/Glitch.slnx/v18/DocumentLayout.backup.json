@@ -1,0 +1,213 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\.Net\\The-Glitch\\Glitch\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\migrations\\20260423071142_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\migrations\\20260423071142_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Glitch\\Migrations\\20260423070057_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\glitch.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\glitch.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\purchase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\models\\entities\\purchase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\models\\entities\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\models\\entities\\favorite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\models\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\alternativeemail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\models\\entities\\alternativeemail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260423071142_InitialCreate.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423071142_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423071142_InitialCreate.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423071142_InitialCreate.cs",
+              "RelativeToolTip": "Glitch\\Migrations\\20260423071142_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T07:11:42.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Glitch.csproj",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
+              "RelativeDocumentMoniker": "Glitch\\Glitch.csproj",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
+              "RelativeToolTip": "Glitch\\Glitch.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-23T06:16:16.786Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "User.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\User.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\User.cs",
+              "RelativeToolTip": "Glitch\\Models\\Entities\\User.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAqwCsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:26:50.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\appsettings.json",
+              "RelativeDocumentMoniker": "Glitch\\appsettings.json",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\appsettings.json",
+              "RelativeToolTip": "Glitch\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-23T06:19:22.064Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Purchase.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Purchase.cs",
+              "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Purchase.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Purchase.cs",
+              "RelativeToolTip": "Glitch\\Models\\Entities\\Purchase.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:31:50.832Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Game.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Game.cs",
+              "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Game.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Game.cs",
+              "RelativeToolTip": "Glitch\\Models\\Entities\\Game.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAuwCYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:29:04.765Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Favorite.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Favorite.cs",
+              "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Favorite.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Favorite.cs",
+              "RelativeToolTip": "Glitch\\Models\\Entities\\Favorite.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:30:41.049Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Cart.cs",
+              "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Cart.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Cart.cs",
+              "RelativeToolTip": "Glitch\\Models\\Entities\\Cart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:29:56.949Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AlternativeEmail.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\AlternativeEmail.cs",
+              "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\AlternativeEmail.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\AlternativeEmail.cs",
+              "RelativeToolTip": "Glitch\\Models\\Entities\\AlternativeEmail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:28:03.32Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Glitch\\Data\\AppDbContext.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Glitch\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAIwGIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:21:30.143Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
+              "RelativeDocumentMoniker": "Glitch\\Program.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
+              "RelativeToolTip": "Glitch\\Program.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowEUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:22:13.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20260423070057_InitialCreate.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423070057_InitialCreate.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs",
+              "RelativeToolTip": "Glitch\\Migrations\\20260423070057_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T07:00:57.858Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
