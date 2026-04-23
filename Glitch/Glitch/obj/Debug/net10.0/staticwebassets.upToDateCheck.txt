@@ -61,8 +61,8 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\uploads\games\85564a66-d13c-46b1-a65c-41d72c021509.webp
-wwwroot\uploads\games\e84de8a2-9011-43f2-a8bf-bae6c59e68b4.jpg
+wwwroot\uploads\games\774bb6eb-81f7-4754-93ad-3314f2e6efab.jpg
+wwwroot\uploads\games\918ced29-9c9d-46ab-a64d-3ef7e0badc5f.webp
 F:\.Net\The-Glitch\Glitch\Glitch\wwwroot\css\site.css
 F:\.Net\The-Glitch\Glitch\Glitch\wwwroot\favicon.ico
 F:\.Net\The-Glitch\Glitch\Glitch\wwwroot\js\site.js

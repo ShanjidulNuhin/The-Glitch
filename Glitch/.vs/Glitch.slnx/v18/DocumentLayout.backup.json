@@ -194,8 +194,7 @@
               "RelativeToolTip": "Glitch\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T08:25:22.528Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-23T08:25:22.528Z"
             },
             {
               "$type": "Document",
@@ -203,8 +202,8 @@
               "Title": "Index.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Home\\Index.cshtml",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Home\\Index.cshtml*",
-              "RelativeToolTip": "Glitch\\Views\\Home\\Index.cshtml*",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Glitch\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAANoDAAAAAAAAAAArwPMDAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T08:23:22.61Z",

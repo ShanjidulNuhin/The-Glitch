@@ -136,22 +136,21 @@
 
             <!-- Genre -->
             <div class="form-group">
-                <label asp-for="Genre">Genre</label>
-                <select asp-for="Genre">
-                    <option value="">-- Select Genre --</option>
-                    <option value="Action">💥 Action</option>
-                    <option value="Adventure">🌍 Adventure</option>
-                    <option value="RPG">🧙 RPG</option>
-                    <option value="Racing">🏎️ Racing</option>
-                    <option value="Horror">👻 Horror</option>
-                    <option value="Sports">⚽ Sports</option>
-                    <option value="Strategy">♟️ Strategy</option>
-                    <option value="Shooter">🔫 Shooter</option>
-                    <option value="Puzzle">🧩 Puzzle</option>
-                    <option value="Simulation">🏙️ Simulation</option>
-                    <option value="Fighting">🥊 Fighting</option>
-                    <option value="Other">🎮 Other</option>
-                </select>
+                <input asp-for="Genre" list="genreList" class="form-control" placeholder="Select or type genre" />
+                <datalist id="genreList">
+                    <option value="Action"></option>
+                    <option value="Adventure"></option>
+                    <option value="RPG"></option>
+                    <option value="Racing"></option>
+                    <option value="Horror"></option>
+                    <option value="Sports"></option>
+                    <option value="Strategy"></option>
+                    <option value="Shooter"></option>
+                    <option value="Puzzle"></option>
+                    <option value="Simulation"></option>
+                    <option value="Fighting"></option>
+                    <option value="Other"></option>
+                </datalist>
                 <span asp-validation-for="Genre" class="field-error"></span>
             </div>
 
