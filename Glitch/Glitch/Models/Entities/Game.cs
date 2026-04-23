@@ -32,6 +32,10 @@ namespace Glitch.Models.Entities
         // Filename of the game cover image
         public string? ImageFileName { get; set; }
 
+        // ← NEW: The actual game file admin uploads
+        // e.g. "cyberpunk_setup.zip" stored in wwwroot/uploads/gamefiles/
+        public string? GameFile { get; set; }
+
         // Is this game visible to customers?
         public bool IsAvailable { get; set; } = true;
 

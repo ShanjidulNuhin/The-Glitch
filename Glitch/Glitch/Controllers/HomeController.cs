@@ -2,7 +2,7 @@ using Glitch.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Glitch.Controllers
+namespace glitch.Controllers
 {
     public class HomeController : Controller
     {
@@ -25,14 +25,29 @@ namespace Glitch.Controllers
         }
 
         // GET: /Home/GameDetail/5
-        // Shows full game detail page
         public async Task<IActionResult> GameDetail(int id)
         {
             var game = await _context.Games.FindAsync(id);
 
-            // If game not found or not available, go back home
             if (game == null || !game.IsAvailable)
                 return RedirectToAction("Index");
+
+            // Check if logged in customer has purchased this game
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            var role = HttpContext.Session.GetString("Role");
+
+            if (userIdStr != null && role == "Customer")
+            {
+                var userId = int.Parse(userIdStr);
+
+                // Pass to view whether user has purchased
+                ViewBag.HasPurchased = await _context.Purchases
+                    .AnyAsync(p => p.UserId == userId && p.GameId == id);
+            }
+            else
+            {
+                ViewBag.HasPurchased = false;
+            }
 
             return View(game);
         }

@@ -1,4 +1,4 @@
-﻿using Glitch.Data;
+using Glitch.Data;
 using Glitch.Helpers;
 using Glitch.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -122,9 +122,76 @@ namespace Glitch.Controllers
 
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("Email", user.Email);
+            if (!string.IsNullOrEmpty(user.ProfileImage))
+            {
+                HttpContext.Session.SetString("ProfileImage", user.ProfileImage);
+            }
 
             TempData["Success"] = "Profile updated successfully!";
             return RedirectToAction("Profile");
+        }
+
+        // ══════════════════════════════════════════════════════
+        // LIBRARY & WISHLIST
+        // ══════════════════════════════════════════════════════
+
+        // GET: /Customer/Library
+        public async Task<IActionResult> Library()
+        {
+            var check = RedirectIfNotCustomer();
+            if (check != null) return check;
+
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr)) return RedirectToAction("Login", "Account");
+            
+            var userId = int.Parse(userIdStr);
+
+            var purchasedGames = await _context.Purchases
+                .Include(p => p.Game)
+                .Where(p => p.UserId == userId)
+                .Select(p => p.Game)
+                .ToListAsync();
+
+            var wishlistGames = await _context.Favorites
+                .Include(f => f.Game)
+                .Where(f => f.UserId == userId)
+                .Select(f => f.Game)
+                .ToListAsync();
+
+            var model = new LibraryViewModel
+            {
+                PurchasedGames = purchasedGames,
+                WishlistGames = wishlistGames
+            };
+
+            return View(model);
+        }
+
+        // POST: /Customer/ToggleWishlist
+        [HttpPost]
+        public async Task<IActionResult> ToggleWishlist(int gameId)
+        {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr)) 
+                return Json(new { success = false, message = "Not logged in" });
+
+            var userId = int.Parse(userIdStr);
+            var favorite = await _context.Favorites
+                .FirstOrDefaultAsync(f => f.UserId == userId && f.GameId == gameId);
+
+            bool added = false;
+            if (favorite != null)
+            {
+                _context.Favorites.Remove(favorite);
+            }
+            else
+            {
+                _context.Favorites.Add(new Models.Entities.Favorite { UserId = userId, GameId = gameId });
+                added = true;
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { success = true, added = added });
         }
 
         // ══════════════════════════════════════════════════════

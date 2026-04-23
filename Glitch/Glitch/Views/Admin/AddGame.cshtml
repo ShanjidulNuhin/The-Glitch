@@ -1,4 +1,4 @@
-﻿@model Glitch.ViewModels.Admin.GameFormViewModel
+@model Glitch.ViewModels.Admin.GameFormViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -53,7 +53,6 @@
 
     .field-error { color: #f87171; font-size: 12px; margin-top: 2px; }
 
-    /* Image upload area */
     .image-upload-area {
         border: 2px dashed var(--border);
         border-radius: 10px;
@@ -90,7 +89,6 @@
         border: 1px solid var(--border);
     }
 
-    /* Toggle switch for IsAvailable */
     .toggle-row {
         display: flex;
         align-items: center;
@@ -127,7 +125,6 @@
     .toggle input:checked + .toggle-slider { background: var(--primary); }
     .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
 
-    /* Form buttons */
     .form-actions {
         display: flex;
         gap: 12px;
@@ -173,16 +170,14 @@
 
         <div class="form-grid">
 
-            <!-- Title -->
             <div class="form-group">
                 <label asp-for="Title">Game Title</label>
                 <input asp-for="Title" placeholder="e.g. Cyber Legends" />
                 <span asp-validation-for="Title" class="field-error"></span>
             </div>
 
-            <!-- Genre -->
             <div class="form-group">
-                                <label asp-for="Title">Select Category</label>
+                <label asp-for="Genre">Select Category</label>
                 <input asp-for="Genre" list="genreList" class="form-control" placeholder="Select or type genre" />
                 <datalist id="genreList">
                     <option value="Action"></option>
@@ -200,7 +195,6 @@
                 </datalist>
             </div>
 
-            <!-- Price -->
             <div class="form-group">
                 <label asp-for="Price">Price (USD)</label>
                 <input asp-for="Price" type="number"
@@ -209,7 +203,6 @@
                 <span asp-validation-for="Price" class="field-error"></span>
             </div>
 
-            <!-- Availability toggle -->
             <div class="form-group">
                 <label>Availability</label>
                 <div class="toggle-row">
@@ -223,7 +216,6 @@
                 </div>
             </div>
 
-            <!-- Description -->
             <div class="form-group full">
                 <label asp-for="Description">Description</label>
                 <textarea asp-for="Description"
@@ -231,7 +223,6 @@
                 <span asp-validation-for="Description" class="field-error"></span>
             </div>
 
-            <!-- Image upload -->
             <div class="form-group full">
                 <label>Cover Image (optional)</label>
                 <div class="image-upload-area" onclick="document.getElementById('imgInput').click()">
@@ -247,15 +238,28 @@
                 </div>
             </div>
 
-            <!-- YouTube Trailer URL -->
-<div class="form-group full">
-    <label asp-for="TrailerUrl">YouTube Trailer URL (optional)</label>
-    <input asp-for="TrailerUrl"
-           placeholder="e.g. https://www.youtube.com/watch?v=XXXXXXX" />
-    <span style="font-size:12px; color:var(--muted); margin-top:4px;">
-        Paste any YouTube link — we'll convert it automatically
-    </span>
-</div>
+            <div class="form-group full">
+                <label>Game File (zip, exe, pdf, docs, images, etc.)</label>
+                <div class="image-upload-area" style="border-color: rgba(16,185,129,0.3);">
+                    <input type="file"
+                           id="gameFileInput"
+                           name="GameFileUpload"
+                           accept=".zip,.rar,.exe,.msi,.7z,.tar,.gz,.pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" />
+                    <div class="upload-icon">📦</div>
+                    <p>Click to upload the game file, document, or image</p>
+                    <span>ZIP, RAR, EXE, PDF, DOCX, Images — Max 2GB</span>
+                    <span id="gameFileName" style="color:#6ee7b7; margin-top:6px; display:none;"></span>
+                </div>
+            </div>
+
+            <div class="form-group full">
+                <label asp-for="TrailerUrl">YouTube Trailer URL (optional)</label>
+                <input asp-for="TrailerUrl"
+                       placeholder="e.g. https://www.youtube.com/watch?v=XXXXXXX" />
+                <span style="font-size:12px; color:var(--muted); margin-top:4px;">
+                    Paste any YouTube link — we'll convert it automatically
+                </span>
+            </div>
 
         </div>
 
@@ -281,5 +285,14 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    // Show selected game filename
+    document.getElementById('gameFileInput')?.addEventListener('change', function() {
+        const label = document.getElementById('gameFileName');
+        if (this.files[0]) {
+            label.textContent = '✅ Selected: ' + this.files[0].name;
+            label.style.display = 'block';
+        }
+    });
 </script>
 }

@@ -198,7 +198,6 @@ F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\staticwebassets.build.json.ca
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\staticwebassets.development.json
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\swae.build.ex.cache
-F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\Glitch.csproj.Up2Date
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\Glitch.dll
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\refint\Glitch.dll
@@ -224,3 +223,4 @@ F:\.Net\The-Glitch\Glitch\Glitch\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Wor
 F:\.Net\The-Glitch\Glitch\Glitch\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 F:\.Net\The-Glitch\Glitch\Glitch\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\Glitch.sourcelink.json
+F:\.Net\The-Glitch\Glitch\Glitch\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

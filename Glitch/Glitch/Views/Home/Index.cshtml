@@ -1,4 +1,4 @@
-﻿@model List<Glitch.Models.Entities.Game>
+@model List<Glitch.Models.Entities.Game>
 
 @{
     ViewData["Title"] = "Glitch - Home";
@@ -457,7 +457,7 @@
             transition: all 0.2s;
         }
 
-        .btn-wishlist:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-wishlist:hover, .btn-wishlist.active { border-color: #f43f5e; color: #f43f5e; }
 
         .slide-image { position: relative; z-index: 3; flex-shrink: 0; }
 
@@ -706,7 +706,7 @@
             transition: all 0.2s;
         }
 
-        .btn-card-fav:hover { border-color: #f43f5e; color: #f43f5e; }
+        .btn-card-fav:hover, .btn-card-fav.active { border-color: #f43f5e; color: #f43f5e; }
 
         /* Coming soon placeholder card */
         .coming-soon-card {
@@ -872,6 +872,7 @@
                 </div>
                 @navUsername
             </a>
+            <a href="/Customer/Library" class="btn-outline">📚 Library</a>
         }
         <a href="/Account/Logout" class="btn-outline">Logout</a>
     }
@@ -901,8 +902,7 @@
         <!-- Show hero slider with first 4 games from database -->
         <div class="hero-slider" id="heroSlider">
 
-
-            @for (int i = 0; i < Math.Min(4, Model.Count); i++)
+            @for (int i = 0; i < Model.Count; i++)
             {
                 var game    = Model[i];
                 var emoji   = genreEmoji.ContainsKey(game.Genre) ? genreEmoji[game.Genre] : "🎮";
@@ -921,8 +921,15 @@
                             <div class="slide-genre">@game.Genre</div>
                         </div>
                         <div class="slide-buttons">
-                            <a href="/Account/Register" class="btn-buy">🛒 Buy Now</a>
-                            <a href="#games" class="btn-wishlist">❤️ Wishlist</a>
+                            @if (Context.Session.GetString("UserId") != null)
+                            {
+                                <a href="/Purchase/Pay/@game.Id" class="btn-buy">🛒 Buy Now</a>
+                            }
+                            else
+                            {
+                                <a href="/Account/Register" class="btn-buy">🛒 Buy Now</a>
+                            }
+                            <button onclick="toggleWishlist(@game.Id, this)" class="btn-wishlist">❤️ Wishlist</button>
                         </div>
                     </div>
                     @* <div class="slide-image">
@@ -1032,8 +1039,15 @@
                                             <span class="game-card-genre">@game.Genre</span>
                                         </div>
                                         <div class="game-card-actions">
-                                            <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
-                                            <button class="btn-card-fav">❤️</button>
+                                            @if (Context.Session.GetString("UserId") != null)
+                                            {
+                                                <a href="/Purchase/Pay/@game.Id" class="btn-card-buy">🛒 Buy</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                            }
+                                            <button onclick="toggleWishlist(@game.Id, this); event.stopPropagation();" class="btn-card-fav">❤️</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1326,6 +1340,32 @@
 
         if (slides.length > 0) {
             timer = setInterval(nextSlide, duration);
+        }
+
+        async function toggleWishlist(gameId, btn) {
+            try {
+                const res = await fetch('/Customer/ToggleWishlist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `gameId=${gameId}`
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if (data.added) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                } else {
+                    if (data.message === "Not logged in") {
+                        window.location.href = '/Account/Login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            }
         }
 
     </script>

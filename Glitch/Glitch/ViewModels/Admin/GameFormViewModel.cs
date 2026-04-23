@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace Glitch.ViewModels.Admin
 {
     public class GameFormViewModel
     {
-        // 0 means new game, >0 means editing existing game
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Game title is required")]
@@ -22,15 +20,16 @@ namespace Glitch.ViewModels.Admin
         [Required(ErrorMessage = "Genre is required")]
         public string Genre { get; set; } = string.Empty;
 
-        // YouTube trailer link - optional
-        // Admin pastes: https://www.youtube.com/watch?v=XXXXXXX
         public string? TrailerUrl { get; set; }
 
-        // Optional image upload
         public IFormFile? ImageFile { get; set; }
 
-        // Existing image filename (for edit mode)
+        public IFormFile? GameFileUpload { get; set; }
+
         public string? ExistingImage { get; set; }
+
+        // Existing game file filename (for edit mode)
+        public string? ExistingGameFile { get; set; }
 
         public bool IsAvailable { get; set; } = true;
     }

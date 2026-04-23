@@ -1,0 +1,435 @@
+﻿@model Glitch.ViewModels.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Payment";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment — Glitch</title>
+    <style>
+
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            :root {
+                --primary: #6366f1;
+                --primary-dark: #4f46e5;
+                --bg: #0f0f1a;
+                --card: #1a1a2e;
+                --border: #2a2a4a;
+                --text: #fff;
+                --muted: #888;
+                --success: #10b981;
+            }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: 'Segoe UI', sans-serif;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            /* Payment card layout */
+            .payment-wrap {
+                display: flex;
+                gap: 24px;
+                width: 100%;
+                max-width: 860px;
+                align-items: flex-start;
+            }
+
+            /* Left - Game summary */
+            .game-summary {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 28px;
+                width: 280px;
+                flex-shrink: 0;
+            }
+
+            .game-summary-image {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                border-radius: 10px;
+                margin-bottom: 16px;
+                border: 1px solid var(--border);
+            }
+
+            .game-summary-placeholder {
+                width: 100%; height: 160px;
+                background: linear-gradient(135deg, #1e1e3a, #2a2a4a);
+                border-radius: 10px;
+                display: flex; align-items: center;
+                justify-content: center;
+                font-size: 52px;
+                margin-bottom: 16px;
+            }
+
+            .game-summary h3 {
+                font-size: 17px; font-weight: 800;
+                margin-bottom: 8px;
+            }
+
+            .game-summary-genre {
+                display: inline-block;
+                background: rgba(99,102,241,0.15);
+                color: #a5b4fc;
+                padding: 3px 10px; border-radius: 50px;
+                font-size: 11px; font-weight: 700;
+                margin-bottom: 16px;
+            }
+
+            .price-display {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 0;
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 14px;
+            }
+
+            .price-label { font-size: 13px; color: var(--muted); }
+
+            .price-amount {
+                font-size: 26px; font-weight: 900;
+                color: var(--primary);
+            }
+
+            .security-note {
+                display: flex; align-items: center; gap: 6px;
+                font-size: 12px; color: var(--muted);
+            }
+
+            /* Right - Payment form */
+            .payment-form-card {
+                flex: 1;
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 32px;
+            }
+
+            .payment-header {
+                margin-bottom: 28px;
+            }
+
+            .payment-header h2 {
+                font-size: 22px; font-weight: 800;
+                margin-bottom: 6px;
+            }
+
+            .payment-header p {
+                font-size: 14px; color: var(--muted);
+                line-height: 1.5;
+            }
+
+            /* Steps indicator */
+            .steps {
+                display: flex;
+                gap: 0;
+                margin-bottom: 28px;
+            }
+
+            .step {
+                flex: 1;
+                display: flex; align-items: center;
+                gap: 8px;
+                font-size: 12px; font-weight: 600;
+                color: var(--muted);
+            }
+
+            .step-num {
+                width: 24px; height: 24px;
+                border-radius: 50%;
+                background: var(--border);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 11px; font-weight: 700;
+                flex-shrink: 0;
+            }
+
+            .step.active .step-num {
+                background: var(--primary);
+                color: #fff;
+            }
+
+            .step.active { color: #fff; }
+
+            .step-line {
+                flex: 1;
+                height: 1px;
+                background: var(--border);
+                margin: 0 8px;
+            }
+
+            /* Form groups */
+            .form-group { margin-bottom: 20px; }
+
+            .form-group label {
+                display: block;
+                font-size: 13px; font-weight: 700;
+                color: var(--muted);
+                text-transform: uppercase; letter-spacing: 0.5px;
+                margin-bottom: 8px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 13px 16px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                color: #fff; font-size: 15px;
+                outline: none; transition: border 0.2s;
+                font-family: inherit;
+            }
+
+            .form-group input:focus { border-color: var(--primary); }
+            .form-group input.error { border-color: #ef4444; }
+
+            .field-error {
+                color: #f87171; font-size: 12px;
+                margin-top: 6px; display: block;
+            }
+
+            /* Price hint */
+            .price-hint {
+                display: flex; align-items: center; gap: 8px;
+                padding: 12px 14px;
+                background: rgba(99,102,241,0.08);
+                border: 1px solid rgba(99,102,241,0.2);
+                border-radius: 8px;
+                font-size: 13px; color: #a5b4fc;
+                margin-top: 8px;
+            }
+
+            /* Amount input with $ prefix */
+            .amount-input-wrap {
+                position: relative;
+            }
+
+            .amount-input-wrap .dollar {
+                position: absolute;
+                left: 16px; top: 50%;
+                transform: translateY(-50%);
+                font-size: 18px; font-weight: 700;
+                color: var(--primary);
+                pointer-events: none;
+            }
+
+            .amount-input-wrap input {
+                padding-left: 34px;
+                font-size: 22px; font-weight: 800;
+                letter-spacing: 1px;
+            }
+
+            /* Divider */
+            .form-divider {
+                height: 1px;
+                background: var(--border);
+                margin: 24px 0;
+                position: relative;
+            }
+
+            .form-divider span {
+                position: absolute;
+                left: 50%; top: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--card);
+                padding: 0 12px;
+                font-size: 12px; color: var(--muted);
+            }
+
+            /* Pay button */
+            .btn-pay {
+                width: 100%;
+                padding: 15px;
+                background: linear-gradient(135deg, var(--primary), #8b5cf6);
+                color: #fff; border: none;
+                border-radius: 10px;
+                font-size: 16px; font-weight: 700;
+                cursor: pointer; transition: all 0.2s;
+                box-shadow: 0 0 30px rgba(99,102,241,0.3);
+                display: flex; align-items: center;
+                justify-content: center; gap: 10px;
+            }
+
+            .btn-pay:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 40px rgba(99,102,241,0.4);
+            }
+
+            .btn-cancel {
+                display: block; text-align: center;
+                margin-top: 14px;
+                color: var(--muted); text-decoration: none;
+                font-size: 13px; transition: color 0.2s;
+            }
+
+            .btn-cancel:hover { color: #ef4444; }
+
+            /* Security badges */
+            .security-badges {
+                display: flex; gap: 12px;
+                justify-content: center;
+                margin-top: 20px;
+                flex-wrap: wrap;
+            }
+
+            .badge {
+                display: flex; align-items: center; gap: 5px;
+                font-size: 11px; color: var(--muted);
+            }
+
+            /* Error alert */
+            .alert-danger {
+                background: #450a0a; border: 1px solid #dc2626;
+                color: #fca5a5; padding: 12px 16px;
+                border-radius: 8px; font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+    </style>
+</head>
+<body>
+
+    <div class="payment-wrap">
+
+        <!-- Left: Game summary -->
+        <div class="game-summary">
+
+            @if (!string.IsNullOrEmpty(Model.GameImage))
+            {
+                <img class="game-summary-image"
+                     src="/uploads/games/@Model.GameImage"
+                     alt="@Model.GameTitle" />
+            }
+            else
+            {
+                <div class="game-summary-placeholder">🎮</div>
+            }
+
+            <h3>@Model.GameTitle</h3>
+            <div class="game-summary-genre">@Model.GameGenre</div>
+
+            <div class="price-display">
+                <span class="price-label">Total Price</span>
+                <span class="price-amount">$@Model.GamePrice.ToString("F2")</span>
+            </div>
+
+            <div class="security-note">
+                🔒 Secure payment — verified by password
+            </div>
+
+        </div>
+
+        <!-- Right: Payment form -->
+        <div class="payment-form-card">
+
+            <div class="payment-header">
+                <h2>💳 Complete Purchase</h2>
+                <p>
+                    Enter the exact game price and your account
+                    password to confirm the purchase.
+                </p>
+            </div>
+
+            <!-- Steps -->
+            <div class="steps">
+                <div class="step active">
+                    <div class="step-num">1</div>
+                    Enter Amount
+                </div>
+                <div class="step-line"></div>
+                <div class="step active">
+                    <div class="step-num">2</div>
+                    Verify Password
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    Download Game
+                </div>
+            </div>
+
+            @* Show validation errors *@
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert-danger">
+                    ❌ @Html.ValidationSummary(true)
+                </div>
+            }
+
+            <form asp-action="Pay" asp-controller="Purchase" method="post">
+                @Html.AntiForgeryToken()
+
+                <!-- Hidden game ID -->
+                <input type="hidden" asp-for="GameId" />
+
+                <!-- Amount field -->
+                <div class="form-group">
+                    <label asp-for="AmountEntered">
+                        Enter Exact Price to Confirm
+                    </label>
+                    <div class="amount-input-wrap">
+                        <span class="dollar">$</span>
+                        <input asp-for="AmountEntered"
+                               type="number"
+                               step="0.01"
+                               min="0.01"
+                               placeholder="0.00"
+                               autocomplete="off" />
+                    </div>
+                    <span asp-validation-for="AmountEntered" class="field-error"></span>
+
+                    <!-- Hint showing the exact price -->
+                    <div class="price-hint">
+                        💡 The exact price for <strong>@Model.GameTitle</strong>
+                        is <strong>$@Model.GamePrice.ToString("F2")</strong>
+                    </div>
+                </div>
+
+                <div class="form-divider"><span>then verify identity</span></div>
+
+                <!-- Password field -->
+                <div class="form-group">
+                    <label asp-for="Password">Your Account Password</label>
+                    <input asp-for="Password"
+                           type="password"
+                           placeholder="Enter your password" />
+                    <span asp-validation-for="Password" class="field-error"></span>
+                </div>
+
+                <!-- Pay button -->
+                <button type="submit" class="btn-pay">
+                    🔒 Confirm Purchase — $@Model.GamePrice.ToString("F2")
+                </button>
+
+            </form>
+
+            <a href="/Home/GameDetail/@Model.GameId" class="btn-cancel">
+                ← Cancel and go back
+            </a>
+
+            <!-- Security badges -->
+            <div class="security-badges">
+                <div class="badge">🔒 Encrypted</div>
+                <div class="badge">✅ Password Verified</div>
+                <div class="badge">🛡️ Secure</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

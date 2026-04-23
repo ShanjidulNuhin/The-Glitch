@@ -1,4 +1,4 @@
-﻿using Glitch.Data;
+using Glitch.Data;
 using Glitch.Helpers;
 using Glitch.Models.Entities;
 using Glitch.ViewModels;
@@ -199,6 +199,10 @@ namespace Glitch.Controllers
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("Role", user.Role);
             HttpContext.Session.SetString("Email", user.Email);
+            if (!string.IsNullOrEmpty(user.ProfileImage))
+            {
+                HttpContext.Session.SetString("ProfileImage", user.ProfileImage);
+            }
 
             // Redirect based on role
             if (user.Role == "Admin")
