@@ -901,6 +901,7 @@
         <!-- Show hero slider with first 4 games from database -->
         <div class="hero-slider" id="heroSlider">
 
+
             @for (int i = 0; i < Math.Min(4, Model.Count); i++)
             {
                 var game    = Model[i];
@@ -1008,7 +1009,8 @@
 
                             @foreach (var game in genreGames)
                             {
-                                <div class="game-card">
+                                <div class="game-card" onclick="window.location='/Home/GameDetail/@game.Id'"
+                                     style="cursor:pointer;">
                                     @if (!string.IsNullOrEmpty(game.ImageFileName))
                                     {
                                         <img class="game-card-thumb"
