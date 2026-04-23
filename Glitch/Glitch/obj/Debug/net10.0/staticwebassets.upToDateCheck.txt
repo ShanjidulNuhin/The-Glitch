@@ -74,7 +74,6 @@ wwwroot\uploads\games\774bb6eb-81f7-4754-93ad-3314f2e6efab.jpg
 wwwroot\uploads\games\918ced29-9c9d-46ab-a64d-3ef7e0badc5f.webp
 wwwroot\uploads\games\97fcd608-3cac-489b-b67b-dc4bcb7f24aa.jpeg
 wwwroot\uploads\profiles\36b390bb-6de4-434c-9921-27ff00d7f818.webp
-wwwroot\uploads\profiles\50e1ad95-05b7-4870-befa-12ff4e646623.webp
 F:\.Net\The-Glitch\Glitch\Glitch\wwwroot\css\site.css
 F:\.Net\The-Glitch\Glitch\Glitch\wwwroot\favicon.ico
 F:\.Net\The-Glitch\Glitch\Glitch\wwwroot\js\site.js

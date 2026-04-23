@@ -3,8 +3,36 @@
   "WorkspaceRootPath": "F:\\.Net\\The-Glitch\\Glitch\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\admin\\editgame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\admin\\editgame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\glitch.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\glitch.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\admin\\games.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\admin\\games.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\admin\\addgame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\admin\\addgame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\admin\\adminprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\admin\\adminprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\admindashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\admindashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,10 +63,6 @@
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\home\\gamedetail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\admin\\adminprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\admin\\adminprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -61,10 +85,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\customerprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\customerprofileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\admindashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\admindashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\models\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -115,10 +135,6 @@
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\purchase\\pay.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\customer\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\customer\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -129,10 +145,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\admin\\editgame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\admin\\editgame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\admin\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -147,24 +159,12 @@
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\admin\\games.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\admin\\games.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\migrations\\20260423071142_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\migrations\\20260423071142_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Glitch\\Migrations\\20260423070057_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\glitch.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\glitch.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\migrations\\20260423101352_addtrailerurltogame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -186,41 +186,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
-              "RelativeDocumentMoniker": "Glitch\\Program.cs",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
-              "RelativeToolTip": "Glitch\\Program.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAmwD4AAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T06:22:13.534Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "_AdminLayout.cshtml",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Shared\\_AdminLayout.cshtml",
-              "RelativeDocumentMoniker": "Glitch\\Views\\Shared\\_AdminLayout.cshtml",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Shared\\_AdminLayout.cshtml",
-              "RelativeToolTip": "Glitch\\Views\\Shared\\_AdminLayout.cshtml",
-              "ViewState": "AgIAAIkBAAAAAAAAAAAswJEBAABOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-23T09:13:38.562Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "AddGame.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\AddGame.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\AddGame.cshtml",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\AddGame.cshtml",
               "RelativeToolTip": "Glitch\\Views\\Admin\\AddGame.cshtml",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAmwJ0AAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T09:20:35.186Z",
               "EditorCaption": ""
@@ -228,42 +204,97 @@
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Glitch\\Controllers\\AdminController.cs",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Glitch\\Controllers\\AdminController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwIkAAAAPAAAAAAAAAA==",
+              "Title": "AdminProfileViewModel.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
+              "RelativeDocumentMoniker": "Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
+              "RelativeToolTip": "Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T09:17:04.362Z"
+              "WhenOpened": "2026-04-23T10:22:09.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EditGame.cshtml",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\EditGame.cshtml",
+              "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\EditGame.cshtml",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\EditGame.cshtml",
+              "RelativeToolTip": "Glitch\\Views\\Admin\\EditGame.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-23T09:21:59.432Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "GameFormViewModel.cs",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
-              "RelativeDocumentMoniker": "Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
-              "RelativeToolTip": "Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwB4AAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T09:16:08.403Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Glitch\\Controllers\\HomeController.cs",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Glitch\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAcwDMAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T08:25:22.528Z"
+              "Title": "Games.cshtml",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Games.cshtml",
+              "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\Games.cshtml",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Games.cshtml",
+              "RelativeToolTip": "Glitch\\Views\\Admin\\Games.cshtml",
+              "ViewState": "AgIAAO4AAAAAAAAAAAAAAP8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-23T09:19:40.297Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Glitch.csproj",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
+              "RelativeDocumentMoniker": "Glitch\\Glitch.csproj",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
+              "RelativeToolTip": "Glitch\\Glitch.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-23T06:16:16.786Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Glitch\\Views\\Account\\Login.cshtml",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Login.cshtml*",
+              "RelativeToolTip": "Glitch\\Views\\Account\\Login.cshtml*",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAcwKsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-23T08:19:04.6Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Glitch\\Views\\Account\\Register.cshtml",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Register.cshtml*",
+              "RelativeToolTip": "Glitch\\Views\\Account\\Register.cshtml*",
+              "ViewState": "AgIAAJEAAAAAAAAAAAASwKcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-23T08:10:22.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AdminDashboardViewModel.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\AdminDashboardViewModel.cs",
+              "RelativeDocumentMoniker": "Glitch\\ViewModels\\AdminDashboardViewModel.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\AdminDashboardViewModel.cs",
+              "RelativeToolTip": "Glitch\\ViewModels\\AdminDashboardViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T09:15:07.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Game.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Game.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Game.cs",
@@ -275,7 +306,67 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Glitch\\Controllers\\HomeController.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Glitch\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAcwDMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T08:25:22.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GameFormViewModel.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
+              "RelativeDocumentMoniker": "Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
+              "RelativeToolTip": "Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwB4AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T09:16:08.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Glitch\\Controllers\\AdminController.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Glitch\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwIkAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T09:17:04.362Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "_AdminLayout.cshtml",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeDocumentMoniker": "Glitch\\Views\\Shared\\_AdminLayout.cshtml",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeToolTip": "Glitch\\Views\\Shared\\_AdminLayout.cshtml",
+              "ViewState": "AgIAAIkBAAAAAAAAAAAswJEBAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-23T09:13:38.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
+              "RelativeDocumentMoniker": "Glitch\\Program.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
+              "RelativeToolTip": "Glitch\\Program.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAmwD4AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T06:22:13.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\appsettings.json",
               "RelativeDocumentMoniker": "Glitch\\appsettings.json",
@@ -287,19 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AdminProfileViewModel.cs",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
-              "RelativeDocumentMoniker": "Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
-              "RelativeToolTip": "Glitch\\ViewModels\\Admin\\AdminProfileViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T10:22:09.701Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 14,
               "Title": "GameDetail.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Home\\GameDetail.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Home\\GameDetail.cshtml",
@@ -311,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "Glitch\\ViewModels\\RegisterViewModel.cs",
@@ -323,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "PaymentViewModel.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\PaymentViewModel.cs",
               "RelativeDocumentMoniker": "Glitch\\ViewModels\\PaymentViewModel.cs",
@@ -335,7 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "Glitch\\ViewModels\\LoginViewModel.cs",
@@ -347,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "CustomerProfileViewModel.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\CustomerProfileViewModel.cs",
               "RelativeDocumentMoniker": "Glitch\\ViewModels\\CustomerProfileViewModel.cs",
@@ -359,19 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "AdminDashboardViewModel.cs",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\AdminDashboardViewModel.cs",
-              "RelativeDocumentMoniker": "Glitch\\ViewModels\\AdminDashboardViewModel.cs",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\AdminDashboardViewModel.cs",
-              "RelativeToolTip": "Glitch\\ViewModels\\AdminDashboardViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T09:15:07.498Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 21,
               "Title": "User.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\User.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\User.cs",
@@ -383,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\_ViewImports.cshtml",
@@ -395,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 22,
               "Title": "Purchase.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Purchase.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Purchase.cs",
@@ -407,7 +474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 23,
               "Title": "Favorite.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Favorite.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Favorite.cs",
@@ -419,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 24,
               "Title": "Cart.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Cart.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Cart.cs",
@@ -431,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 25,
               "Title": "AlternativeEmail.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\AlternativeEmail.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\AlternativeEmail.cs",
@@ -443,7 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 26,
               "Title": "AppDbContextModelSnapshot.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\AppDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Glitch\\Migrations\\AppDbContextModelSnapshot.cs",
@@ -455,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 27,
               "Title": "PasswordHelper.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Helpers\\PasswordHelper.cs",
               "RelativeDocumentMoniker": "Glitch\\Helpers\\PasswordHelper.cs",
@@ -467,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Glitch\\Data\\AppDbContext.cs",
@@ -479,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 29,
               "Title": "PurchaseController.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\PurchaseController.cs",
               "RelativeDocumentMoniker": "Glitch\\Controllers\\PurchaseController.cs",
@@ -491,7 +558,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 30,
               "Title": "CustomerController.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\CustomerController.cs",
               "RelativeDocumentMoniker": "Glitch\\Controllers\\CustomerController.cs",
@@ -503,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 31,
               "Title": "AccountController.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Glitch\\Controllers\\AccountController.cs",
@@ -515,7 +582,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 32,
               "Title": "Pay.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Purchase\\Pay.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Purchase\\Pay.cshtml",
@@ -539,7 +606,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 35,
               "Title": "Index.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Home\\Index.cshtml",
@@ -551,7 +618,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 34,
               "Title": "DeleteAccount.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Customer\\DeleteAccount.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Customer\\DeleteAccount.cshtml",
@@ -563,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 33,
               "Title": "Profile.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Customer\\Profile.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Customer\\Profile.cshtml",
@@ -575,31 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Glitch\\Views\\Account\\Login.cshtml",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "Glitch\\Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAJwAAAAAAAAAAADwv7QAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-23T08:19:04.6Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "EditGame.cshtml",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\EditGame.cshtml",
-              "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\EditGame.cshtml",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\EditGame.cshtml",
-              "RelativeToolTip": "Glitch\\Views\\Admin\\EditGame.cshtml",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAAAIsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-23T09:21:59.432Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "Users.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Users.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\Users.cshtml",
@@ -611,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "Profile.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Profile.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\Profile.cshtml",
@@ -623,7 +666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Index.cshtml",
               "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\Index.cshtml",
@@ -632,18 +675,6 @@
               "ViewState": "AgIAANMAAAAAAAAAAAAAANgAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T09:18:44.062Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "Games.cshtml",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Games.cshtml",
-              "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\Games.cshtml",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\Games.cshtml",
-              "RelativeToolTip": "Glitch\\Views\\Admin\\Games.cshtml",
-              "ViewState": "AgIAAO4AAAAAAAAAAAAAAP8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-23T09:19:40.297Z"
             },
             {
               "$type": "Document",
@@ -671,19 +702,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "Register.cshtml",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Register.cshtml",
-              "RelativeDocumentMoniker": "Glitch\\Views\\Account\\Register.cshtml",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Register.cshtml",
-              "RelativeToolTip": "Glitch\\Views\\Account\\Register.cshtml",
-              "ViewState": "AgIAAJEAAAAAAAAAAAASwKsAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-23T08:10:22.873Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "20260423071142_InitialCreate.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423071142_InitialCreate.cs",
               "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423071142_InitialCreate.cs",
@@ -696,18 +715,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 40,
-              "Title": "Glitch.csproj",
-              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
-              "RelativeDocumentMoniker": "Glitch\\Glitch.csproj",
-              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
-              "RelativeToolTip": "Glitch\\Glitch.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-23T06:16:16.786Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
               "Title": "20260423070057_InitialCreate.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs",
               "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423070057_InitialCreate.cs",
