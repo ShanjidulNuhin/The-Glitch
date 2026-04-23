@@ -1,0 +1,245 @@
+﻿@model Glitch.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register — Glitch</title>
+    <style>
+            /* Reset and base styles */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #0f0f1a;
+                font-family: 'Segoe UI', sans-serif;
+                color: #fff;
+            }
+
+            /* Card container */
+            .auth-card {
+                background: #1a1a2e;
+                border: 1px solid #2a2a4a;
+                border-radius: 16px;
+                padding: 40px;
+                width: 100%;
+                max-width: 420px;
+                box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
+            }
+
+            /* Logo area */
+            .logo {
+                text-align: center;
+                margin-bottom: 28px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+                font-weight: 800;
+                color: #6366f1;
+                letter-spacing: 1px;
+            }
+
+            .logo p {
+                font-size: 13px;
+                color: #888;
+                margin-top: 4px;
+            }
+
+            /* Form group */
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .form-group label {
+                display: block;
+                font-size: 13px;
+                color: #aaa;
+                margin-bottom: 6px;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 11px 14px;
+                background: #0f0f1a;
+                border: 1px solid #2a2a4a;
+                border-radius: 8px;
+                color: #fff;
+                font-size: 14px;
+                outline: none;
+                transition: border 0.2s;
+            }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                border-color: #6366f1;
+            }
+
+            /* Error messages */
+            .field-error {
+                color: #f87171;
+                font-size: 12px;
+                margin-top: 5px;
+            }
+
+            /* Submit button */
+            .btn-primary {
+                width: 100%;
+                padding: 12px;
+                background: #6366f1;
+                color: #fff;
+                border: none;
+                border-radius: 8px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 6px;
+                transition: background 0.2s;
+            }
+
+            .btn-primary:hover {
+                background: #4f46e5;
+            }
+
+            /* Login link */
+            .auth-footer {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 13px;
+                color: #888;
+            }
+
+            .auth-footer a {
+                color: #6366f1;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .auth-footer a:hover {
+                text-decoration: underline;
+            }
+
+            /* Success message */
+            .alert-success {
+                background: #064e3b;
+                border: 1px solid #059669;
+                color: #6ee7b7;
+                padding: 10px 14px;
+                border-radius: 8px;
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            /* Validation summary errors */
+            .alert-danger {
+                background: #450a0a;
+                border: 1px solid #dc2626;
+                color: #fca5a5;
+                padding: 10px 14px;
+                border-radius: 8px;
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            select option {
+                background: #1a1a2e;
+            }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+
+        <!-- Logo -->
+        <div class="logo">
+            <h1>🎮 Glitch</h1>
+            <p>Create your account</p>
+        </div>
+
+        <!-- Success message from TempData -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert-success">@TempData["Success"]</div>
+        }
+
+        <!-- General validation errors -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert-danger">
+                @Html.ValidationSummary(true, "", new { @class = "" })
+            </div>
+        }
+
+        <!-- Registration form -->
+        <form asp-action="Register" asp-controller="Account" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <!-- Username -->
+            <div class="form-group">
+                <label asp-for="Username">Username</label>
+                <input asp-for="Username" placeholder="Choose a username" />
+                <!-- Shows error under this field if duplicate username -->
+                <span asp-validation-for="Username" class="field-error"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label asp-for="Email">Email Address</label>
+                <input asp-for="Email" placeholder="Enter your email" />
+                <span asp-validation-for="Email" class="field-error"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" placeholder="Min 6 characters" />
+                <span asp-validation-for="Password" class="field-error"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" placeholder="Repeat your password" />
+                <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+            </div>
+
+            <!-- Role Selection - only shown to first user -->
+            @if (Model.IsFirstUser)
+            {
+                <div class="form-group">
+                    <label asp-for="Role">Register as</label>
+                    <select asp-for="Role">
+                        <option value="Customer">Customer</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+            }
+
+            <!-- Submit button -->
+            <button type="submit" class="btn-primary">Create Account</button>
+
+        </form>
+
+        <!-- Link to login page -->
+        <div class="auth-footer">
+            Already have an account?
+            <a asp-action="Login" asp-controller="Account">Login here</a>
+        </div>
+
+    </div>
+</body>
+</html>

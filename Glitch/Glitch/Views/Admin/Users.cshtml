@@ -1,0 +1,303 @@
+﻿@model List<Glitch.Models.Entities.User>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .users-table-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .table-toolbar {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .table-toolbar input {
+        padding: 9px 16px 9px 38px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+        width: 280px;
+        transition: border 0.2s;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: 12px center;
+    }
+
+    .table-toolbar input:focus { border-color: var(--primary); }
+    .table-toolbar input::placeholder { color: var(--muted); }
+
+    .filter-pills { display: flex; gap: 6px; margin-left: auto; }
+
+    .pill {
+        padding: 6px 14px;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .pill:hover,
+    .pill.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(42,42,74,0.3);
+    }
+
+    td {
+        padding: 13px 16px;
+        font-size: 13px;
+        border-bottom: 1px solid rgba(42,42,74,0.4);
+        vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(99,102,241,0.04); }
+
+    .user-avatar {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), #8b5cf6);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px; font-weight: 700;
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
+    .user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    .role-badge {
+        padding: 3px 10px; border-radius: 50px;
+        font-size: 11px; font-weight: 700;
+    }
+
+    .role-admin    { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .role-customer { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .role-blocked  { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+
+    .action-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .btn-action {
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .btn-block   { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #fcd34d; }
+    .btn-block:hover { background: var(--warning); color: #000; border-color: var(--warning); }
+
+    .btn-unblock { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #6ee7b7; }
+    .btn-unblock:hover { background: var(--success); color: #fff; border-color: var(--success); }
+
+    .btn-promote { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); color: #a5b4fc; }
+    .btn-promote:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .btn-del { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #fca5a5; }
+    .btn-del:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+    .current-user-badge {
+        font-size: 10px;
+        background: rgba(99,102,241,0.2);
+        color: #a5b4fc;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 6px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="users-table-card">
+
+    <div class="table-toolbar">
+        <input type="text"
+               id="userSearch"
+               placeholder="Search users..."
+               oninput="filterUsers()" />
+
+        <div class="filter-pills">
+            <button class="pill active" onclick="filterRole('all', this)">All</button>
+            <button class="pill" onclick="filterRole('admin', this)">Admins</button>
+            <button class="pill" onclick="filterRole('customer', this)">Customers</button>
+            <button class="pill" onclick="filterRole('blocked', this)">Blocked</button>
+        </div>
+    </div>
+
+    <table id="usersTable">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var currentAdminId = Context.Session.GetString("UserId");
+            }
+            @foreach (var user in Model)
+            {
+                var isCurrentAdmin = user.Id.ToString() == currentAdminId;
+                <tr data-role="@user.Role.ToLower()"
+                    data-blocked="@user.IsBlocked.ToString().ToLower()">
+                    <td>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="user-avatar">
+                                @if (!string.IsNullOrEmpty(user.ProfileImage))
+                                {
+                                    <img src="/uploads/profiles/@user.ProfileImage" alt="@user.Username" />
+                                }
+                                else
+                                {
+                                    @user.Username.Substring(0, 1).ToUpper()
+                                }
+                            </div>
+                            <div>
+                                <div style="font-weight:700;">
+                                    @user.Username
+                                    @if (isCurrentAdmin)
+                                    {
+                                        <span class="current-user-badge">You</span>
+                                    }
+                                </div>
+                                <div style="font-size:11px; color:var(--muted);">@user.Email</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="role-badge @(user.Role == "Admin" ? "role-admin" : "role-customer")">
+                            @(user.Role == "Admin" ? "🛡️ Admin" : "👤 Customer")
+                        </span>
+                    </td>
+                    <td>
+                        @if (user.IsBlocked)
+                        {
+                            <span class="role-badge role-blocked">🚫 Blocked</span>
+                        }
+                        else
+                        {
+                            <span style="color:var(--success); font-size:12px; font-weight:600;">✅ Active</span>
+                        }
+                    </td>
+                    <td style="color:var(--muted);">@user.CreatedAt.ToString("MMM dd, yyyy")</td>
+                    <td>
+                        @if (!isCurrentAdmin)
+                        {
+                            <div class="action-btns">
+
+                                @* Block / Unblock *@
+                                @if (!user.IsBlocked)
+                                {
+                                    <form method="post" action="/Admin/BlockUser/@user.Id"
+                                          onsubmit="return confirm('Block @user.Username?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-action btn-block">🚫 Block</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" action="/Admin/UnblockUser/@user.Id">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-action btn-unblock">✅ Unblock</button>
+                                    </form>
+                                }
+
+                                @* Promote to Admin *@
+                                @if (user.Role == "Customer")
+                                {
+                                    <form method="post" action="/Admin/PromoteUser/@user.Id"
+                                          onsubmit="return confirm('Promote @user.Username to Admin?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-action btn-promote">🛡️ Promote</button>
+                                    </form>
+                                }
+
+                                @* Delete *@
+                                <form method="post" action="/Admin/DeleteUser/@user.Id"
+                                      onsubmit="return confirm('Permanently delete @user.Username?')">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn-action btn-del">🗑️ Delete</button>
+                                </form>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <span style="font-size:12px; color:var(--muted);">—</span>
+                        }
+                    </td>
+                </tr>
+            }
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="5" style="text-align:center; padding:40px; color:var(--muted);">
+                        No users found
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+<script>
+    // Search users by name or email
+    function filterUsers() {
+        const q = document.getElementById('userSearch').value.toLowerCase();
+        document.querySelectorAll('#usersTable tbody tr').forEach(row => {
+            const matches = row.textContent.toLowerCase().includes(q);
+            row.style.display = matches ? '' : 'none';
+        });
+    }
+
+    // Filter by role pill
+    let activeRole = 'all';
+
+    function filterRole(role, btn) {
+        activeRole = role;
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+
+        document.querySelectorAll('#usersTable tbody tr').forEach(row => {
+            if (role === 'all') {
+                row.style.display = '';
+            } else if (role === 'blocked') {
+                row.style.display = row.dataset.blocked === 'true' ? '' : 'none';
+            } else {
+                row.style.display = row.dataset.role === role ? '' : 'none';
+            }
+        });
+    }
+</script>
+}

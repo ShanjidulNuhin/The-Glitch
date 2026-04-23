@@ -22,6 +22,13 @@ namespace Glitch.Models.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
+        [Required]
+        [MaxLength(50)]
+        public string Genre { get; set; } = string.Empty;
+
+        // YouTube trailer URL - admin pastes full YT link
+        public string? TrailerUrl { get; set; }
+
         // Filename of the game cover image
         public string? ImageFileName { get; set; }
 

@@ -117,6 +117,11 @@ namespace Glitch.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("ImageFileName")
                         .HasColumnType("nvarchar(max)");
 
@@ -130,6 +135,9 @@ namespace Glitch.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TrailerUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

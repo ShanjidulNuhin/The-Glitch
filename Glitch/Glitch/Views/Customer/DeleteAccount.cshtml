@@ -1,0 +1,221 @@
+﻿@{
+    ViewData["Title"] = "Delete Account";
+    Layout = null;
+    var username = Context.Session.GetString("Username") ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Delete Account — Glitch</title>
+    <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: #0f0f1a;
+                color: #fff;
+                font-family: 'Segoe UI', sans-serif;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .delete-card {
+                background: #1a1a2e;
+                border: 1px solid rgba(239,68,68,0.3);
+                border-radius: 16px;
+                padding: 40px;
+                width: 100%;
+                max-width: 460px;
+                box-shadow: 0 0 60px rgba(239,68,68,0.1);
+            }
+
+            .danger-icon {
+                font-size: 52px;
+                text-align: center;
+                margin-bottom: 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+                font-weight: 800;
+                color: #ef4444;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .warning-text {
+                font-size: 14px;
+                color: #888;
+                text-align: center;
+                line-height: 1.6;
+                margin-bottom: 28px;
+            }
+
+            .what-deleted {
+                background: rgba(239,68,68,0.08);
+                border: 1px solid rgba(239,68,68,0.2);
+                border-radius: 10px;
+                padding: 16px;
+                margin-bottom: 24px;
+            }
+
+                .what-deleted p {
+                    font-size: 13px;
+                    color: #fca5a5;
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                    .what-deleted p:last-child {
+                        margin-bottom: 0;
+                    }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+                .form-group label {
+                    display: block;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #888;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-bottom: 6px;
+                }
+
+                .form-group input {
+                    width: 100%;
+                    padding: 11px 14px;
+                    background: #0f0f1a;
+                    border: 1px solid #2a2a4a;
+                    border-radius: 8px;
+                    color: #fff;
+                    font-size: 14px;
+                    outline: none;
+                    transition: border 0.2s;
+                }
+
+                    .form-group input:focus {
+                        border-color: #ef4444;
+                    }
+
+            .confirm-note {
+                font-size: 12px;
+                color: #888;
+                margin-top: 4px;
+            }
+
+            .btn-delete {
+                width: 100%;
+                padding: 12px;
+                background: #ef4444;
+                color: #fff;
+                border: none;
+                border-radius: 9px;
+                font-size: 15px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: background 0.2s;
+                margin-top: 8px;
+            }
+
+                .btn-delete:hover {
+                    background: #dc2626;
+                }
+
+            .btn-cancel {
+                display: block;
+                text-align: center;
+                margin-top: 14px;
+                color: #888;
+                text-decoration: none;
+                font-size: 13px;
+                transition: color 0.2s;
+            }
+
+                .btn-cancel:hover {
+                    color: #6366f1;
+                }
+
+            .alert-danger {
+                background: #450a0a;
+                border: 1px solid #dc2626;
+                color: #fca5a5;
+                padding: 10px 14px;
+                border-radius: 8px;
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="delete-card">
+
+        <div class="danger-icon">⚠️</div>
+        <h1>Delete Account</h1>
+        <p class="warning-text">
+            This action is <strong>permanent</strong> and cannot be undone.
+            Your account and all data will be deleted from our database.
+        </p>
+
+        <!-- What will be deleted -->
+        <div class="what-deleted">
+            <p>🗑️ Your profile and personal info</p>
+            <p>🛒 All cart items</p>
+            <p>❤️ All favorites</p>
+            <p>💰 All purchase history</p>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert-danger">❌ @TempData["Error"]</div>
+        }
+
+        <form method="post" action="/Customer/DeleteAccountConfirmed">
+            @Html.AntiForgeryToken()
+
+            <!-- Password verification -->
+            <div class="form-group">
+                <label>Your Password</label>
+                <input type="password"
+                       name="password"
+                       placeholder="Enter your password to confirm" />
+            </div>
+
+            <!-- Type DELETE to confirm -->
+            <div class="form-group">
+                <label>Type DELETE to confirm</label>
+                <input type="text"
+                       name="confirmation"
+                       placeholder='Type "DELETE" here'
+                       autocomplete="off" />
+                <span class="confirm-note">
+                    You must type exactly: DELETE (all capitals)
+                </span>
+            </div>
+
+            <button type="submit" class="btn-delete">
+                🗑️ Permanently Delete My Account
+            </button>
+
+        </form>
+
+        <a href="/Customer/Profile" class="btn-cancel">
+            ← Cancel, keep my account
+        </a>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,646 @@
+﻿@model Glitch.Models.Entities.Game
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = null;
+
+    var isLoggedIn = Context.Session.GetString("UserId") != null;
+    var userRole   = Context.Session.GetString("Role") ?? "";
+    var username   = Context.Session.GetString("Username") ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.Title — GameVault</title>
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --border: #2a2a4a;
+            --text: #fff;
+            --muted: #888;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ── Navbar ───────────────────────────────────────────── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 40px;
+            background: rgba(15,15,26,0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            gap: 16px;
+        }
+
+        .navbar-logo {
+            font-size: 20px; font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .navbar-logo span { color: #fff; }
+
+        .navbar-actions { display: flex; gap: 10px; align-items: center; }
+
+        .btn-outline {
+            padding: 8px 18px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            border-radius: 8px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s;
+        }
+
+        .btn-outline:hover { background: var(--primary); color: #fff; }
+
+        .btn-filled {
+            padding: 8px 18px;
+            background: var(--primary); color: #fff;
+            border: none; border-radius: 8px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none; transition: background 0.2s;
+        }
+
+        .btn-filled:hover { background: var(--primary-dark); }
+
+        /* User name button in navbar */
+        .user-btn {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 14px;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 50px;
+            text-decoration: none; color: #fff;
+            font-size: 13px; font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .user-btn:hover { background: rgba(99,102,241,0.2); }
+
+        .user-avatar-small {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700;
+            overflow: hidden; flex-shrink: 0;
+        }
+
+        .user-avatar-small img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        /* ── Hero Banner ──────────────────────────────────────── */
+        .game-hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin-top: 64px;
+        }
+
+        .game-hero-bg {
+            position: absolute; inset: 0;
+            background-size: cover;
+            background-position: center;
+            filter: blur(3px) saturate(1.2);
+            opacity: 0.25;
+            transform: scale(1.05);
+        }
+
+        .game-hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(15,15,26,0.6) 0%,
+                rgba(15,15,26,0.95) 100%
+            );
+        }
+
+        .game-hero-content {
+            position: relative; z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px 40px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-end;
+            height: 100%;
+        }
+
+        .game-cover-img {
+            width: 180px; height: 240px;
+            object-fit: cover;
+            border-radius: 14px;
+            flex-shrink: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            border: 2px solid rgba(99,102,241,0.3);
+        }
+
+        .game-cover-placeholder-large {
+            width: 180px; height: 240px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1e1e3a, #2a2a4a);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 64px;
+            flex-shrink: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            border: 2px solid rgba(99,102,241,0.3);
+        }
+
+        .game-hero-info { flex: 1; }
+
+        .game-genre-badge {
+            display: inline-block;
+            background: rgba(99,102,241,0.2);
+            border: 1px solid rgba(99,102,241,0.3);
+            color: #a5b4fc;
+            padding: 4px 12px; border-radius: 50px;
+            font-size: 12px; font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .game-title {
+            font-size: clamp(28px, 4vw, 52px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .game-short-desc {
+            font-size: 15px; color: var(--muted);
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .game-price-row {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 20px; flex-wrap: wrap;
+        }
+
+        .game-price {
+            font-size: 36px; font-weight: 900;
+            color: var(--primary);
+        }
+
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .btn-buy-big {
+            padding: 13px 32px;
+            background: var(--primary); color: #fff;
+            border: none; border-radius: 10px;
+            font-size: 16px; font-weight: 700;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 0 30px rgba(99,102,241,0.4);
+        }
+
+        .btn-buy-big:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        .btn-fav-big {
+            padding: 13px 28px;
+            background: transparent; color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px; font-weight: 700;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-fav-big:hover { border-color: #f43f5e; color: #f43f5e; }
+
+        .btn-cart-big {
+            padding: 13px 28px;
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #6ee7b7;
+            border-radius: 10px;
+            font-size: 16px; font-weight: 700;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-cart-big:hover { background: rgba(16,185,129,0.2); }
+
+        /* ── Main Content ─────────────────────────────────────── */
+        .game-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 40px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 30px;
+        }
+
+        /* Left column */
+        .content-left {}
+
+        .section-block {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .section-block h2 {
+            font-size: 18px; font-weight: 800;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .game-description {
+            font-size: 15px;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* YouTube iframe */
+        .trailer-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .trailer-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .no-trailer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 220px;
+            background: rgba(42,42,74,0.3);
+            border-radius: 10px;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Right column - game info sidebar */
+        .content-right {}
+
+        .info-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .info-card h3 {
+            font-size: 15px; font-weight: 800;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(42,42,74,0.4);
+            font-size: 13px;
+        }
+
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label { color: var(--muted); }
+        .info-value { font-weight: 700; }
+
+        /* Buy box */
+        .buy-box {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05));
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .buy-box .price-big {
+            font-size: 38px; font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .buy-box-actions { display: flex; flex-direction: column; gap: 10px; }
+
+        .btn-buy-full {
+            width: 100%; padding: 13px;
+            background: var(--primary); color: #fff;
+            border: none; border-radius: 10px;
+            font-size: 15px; font-weight: 700;
+            cursor: pointer; text-decoration: none;
+            text-align: center; transition: all 0.2s;
+        }
+
+        .btn-buy-full:hover { background: var(--primary-dark); }
+
+        .btn-cart-full {
+            width: 100%; padding: 12px;
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #6ee7b7;
+            border-radius: 10px;
+            font-size: 14px; font-weight: 700;
+            cursor: pointer; text-decoration: none;
+            text-align: center; transition: all 0.2s;
+        }
+
+        .btn-cart-full:hover { background: rgba(16,185,129,0.2); }
+
+        .btn-fav-full {
+            width: 100%; padding: 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            border-radius: 10px;
+            font-size: 14px; font-weight: 700;
+            cursor: pointer; text-decoration: none;
+            text-align: center; transition: all 0.2s;
+        }
+
+        .btn-fav-full:hover { border-color: #f43f5e; color: #f43f5e; }
+
+        .login-prompt {
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+
+        .login-prompt a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        /* Back button */
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--muted); text-decoration: none;
+            font-size: 13px; font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover { color: var(--primary); }
+
+        /* Footer */
+        .footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ── Navbar ──────────────────────────────────────────────── -->
+    <nav class="navbar">
+        <a href="/" class="navbar-logo">🎮 Game<span>Vault</span></a>
+
+        <div class="navbar-actions">
+            @if (isLoggedIn)
+            {
+                @if (userRole == "Admin")
+                {
+                    <!-- Admin: show name → goes to admin profile -->
+                    <a href="/Admin/Profile" class="user-btn">
+                        <div class="user-avatar-small">
+                            @{
+                                var profileImg = Context.Session.GetString("ProfileImage");
+                            }
+                            @if (!string.IsNullOrEmpty(profileImg))
+                            {
+                                <img src="/uploads/profiles/@profileImg" alt="@username" />
+                            }
+                            else
+                            {
+                                @username.Substring(0, 1).ToUpper()
+                            }
+                        </div>
+                        @username
+                    </a>
+                    <a href="/Admin/Index" class="btn-outline">⚙️ Admin Panel</a>
+                }
+                else
+                {
+                    <!-- Customer: show name → goes to customer profile -->
+                    <a href="/Customer/Profile" class="user-btn">
+                        <div class="user-avatar-small">
+                            @{
+                                var profileImg = Context.Session.GetString("ProfileImage");
+                            }
+                            @if (!string.IsNullOrEmpty(profileImg))
+                            {
+                                <img src="/uploads/profiles/@profileImg" alt="@username" />
+                            }
+                            else
+                            {
+                                @username.Substring(0, 1).ToUpper()
+                            }
+                        </div>
+                        @username
+                    </a>
+                }
+                <a href="/Account/Logout" class="btn-outline">Logout</a>
+            }
+            else
+            {
+                <a href="/Account/Login" class="btn-outline">Login</a>
+                <a href="/Account/Register" class="btn-filled">Register</a>
+            }
+        </div>
+    </nav>
+
+    <!-- ── Game Hero Banner ────────────────────────────────────── -->
+    <div class="game-hero">
+
+        @if (!string.IsNullOrEmpty(Model.ImageFileName))
+        {
+            <div class="game-hero-bg"
+                 style="background-image: url('/uploads/games/@Model.ImageFileName');"></div>
+        }
+        <div class="game-hero-overlay"></div>
+
+        <div class="game-hero-content">
+
+            <!-- Game cover image -->
+            @if (!string.IsNullOrEmpty(Model.ImageFileName))
+            {
+                <img class="game-cover-img"
+                     src="/uploads/games/@Model.ImageFileName"
+                     alt="@Model.Title" />
+            }
+            else
+            {
+                <div class="game-cover-placeholder-large">🎮</div>
+            }
+
+            <!-- Game info -->
+            <div class="game-hero-info">
+                <div class="game-genre-badge">@Model.Genre</div>
+                <h1 class="game-title">@Model.Title</h1>
+                <p class="game-short-desc">@Model.Description</p>
+
+                <div class="game-price-row">
+                    <div class="game-price">$@Model.Price.ToString("F2")</div>
+                </div>
+
+                <div class="hero-actions">
+                    @if (isLoggedIn && userRole == "Customer")
+                    {
+                        <a href="#" class="btn-buy-big">🛒 Buy Now</a>
+                        <a href="#" class="btn-cart-big">➕ Add to Cart</a>
+                        <a href="#" class="btn-fav-big">❤️ Wishlist</a>
+                    }
+                    else if (!isLoggedIn)
+                    {
+                        <a href="/Account/Register" class="btn-buy-big">🛒 Buy Now</a>
+                        <a href="/Account/Login" class="btn-fav-big">❤️ Wishlist</a>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Main Content ────────────────────────────────────────── -->
+    <div class="game-content">
+
+        <!-- Left column -->
+        <div class="content-left">
+
+            <a href="/" class="back-btn">← Back to Games</a>
+
+            <!-- Description -->
+            <div class="section-block">
+                <h2>📖 About This Game</h2>
+                <p class="game-description">@Model.Description</p>
+            </div>
+
+            <!-- YouTube Trailer -->
+            <div class="section-block">
+                <h2>🎬 Game Trailer</h2>
+                @if (!string.IsNullOrEmpty(Model.TrailerUrl))
+                {
+                    <div class="trailer-wrapper">
+                        <iframe src="@Model.TrailerUrl"
+                                title="@Model.Title Trailer"
+                                allow="accelerometer; autoplay; clipboard-write;
+                                       encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                }
+                else
+                {
+                    <div class="no-trailer">
+                        <span style="font-size:36px;">🎬</span>
+                        <span>No trailer available yet</span>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <!-- Right column -->
+        <div class="content-right">
+
+            <!-- Buy Box -->
+            <div class="buy-box">
+                <div class="price-big">$@Model.Price.ToString("F2")</div>
+                <div class="buy-box-actions">
+                    @if (isLoggedIn && userRole == "Customer")
+                    {
+                        <a href="#" class="btn-buy-full">🛒 Buy Now</a>
+                        <a href="#" class="btn-cart-full">➕ Add to Cart</a>
+                        <a href="#" class="btn-fav-full">❤️ Add to Wishlist</a>
+                    }
+                    else if (!isLoggedIn)
+                    {
+                        <a href="/Account/Register" class="btn-buy-full">🛒 Buy Now</a>
+                        <a href="/Account/Register" class="btn-cart-full">➕ Add to Cart</a>
+                        <a href="/Account/Register" class="btn-fav-full">❤️ Wishlist</a>
+                        <p class="login-prompt">
+                            Already have an account?
+                            <a href="/Account/Login">Login here</a>
+                        </p>
+                    }
+                    else if (userRole == "Admin")
+                    {
+                        <a href="/Admin/EditGame/@Model.Id" class="btn-buy-full">✏️ Edit This Game</a>
+                    }
+                </div>
+            </div>
+
+            <!-- Game Info -->
+            <div class="info-card">
+                <h3>ℹ️ Game Info</h3>
+                <div class="info-row">
+                    <span class="info-label">Genre</span>
+                    <span class="info-value">@Model.Genre</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Price</span>
+                    <span class="info-value" style="color:var(--primary);">
+                        $@Model.Price.ToString("F2")
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status</span>
+                    <span class="info-value" style="color:#6ee7b7;">
+                        @(Model.IsAvailable ? "✅ Available" : "❌ Unavailable")
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Added</span>
+                    <span class="info-value">@Model.CreatedAt.ToString("MMM dd, yyyy")</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Footer ──────────────────────────────────────────────── -->
+    <footer class="footer">
+        <p>© 2025 GameVault. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

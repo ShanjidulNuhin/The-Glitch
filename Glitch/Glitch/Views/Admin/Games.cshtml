@@ -1,0 +1,256 @@
+﻿@model List<Glitch.Models.Entities.Game>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .page-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    .btn-add {
+        padding: 10px 22px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s;
+    }
+
+    .btn-add:hover { background: var(--primary-dark); }
+
+    .games-table-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .search-bar {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .search-bar input {
+        width: 100%;
+        max-width: 320px;
+        padding: 9px 16px 9px 38px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+        transition: border 0.2s;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: 12px center;
+    }
+
+    .search-bar input:focus { border-color: var(--primary); }
+    .search-bar input::placeholder { color: var(--muted); }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(42,42,74,0.3);
+    }
+
+    td {
+        padding: 14px 16px;
+        font-size: 13px;
+        border-bottom: 1px solid rgba(42,42,74,0.4);
+        vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(99,102,241,0.04); }
+
+    .game-thumb {
+        width: 48px; height: 48px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 1px solid var(--border);
+    }
+
+    .game-thumb-placeholder {
+        width: 48px; height: 48px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #1e1e3a, #2a2a4a);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px;
+        border: 1px solid var(--border);
+    }
+
+    .status-badge {
+        padding: 3px 10px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .status-available   { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+    .status-unavailable { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+
+    .action-btns { display: flex; gap: 8px; }
+
+    .btn-edit {
+        padding: 6px 14px;
+        background: rgba(99,102,241,0.1);
+        border: 1px solid rgba(99,102,241,0.3);
+        color: #a5b4fc;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-edit:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .btn-delete {
+        padding: 6px 14px;
+        background: rgba(239,68,68,0.1);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #fca5a5;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-delete:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--muted);
+    }
+
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+</style>
+
+<div class="page-actions">
+    <a href="/Admin/AddGame" class="btn-add">➕ Add New Game</a>
+</div>
+
+<div class="games-table-card">
+
+    <div class="search-bar">
+        <input type="text"
+               id="gameSearch"
+               placeholder="Search games..."
+               oninput="filterTable()" />
+    </div>
+
+    <table id="gamesTable">
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Added</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model)
+            {
+                <tr>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            @if (!string.IsNullOrEmpty(game.ImageFileName))
+                            {
+                                <img class="game-thumb"
+                                     src="/uploads/games/@game.ImageFileName"
+                                     alt="@game.Title" />
+                            }
+                            else
+                            {
+                                <div class="game-thumb-placeholder">🎮</div>
+                            }
+                            <div>
+                                <div style="font-weight:700;">@game.Title</div>
+                                <div style="font-size:11px; color:var(--muted); margin-top:2px;">
+                                    ID: #@game.Id
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span style="background:rgba(99,102,241,0.15); color:#a5b4fc; padding:3px 10px; border-radius:50px; font-size:11px; font-weight:700;">
+                            @game.Genre
+                        </span>
+                    </td>
+                    <td style="font-weight:700; color:var(--primary);">
+                        $@game.Price.ToString("F2")
+                    </td>
+                    <td>
+                        @if (game.IsAvailable)
+                        {
+                            <span class="status-badge status-available">✅ Available</span>
+                        }
+                        else
+                        {
+                            <span class="status-badge status-unavailable">❌ Hidden</span>
+                        }
+                    </td>
+                    <td style="color:var(--muted);">@game.CreatedAt.ToString("MMM dd, yyyy")</td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="/Admin/EditGame/@game.Id" class="btn-edit">✏️ Edit</a>
+                            <form method="post" action="/Admin/DeleteGame/@game.Id"
+                                  onsubmit="return confirm('Delete \'@game.Title\'? This cannot be undone!')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-delete">🗑️ Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <div class="icon">🎮</div>
+                            <h3>No games yet</h3>
+                            <p>Click "Add New Game" to add your first game!</p>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+<script>
+    function filterTable() {
+        const q = document.getElementById('gameSearch').value.toLowerCase();
+        const rows = document.querySelectorAll('#gamesTable tbody tr');
+        rows.forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    }
+</script>
+}

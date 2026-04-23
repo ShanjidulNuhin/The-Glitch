@@ -1,0 +1,285 @@
+﻿@model Glitch.ViewModels.Admin.GameFormViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 30px;
+        max-width: 700px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-group label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+        transition: border 0.2s;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--primary); }
+
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    select option { background: #1a1a2e; }
+
+    .field-error { color: #f87171; font-size: 12px; margin-top: 2px; }
+
+    /* Image upload area */
+    .image-upload-area {
+        border: 2px dashed var(--border);
+        border-radius: 10px;
+        padding: 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.2s;
+        position: relative;
+    }
+
+    .image-upload-area:hover { border-color: var(--primary); }
+
+    .image-upload-area input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        padding: 0;
+        border: none;
+        background: transparent;
+    }
+
+    .image-upload-area .upload-icon { font-size: 32px; margin-bottom: 8px; }
+    .image-upload-area p { font-size: 13px; color: var(--muted); }
+    .image-upload-area span { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }
+
+    #imagePreview {
+        width: 100%;
+        max-height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-top: 12px;
+        display: none;
+        border: 1px solid var(--border);
+    }
+
+    /* Toggle switch for IsAvailable */
+    .toggle-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .toggle {
+        position: relative;
+        width: 44px; height: 24px;
+    }
+
+    .toggle input { display: none; }
+
+    .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: var(--border);
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .toggle-slider::before {
+        content: '';
+        position: absolute;
+        width: 18px; height: 18px;
+        left: 3px; top: 3px;
+        background: #fff;
+        border-radius: 50%;
+        transition: transform 0.2s;
+    }
+
+    .toggle input:checked + .toggle-slider { background: var(--primary); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    /* Form buttons */
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+    }
+
+    .btn-save {
+        padding: 11px 28px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-save:hover { background: var(--primary-dark); }
+
+    .btn-cancel {
+        padding: 11px 28px;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-cancel:hover { border-color: var(--danger); color: var(--danger); }
+</style>
+
+<div class="form-card">
+    <form asp-action="AddGame" asp-controller="Admin"
+          method="post" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-grid">
+
+            <!-- Title -->
+            <div class="form-group">
+                <label asp-for="Title">Game Title</label>
+                <input asp-for="Title" placeholder="e.g. Cyber Legends" />
+                <span asp-validation-for="Title" class="field-error"></span>
+            </div>
+
+            <!-- Genre -->
+            <div class="form-group">
+                                <label asp-for="Title">Select Category</label>
+                <input asp-for="Genre" list="genreList" class="form-control" placeholder="Select or type genre" />
+                <datalist id="genreList">
+                    <option value="Action"></option>
+                    <option value="Adventure"></option>
+                    <option value="RPG"></option>
+                    <option value="Racing"></option>
+                    <option value="Horror"></option>
+                    <option value="Sports"></option>
+                    <option value="Strategy"></option>
+                    <option value="Shooter"></option>
+                    <option value="Puzzle"></option>
+                    <option value="Simulation"></option>
+                    <option value="Fighting"></option>
+                    <option value="Other"></option>
+                </datalist>
+            </div>
+
+            <!-- Price -->
+            <div class="form-group">
+                <label asp-for="Price">Price (USD)</label>
+                <input asp-for="Price" type="number"
+                       step="0.01" min="0.01"
+                       placeholder="e.g. 29.99" />
+                <span asp-validation-for="Price" class="field-error"></span>
+            </div>
+
+            <!-- Availability toggle -->
+            <div class="form-group">
+                <label>Availability</label>
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input asp-for="IsAvailable" type="checkbox" checked />
+                        <div class="toggle-slider"></div>
+                    </label>
+                    <span style="font-size:13px; color:var(--muted);">
+                        Show this game to customers
+                    </span>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group full">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description"
+                          placeholder="Describe the game..."></textarea>
+                <span asp-validation-for="Description" class="field-error"></span>
+            </div>
+
+            <!-- Image upload -->
+            <div class="form-group full">
+                <label>Cover Image (optional)</label>
+                <div class="image-upload-area" onclick="document.getElementById('imgInput').click()">
+                    <input type="file"
+                           id="imgInput"
+                           name="ImageFile"
+                           accept=".jpg,.jpeg,.png,.webp"
+                           onchange="previewImage(this)" />
+                    <div class="upload-icon">🖼️</div>
+                    <p>Click to upload game cover image</p>
+                    <span>JPG, PNG or WEBP — max 5MB</span>
+                    <img id="imagePreview" src="" alt="Preview" />
+                </div>
+            </div>
+
+            <!-- YouTube Trailer URL -->
+<div class="form-group full">
+    <label asp-for="TrailerUrl">YouTube Trailer URL (optional)</label>
+    <input asp-for="TrailerUrl"
+           placeholder="e.g. https://www.youtube.com/watch?v=XXXXXXX" />
+    <span style="font-size:12px; color:var(--muted); margin-top:4px;">
+        Paste any YouTube link — we'll convert it automatically
+    </span>
+</div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">💾 Save Game</button>
+            <a href="/Admin/Games" class="btn-cancel">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+<script>
+    // Show image preview when file is selected
+    function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+}

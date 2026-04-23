@@ -1,0 +1,254 @@
+﻿@model Glitch.ViewModels.Admin.AdminProfileViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .profile-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 24px;
+        max-width: 900px;
+    }
+
+    /* Left card - avatar */
+    .avatar-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
+    }
+
+    .big-avatar {
+        width: 100px; height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), #8b5cf6);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 40px; font-weight: 800;
+        position: relative;
+        overflow: hidden;
+        border: 3px solid rgba(99,102,241,0.3);
+    }
+
+    .big-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    .avatar-name { font-size: 18px; font-weight: 800; }
+    .avatar-role {
+        font-size: 12px; font-weight: 700;
+        background: rgba(99,102,241,0.2);
+        color: var(--primary);
+        padding: 4px 12px; border-radius: 50px;
+    }
+
+    .avatar-upload {
+        width: 100%;
+        padding: 8px;
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--muted);
+        cursor: pointer;
+        transition: border-color 0.2s;
+        position: relative;
+    }
+
+    .avatar-upload:hover { border-color: var(--primary); color: var(--primary); }
+
+    .avatar-upload input {
+        position: absolute; inset: 0;
+        opacity: 0; cursor: pointer;
+    }
+
+    /* Right card - form */
+    .form-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 28px;
+    }
+
+    .form-section {
+        margin-bottom: 28px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .form-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .form-section h3 {
+        font-size: 15px; font-weight: 800;
+        margin-bottom: 18px;
+        display: flex; align-items: center; gap: 8px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+
+    .form-group label {
+        font-size: 12px; font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .form-group input {
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: #fff; font-size: 14px;
+        outline: none; transition: border 0.2s;
+    }
+
+    .form-group input:focus { border-color: var(--primary); }
+    .field-error { color: #f87171; font-size: 12px; }
+
+    .btn-save {
+        padding: 10px 26px;
+        background: var(--primary); color: #fff;
+        border: none; border-radius: 9px;
+        font-size: 14px; font-weight: 700;
+        cursor: pointer; transition: background 0.2s;
+    }
+
+    .btn-save:hover { background: var(--primary-dark); }
+
+    .password-note {
+        font-size: 12px; color: var(--muted);
+        margin-bottom: 14px;
+        padding: 10px 14px;
+        background: rgba(99,102,241,0.08);
+        border-radius: 8px;
+        border-left: 3px solid var(--primary);
+    }
+</style>
+
+<form asp-action="Profile" asp-controller="Admin"
+      method="post" enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+
+    <div class="profile-layout">
+
+        <!-- Left: Avatar card -->
+        <div class="avatar-card">
+
+            <div class="big-avatar" id="avatarPreview">
+                @if (!string.IsNullOrEmpty(Model.ProfileImage))
+                {
+                    <img id="avatarImg"
+                         src="/uploads/profiles/@Model.ProfileImage"
+                         alt="@Model.Username" />
+                }
+                else
+                {
+                    <span id="avatarInitial">
+                        @Model.Username.Substring(0, 1).ToUpper()
+                    </span>
+                }
+            </div>
+
+            <div class="avatar-name">@Model.Username</div>
+            <div class="avatar-role">🛡️ Administrator</div>
+
+            <div class="avatar-upload">
+                <input type="file"
+                       name="ImageFile"
+                       accept=".jpg,.jpeg,.png,.webp"
+                       onchange="previewAvatar(this)" />
+                📷 Change Photo
+            </div>
+
+            <span style="font-size:11px; color:var(--muted);">JPG, PNG or WEBP · Max 3MB</span>
+
+        </div>
+
+        <!-- Right: Form card -->
+        <div class="form-card">
+
+            <!-- Basic Info -->
+            <div class="form-section">
+                <h3>👤 Basic Information</h3>
+
+                <div class="form-group">
+                    <label asp-for="Username">Username</label>
+                    <input asp-for="Username" />
+                    <span asp-validation-for="Username" class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email">Email Address</label>
+                    <input asp-for="Email" type="email" />
+                    <span asp-validation-for="Email" class="field-error"></span>
+                </div>
+
+                <button type="submit" class="btn-save">💾 Save Changes</button>
+            </div>
+
+            <!-- Change Password -->
+            <div class="form-section">
+                <h3>🔒 Change Password</h3>
+
+                <div class="password-note">
+                    Leave blank if you don't want to change your password.
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CurrentPassword">Current Password</label>
+                    <input asp-for="CurrentPassword"
+                           placeholder="Enter current password" />
+                    <span asp-validation-for="CurrentPassword" class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NewPassword">New Password</label>
+                    <input asp-for="NewPassword"
+                           placeholder="Min 6 characters" />
+                    <span asp-validation-for="NewPassword" class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmNewPassword">Confirm New Password</label>
+                    <input asp-for="ConfirmNewPassword"
+                           placeholder="Repeat new password" />
+                    <span asp-validation-for="ConfirmNewPassword" class="field-error"></span>
+                </div>
+
+                <button type="submit" class="btn-save">🔒 Update Password</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+<script>
+    // Preview avatar image before uploading
+    function previewAvatar(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const preview = document.getElementById('avatarPreview');
+                // Remove initial letter span if exists
+                const initial = document.getElementById('avatarInitial');
+                if (initial) initial.remove();
+                // Show image preview
+                let img = document.getElementById('avatarImg');
+                if (!img) {
+                    img = document.createElement('img');
+                    img.id = 'avatarImg';
+                    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+                    preview.appendChild(img);
+                }
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+}
