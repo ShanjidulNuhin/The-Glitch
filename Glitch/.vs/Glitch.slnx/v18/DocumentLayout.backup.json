@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "F:\\.Net\\The-Glitch\\Glitch\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\viewmodels\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\viewmodels\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|f:\\.net\\the-glitch\\glitch\\glitch\\migrations\\20260423071142_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{70DC9E25-B3DF-4337-A142-4A1A4AEF0FE6}|Glitch\\Glitch.csproj|solutionrelative:glitch\\migrations\\20260423071142_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,6 +79,57 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Glitch\\Controllers\\AccountController.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Glitch\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T07:24:12.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "Glitch\\ViewModels\\LoginViewModel.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\LoginViewModel.cs",
+              "RelativeToolTip": "Glitch\\ViewModels\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T07:23:23.103Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RegisterViewModel.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\RegisterViewModel.cs",
+              "RelativeDocumentMoniker": "Glitch\\ViewModels\\RegisterViewModel.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\RegisterViewModel.cs",
+              "RelativeToolTip": "Glitch\\ViewModels\\RegisterViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T07:18:43.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PasswordHelper.cs",
+              "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Helpers\\PasswordHelper.cs",
+              "RelativeDocumentMoniker": "Glitch\\Helpers\\PasswordHelper.cs",
+              "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Helpers\\PasswordHelper.cs",
+              "RelativeToolTip": "Glitch\\Helpers\\PasswordHelper.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T07:15:39.327Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "20260423071142_InitialCreate.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423071142_InitialCreate.cs",
               "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423071142_InitialCreate.cs",
@@ -70,12 +137,11 @@
               "RelativeToolTip": "Glitch\\Migrations\\20260423071142_InitialCreate.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-23T07:11:42.457Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-23T07:11:42.457Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Glitch.csproj",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Glitch.csproj",
               "RelativeDocumentMoniker": "Glitch\\Glitch.csproj",
@@ -87,7 +153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\User.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\User.cs",
@@ -99,7 +165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\appsettings.json",
               "RelativeDocumentMoniker": "Glitch\\appsettings.json",
@@ -111,7 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Purchase.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Purchase.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Purchase.cs",
@@ -123,7 +189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "Game.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Game.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Game.cs",
@@ -135,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "Favorite.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Favorite.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Favorite.cs",
@@ -147,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "Cart.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\Cart.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\Cart.cs",
@@ -159,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "AlternativeEmail.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Models\\Entities\\AlternativeEmail.cs",
               "RelativeDocumentMoniker": "Glitch\\Models\\Entities\\AlternativeEmail.cs",
@@ -171,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Glitch\\Data\\AppDbContext.cs",
@@ -183,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Program.cs",
               "RelativeDocumentMoniker": "Glitch\\Program.cs",
@@ -195,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "20260423070057_InitialCreate.cs",
               "DocumentMoniker": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs",
               "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423070057_InitialCreate.cs",
