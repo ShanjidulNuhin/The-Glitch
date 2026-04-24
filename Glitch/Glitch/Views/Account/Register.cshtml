@@ -1,4 +1,4 @@
-﻿@model Glitch.ViewModels.RegisterViewModel
+@model Glitch.ViewModels.RegisterViewModel
 
 @{
     ViewData["Title"] = "Register";
@@ -154,6 +154,8 @@
                 font-size: 13px;
                 margin-bottom: 16px;
             }
+            .validation-summary-valid { display: none; }
+            .validation-summary-errors ul { list-style: none; padding-left: 0; }
 
             select option {
                 background: #1a1a2e;
@@ -176,12 +178,7 @@
         }
 
         <!-- General validation errors -->
-        @if (!ViewData.ModelState.IsValid)
-        {
-            <div class="alert-danger">
-                @Html.ValidationSummary(true, "", new { @class = "" })
-            </div>
-        }
+        <div asp-validation-summary="ModelOnly" class="alert-danger"></div>
 
         <!-- Registration form -->
         <form asp-action="Register" asp-controller="Account" method="post">

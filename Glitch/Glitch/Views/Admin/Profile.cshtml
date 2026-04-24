@@ -1,4 +1,4 @@
-﻿@model Glitch.ViewModels.Admin.AdminProfileViewModel
+@model Glitch.ViewModels.Admin.AdminProfileViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -135,10 +135,12 @@
 
     <div class="profile-layout">
 
-        <!-- Left: Avatar card -->
-        <div class="avatar-card">
+        <!-- Left Column -->
+        <div class="left-col" style="display:flex; flex-direction:column; gap:24px;">
+            <!-- Avatar card -->
+            <div class="avatar-card">
 
-            <div class="big-avatar" id="avatarPreview">
+                <div class="big-avatar" id="avatarPreview">
                 @if (!string.IsNullOrEmpty(Model.ProfileImage))
                 {
                     <img id="avatarImg"
@@ -166,6 +168,46 @@
 
             <span style="font-size:11px; color:var(--muted);">JPG, PNG or WEBP · Max 3MB</span>
 
+            </div>
+
+            <!-- Dashboard Stats under Avatar -->
+            <div class="stats-mini-container" style="display:flex; flex-direction:column; gap:12px;">
+                <!-- Total Games -->
+                <div class="mini-stat-card" style="background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; align-items:center; gap:12px; transition: transform 0.2s, border-color 0.2s;">
+                    <div style="width:40px; height:40px; border-radius:10px; background:rgba(99,102,241,0.2); display:flex; align-items:center; justify-content:center; font-size:18px;">🎮</div>
+                    <div>
+                        <div style="font-size:20px; font-weight:800; color:#fff;">@Model.TotalGames</div>
+                        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">Total Games</div>
+                    </div>
+                </div>
+
+                <!-- Total Customers -->
+                <div class="mini-stat-card" style="background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; align-items:center; gap:12px; transition: transform 0.2s, border-color 0.2s;">
+                    <div style="width:40px; height:40px; border-radius:10px; background:rgba(16,185,129,0.2); display:flex; align-items:center; justify-content:center; font-size:18px;">👥</div>
+                    <div>
+                        <div style="font-size:20px; font-weight:800; color:#fff;">@Model.TotalCustomers</div>
+                        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">Total Customers</div>
+                    </div>
+                </div>
+
+                <!-- Admin Balance -->
+                <div class="mini-stat-card" style="background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; align-items:center; gap:12px; transition: transform 0.2s, border-color 0.2s;">
+                    <div style="width:40px; height:40px; border-radius:10px; background:rgba(16,185,129,0.2); display:flex; align-items:center; justify-content:center; font-size:18px;">💵</div>
+                    <div>
+                        <div style="font-size:20px; font-weight:800; color:#fff;">$@Model.AdminBalance.ToString("F2")</div>
+                        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">Admin Balance</div>
+                    </div>
+                </div>
+
+                <!-- Total Purchases -->
+                <div class="mini-stat-card" style="background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; align-items:center; gap:12px; transition: transform 0.2s, border-color 0.2s;">
+                    <div style="width:40px; height:40px; border-radius:10px; background:rgba(245,158,11,0.2); display:flex; align-items:center; justify-content:center; font-size:18px;">💰</div>
+                    <div>
+                        <div style="font-size:20px; font-weight:800; color:#fff;">@Model.TotalPurchases</div>
+                        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">Total Purchases</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Right: Form card -->

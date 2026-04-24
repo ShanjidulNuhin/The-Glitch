@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -321,7 +321,7 @@
        <a href="/" class="sidebar-logo" style="text-decoration:none;">
     <div class="sidebar-logo-icon">🎮</div>
     <div class="sidebar-logo-text">
-        <h2>Glitch</h2>
+        <h2> The Glitch</h2>
         <span>Admin Panel</span>
     </div>
 </a>
@@ -348,10 +348,22 @@
                 Users
             </a>
             <a href="/Admin/Profile"
-   class="nav-item @(ViewData["ActivePage"]?.ToString() == "Profile" ? "active" : "")">
-    <div class="nav-icon icon-orange">👤</div>
-    My Profile
-</a>
+               class="nav-item @(ViewData["ActivePage"]?.ToString() == "Profile" ? "active" : "")">
+                <div class="nav-icon icon-orange">👤</div>
+                My Profile
+            </a>
+
+            <a href="/Admin/WithdrawBalance"
+               class="nav-item @(ViewData["ActivePage"]?.ToString() == "WithdrawBalance" ? "active" : "")">
+                <div class="nav-icon icon-red">💵</div>
+                Balance
+            </a>
+            
+            <a href="/Customer/Library"
+               class="nav-item">
+                <div class="nav-icon" style="background:rgba(16,185,129,0.2); color:#10b981;">📚</div>
+                My Library
+            </a>
 
         </div>
 

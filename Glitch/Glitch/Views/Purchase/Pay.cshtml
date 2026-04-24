@@ -1,4 +1,4 @@
-﻿@model Glitch.ViewModels.PaymentViewModel
+@model Glitch.ViewModels.PaymentViewModel
 
 @{
     ViewData["Title"] = "Payment";
@@ -298,6 +298,8 @@
                 border-radius: 8px; font-size: 13px;
                 margin-bottom: 20px;
             }
+            .validation-summary-valid { display: none; }
+            .validation-summary-errors ul { list-style: none; padding-left: 0; }
 
     </style>
 </head>
@@ -363,12 +365,7 @@
             </div>
 
             @* Show validation errors *@
-            @if (!ViewData.ModelState.IsValid)
-            {
-                <div class="alert-danger">
-                    ❌ @Html.ValidationSummary(true)
-                </div>
-            }
+            <div asp-validation-summary="ModelOnly" class="alert-danger"></div>
 
             <form asp-action="Pay" asp-controller="Purchase" method="post">
                 @Html.AntiForgeryToken()

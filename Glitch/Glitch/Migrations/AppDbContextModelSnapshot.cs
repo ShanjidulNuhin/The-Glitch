@@ -134,6 +134,24 @@ namespace Glitch.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ReqGraphics")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReqMemory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReqOS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReqProcessor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReqSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReqStorage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -145,6 +163,58 @@ namespace Glitch.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Glitch.Models.Entities.GameRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId", "GameId")
+                        .IsUnique();
+
+                    b.ToTable("GameRatings");
+                });
+
+            modelBuilder.Entity("Glitch.Models.Entities.GameScreenshot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("GameScreenshots");
                 });
 
             modelBuilder.Entity("Glitch.Models.Entities.Purchase", b =>
@@ -183,6 +253,9 @@ namespace Glitch.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -269,6 +342,36 @@ namespace Glitch.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Glitch.Models.Entities.GameRating", b =>
+                {
+                    b.HasOne("Glitch.Models.Entities.Game", "Game")
+                        .WithMany("Ratings")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Glitch.Models.Entities.User", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Glitch.Models.Entities.GameScreenshot", b =>
+                {
+                    b.HasOne("Glitch.Models.Entities.Game", "Game")
+                        .WithMany("Screenshots")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
             modelBuilder.Entity("Glitch.Models.Entities.Purchase", b =>
                 {
                     b.HasOne("Glitch.Models.Entities.Game", "Game")
@@ -295,6 +398,10 @@ namespace Glitch.Migrations
                     b.Navigation("Favorites");
 
                     b.Navigation("Purchases");
+
+                    b.Navigation("Ratings");
+
+                    b.Navigation("Screenshots");
                 });
 
             modelBuilder.Entity("Glitch.Models.Entities.User", b =>
@@ -306,6 +413,8 @@ namespace Glitch.Migrations
                     b.Navigation("Favorites");
 
                     b.Navigation("Purchases");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

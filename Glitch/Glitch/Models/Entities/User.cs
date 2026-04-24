@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Glitch.Models.Entities
 {
@@ -40,5 +40,9 @@ namespace Glitch.Models.Entities
         public ICollection<Cart> CartItems { get; set; } = new List<Cart>();
         public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
         public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
+        public ICollection<GameRating> Ratings { get; set; } = new List<GameRating>();
+
+        // Customer's balance
+        public decimal Balance { get; set; } = 0m;
     }
 }

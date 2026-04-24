@@ -1,4 +1,4 @@
-﻿@model List<Glitch.Models.Entities.User>
+@model List<Glitch.Models.Entities.User>
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -121,6 +121,9 @@
     .btn-promote { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); color: #a5b4fc; }
     .btn-promote:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
+    .btn-demote { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.3); color: #fdba74; }
+    .btn-demote:hover { background: #f97316; color: #fff; border-color: #f97316; }
+
     .btn-del { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #fca5a5; }
     .btn-del:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
 
@@ -239,6 +242,16 @@
                                           onsubmit="return confirm('Promote @user.Username to Admin?')">
                                         @Html.AntiForgeryToken()
                                         <button type="submit" class="btn-action btn-promote">🛡️ Promote</button>
+                                    </form>
+                                }
+
+                                @* Demote Admin *@
+                                @if (user.Role == "Admin")
+                                {
+                                    <form method="post" action="/Admin/DemoteAdmin/@user.Id"
+                                          onsubmit="return confirm('Demote @user.Username to Customer?')">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-action btn-demote">👤 Demote</button>
                                     </form>
                                 }
 

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Glitch.ViewModels.Admin
 {
@@ -31,5 +31,11 @@ namespace Glitch.ViewModels.Admin
 
         // Existing profile image filename
         public string? ProfileImage { get; set; }
+
+        // Dashboard Stats
+        public int TotalGames { get; set; }
+        public int TotalCustomers { get; set; }
+        public decimal AdminBalance { get; set; }
+        public int TotalPurchases { get; set; }
     }
 }

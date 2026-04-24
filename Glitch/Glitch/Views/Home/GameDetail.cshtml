@@ -1,4 +1,5 @@
 @model Glitch.Models.Entities.Game
+@inject Glitch.Data.AppDbContext DbContext
 
 @{
     ViewData["Title"] = Model.Title;
@@ -37,10 +38,10 @@
         .user-avatar-small img { width: 100%; height: 100%; object-fit: cover; }
         /* Game Hero & Content Styles */
         .game-hero { position: relative; height: 500px; margin-top: 64px; overflow: hidden; }
-        .game-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(3px); opacity: 0.25; }
-        .game-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,15,26,0.6), rgba(15,15,26,0.95)); }
+        .game-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: top center; filter: blur(0px); opacity: 0.6; }
+        .game-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,15,26,0.1) 0%, rgba(15,15,26,0.8) 70%, var(--bg) 100%); }
         .game-hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 60px 40px; display: flex; gap: 40px; align-items: flex-end; height: 100%; }
-        .game-cover-img { width: 180px; height: 240px; object-fit: cover; border-radius: 14px; border: 2px solid rgba(99,102,241,0.3); }
+        .game-cover-img { width: 220px; height: 300px; object-fit: cover; border-radius: 16px; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .btn-buy-big { padding: 13px 32px; background: var(--primary); color: #fff; border-radius: 10px; text-decoration: none; font-weight: 700; box-shadow: 0 0 30px rgba(99,102,241,0.4); display: inline-block; }
         .game-content { max-width: 1200px; margin: 0 auto; padding: 50px 40px; display: grid; grid-template-columns: 1fr 340px; gap: 30px; }
         .section-block { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
@@ -54,25 +55,55 @@
         <a href="/" class="navbar-logo">🎮 The<span>Glitch</span></a>
 
         <div class="navbar-actions">
+            @{
+                decimal navBalance = 0;
+                if (!string.IsNullOrEmpty(userIdStr))
+                {
+                    var navUser = await DbContext.Users.FindAsync(int.Parse(userIdStr));
+                    if (navUser != null) navBalance = navUser.Balance;
+                }
+                var navUsername = Context.Session.GetString("Username") ?? "";
+                var navProfileImg = Context.Session.GetString("ProfileImage");
+            }
+
             @if (isLoggedIn)
             {
-                <a href="@(userRole == "Admin" ? "/Admin/Profile" : "/Customer/Profile")" class="user-btn">
-                    <div class="user-avatar-small">
-                        @if (!string.IsNullOrEmpty(profileImg))
-                        {
-                            <img src="/uploads/profiles/@profileImg" alt="@username" />
-                        }
-                        else
-                        {
-                            <span>@(!string.IsNullOrEmpty(username) ? username.Substring(0, 1).ToUpper() : "U")</span>
-                        }
-                    </div>
-                    @username
-                </a>
-                
                 @if (userRole == "Admin")
                 {
+                    <a href="/Admin/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
+                        <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
+                            @if (!string.IsNullOrEmpty(navProfileImg))
+                            {
+                                <img src="/uploads/profiles/@navProfileImg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+                            }
+                            else
+                            {
+                                @navUsername.Substring(0, 1).ToUpper()
+                            }
+                        </div>
+                        @navUsername
+                    </a>
                     <a href="/Admin/Index" class="btn-outline">⚙️ Admin Panel</a>
+                }
+                else
+                {
+                    <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981; font-weight:800; display:flex; align-items:center; gap:6px;">
+                        <span>💰</span> $@navBalance.ToString("0.00")
+                    </a>
+                    <a href="/Customer/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
+                        <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
+                            @if (!string.IsNullOrEmpty(navProfileImg))
+                            {
+                                <img src="/uploads/profiles/@navProfileImg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+                            }
+                            else
+                            {
+                                @navUsername.Substring(0, 1).ToUpper()
+                            }
+                        </div>
+                        @navUsername
+                    </a>
+                    <a href="/Customer/Library" class="btn-outline">📚 Library</a>
                 }
                 <a href="/Account/Logout" class="btn-outline">Logout</a>
             }
@@ -112,11 +143,16 @@
                     {
                         if (userRole == "Admin")
                         {
-                            <a href="/Admin/EditGame/@Model.Id" class="btn-buy-big">✏️ Edit This Game</a>
+                            <a href="/Admin/EditGame/@Model.Id" class="btn-buy-big" style="background:#8b5cf6; margin-right:10px;">✏️ Edit This Game</a>
                         }
-                        else if (hasPurchased)
+
+                        if (hasPurchased)
                         {
                             <span class="btn-buy-big" style="background: rgba(255,255,255,0.1); color: #ccc; cursor: default;">✅ In Library</span>
+                            @if (!string.IsNullOrEmpty(Model.GameFile))
+                            {
+                                <a href="/uploads/gamefiles/@Model.GameFile" download class="btn-buy-big" style="background:#10b981; margin-left:10px;">⬇️ Download</a>
+                            }
                         }
                         else
                         {
@@ -133,10 +169,22 @@
     </div>
 
     <div class="game-content">
+        @if (TempData["Error"] != null)
+        {
+            <div style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#f87171; padding:12px 20px; border-radius:8px; margin-bottom:20px; grid-column:1/-1;">
+                @TempData["Error"]
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#34d399; padding:12px 20px; border-radius:8px; margin-bottom:20px; grid-column:1/-1;">
+                @TempData["Success"]
+            </div>
+        }
         <div class="content-left">
             <div class="section-block">
                 <h2>📖 About This Game</h2>
-                <p style="line-height:1.8; color:#ccc;">@Model.Description</p>
+                <p style="line-height:1.8; color:#ccc; white-space:pre-wrap;">@Model.Description</p>
             </div>
 
             <div class="section-block">
@@ -156,6 +204,34 @@
 
         <div class="content-right">
             <div class="section-block">
+                <h3 style="margin-bottom:15px;">⭐ Rating</h3>
+                <div style="font-size:36px; font-weight:900; color:#f59e0b; text-align:center; margin-bottom:5px;">
+                    @(((double)ViewBag.AverageRating).ToString("F1"))
+                </div>
+                <div style="text-align:center; color:var(--muted); font-size:13px; margin-bottom:20px;">
+                    Out of 5.0 (@ViewBag.TotalRatings ratings)
+                </div>
+
+                @if (hasPurchased)
+                {
+                    <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;" />
+                    <h4 style="font-size:14px; margin-bottom:10px; text-align:center;">Rate this game</h4>
+                    <form action="/Customer/RateGame" method="post" style="display:flex; flex-direction:column; gap:10px;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="gameId" value="@Model.Id" />
+                        <select name="score" style="width:100%; padding:8px; background:rgba(42,42,74,0.6); border:1px solid var(--border); color:#fff; border-radius:8px; outline:none;">
+                            <option value="5" selected="@(ViewBag.UserRating == 5 ? "selected" : null)">⭐⭐⭐⭐⭐ (5/5)</option>
+                            <option value="4" selected="@(ViewBag.UserRating == 4 ? "selected" : null)">⭐⭐⭐⭐ (4/5)</option>
+                            <option value="3" selected="@(ViewBag.UserRating == 3 ? "selected" : null)">⭐⭐⭐ (3/5)</option>
+                            <option value="2" selected="@(ViewBag.UserRating == 2 ? "selected" : null)">⭐⭐ (2/5)</option>
+                            <option value="1" selected="@(ViewBag.UserRating == 1 ? "selected" : null)">⭐ (1/5)</option>
+                        </select>
+                        <button type="submit" class="btn-outline" style="width:100%; text-align:center; cursor:pointer;">Submit Rating</button>
+                    </form>
+                }
+            </div>
+
+            <div class="section-block">
                 <h3 style="margin-bottom:15px;">ℹ️ Game Details</h3>
                 <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
                     <span style="color:var(--muted);">Released</span>
@@ -166,12 +242,94 @@
                     <span style="color:#6ee7b7;">@(Model.IsAvailable ? "Active" : "Hidden")</span>
                 </div>
             </div>
+
+            <div class="section-block">
+                <h3 style="margin-bottom:15px;">⚙️ System Requirements</h3>
+                <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
+                    @if(!string.IsNullOrEmpty(Model.ReqSize)) { <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">Size</span><span style="color:#fff;text-align:right;">@Model.ReqSize</span></div> }
+                    @if(!string.IsNullOrEmpty(Model.ReqOS)) { <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">OS</span><span style="color:#fff;text-align:right;">@Model.ReqOS</span></div> }
+                    @if(!string.IsNullOrEmpty(Model.ReqProcessor)) { <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">Processor</span><span style="color:#fff;text-align:right;">@Model.ReqProcessor</span></div> }
+                    @if(!string.IsNullOrEmpty(Model.ReqMemory)) { <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">Memory</span><span style="color:#fff;text-align:right;">@Model.ReqMemory</span></div> }
+                    @if(!string.IsNullOrEmpty(Model.ReqGraphics)) { <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">Graphics</span><span style="color:#fff;text-align:right;">@Model.ReqGraphics</span></div> }
+                    @if(!string.IsNullOrEmpty(Model.ReqStorage)) { <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted);">Storage</span><span style="color:#fff;text-align:right;">@Model.ReqStorage</span></div> }
+                    @if(string.IsNullOrEmpty(Model.ReqSize) && string.IsNullOrEmpty(Model.ReqOS) && string.IsNullOrEmpty(Model.ReqProcessor) && string.IsNullOrEmpty(Model.ReqMemory) && string.IsNullOrEmpty(Model.ReqGraphics) && string.IsNullOrEmpty(Model.ReqStorage)) {
+                        <div style="color:var(--muted); text-align:center;">Not specified</div>
+                    }
+                </div>
+            </div>
         </div>
+
+        @if (Model.Screenshots != null && Model.Screenshots.Count > 0)
+        {
+            <div class="section-block" style="grid-column: 1 / -1; margin-bottom: 0;">
+                <h2>📸 Screenshots</h2>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:20px; margin-top:20px;">
+                    @{ var index = 0; }
+                    @foreach(var ss in Model.Screenshots)
+                    {
+                        <img src="/uploads/games/@ss.ImageFileName" alt="Screenshot" onclick="openLightbox(@index)" style="width:100%; height:160px; object-fit:cover; border-radius:10px; border:1px solid var(--border); box-shadow:0 4px 15px rgba(0,0,0,0.3); cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
+                        index++;
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9999; flex-direction:column; align-items:center; justify-content:center; backdrop-filter: blur(10px);">
+        <button onclick="closeLightbox()" style="position:absolute; top:30px; right:40px; background:transparent; border:none; color:#fff; font-size:50px; cursor:pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='#fff'">&times;</button>
+        <button onclick="prevImage()" style="position:absolute; left:40px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:40px; cursor:pointer; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition: background 0.2s;" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">&#10094;</button>
+        <img id="lightboxImg" src="" style="max-width:90%; max-height:85vh; border-radius:14px; box-shadow:0 10px 50px rgba(0,0,0,0.8);" />
+        <button onclick="nextImage()" style="position:absolute; right:40px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:40px; cursor:pointer; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition: background 0.2s;" onmouseover="this.style.background='var(--primary)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">&#10095;</button>
     </div>
 
     <footer style="text-align:center; padding:40px; color:var(--muted); border-top:1px solid var(--border); margin-top:50px;">
         <p>© 2026 Glitch Gaming Store</p>
     </footer>
 
+    <script>
+        const screenshots = [
+            @if(Model.Screenshots != null) {
+                foreach(var ss in Model.Screenshots) {
+                    <text>'/uploads/games/@ss.ImageFileName',</text>
+                }
+            }
+        ];
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            if(screenshots.length === 0) return;
+            currentIndex = index;
+            document.getElementById('lightboxImg').src = screenshots[currentIndex];
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function prevImage() {
+            if(screenshots.length === 0) return;
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : screenshots.length - 1;
+            document.getElementById('lightboxImg').src = screenshots[currentIndex];
+        }
+
+        function nextImage() {
+            if(screenshots.length === 0) return;
+            currentIndex = (currentIndex < screenshots.length - 1) ? currentIndex + 1 : 0;
+            document.getElementById('lightboxImg').src = screenshots[currentIndex];
+        }
+
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').style.display === 'flex') {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+    </script>
 </body>
 </html>

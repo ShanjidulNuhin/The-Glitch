@@ -1,4 +1,4 @@
-﻿using Glitch.Models.Entities;
+using Glitch.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Glitch.Data
@@ -18,6 +18,8 @@ namespace Glitch.Data
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<AlternativeEmail> AlternativeEmails { get; set; }
+        public DbSet<GameRating> GameRatings { get; set; }
+        public DbSet<GameScreenshot> GameScreenshots { get; set; }
 
         // OnModelCreating = fine-tune table rules that
         // cannot be expressed with data annotations alone
@@ -83,6 +85,23 @@ namespace Glitch.Data
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
+            // ── GameRating rules ──────────────────────────────────
+            modelBuilder.Entity<GameRating>(entity =>
+            {
+                entity.HasOne(r => r.User)
+                      .WithMany(u => u.Ratings)
+                      .HasForeignKey(r => r.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(r => r.Game)
+                      .WithMany(g => g.Ratings)
+                      .HasForeignKey(r => r.GameId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // A user can rate a specific game only once
+                entity.HasIndex(r => new { r.UserId, r.GameId }).IsUnique();
+            });
+
             // ── AlternativeEmail rules ────────────────────────────
             modelBuilder.Entity<AlternativeEmail>(entity =>
             {
@@ -93,6 +112,15 @@ namespace Glitch.Data
 
                 // Each alternative email must be unique
                 entity.HasIndex(a => a.Email).IsUnique();
+            });
+
+            // ── GameScreenshot rules ──────────────────────────────
+            modelBuilder.Entity<GameScreenshot>(entity =>
+            {
+                entity.HasOne(gs => gs.Game)
+                      .WithMany(g => g.Screenshots)
+                      .HasForeignKey(gs => gs.GameId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

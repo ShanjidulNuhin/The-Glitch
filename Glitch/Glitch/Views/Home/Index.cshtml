@@ -1,4 +1,5 @@
 @model List<Glitch.Models.Entities.Game>
+@inject Glitch.Data.AppDbContext DbContext
 
 @{
     ViewData["Title"] = "Glitch - Home";
@@ -6,6 +7,16 @@
 
     // Get unique genres from database games
     var genres = Model.Select(g => g.Genre).Distinct().OrderBy(g => g).ToList();
+
+    List<int> ownedGameIds = new List<int>();
+    decimal navBalance = 0;
+    if (Context.Session.GetString("UserId") != null)
+    {
+        var userId = int.Parse(Context.Session.GetString("UserId")!);
+        ownedGameIds = DbContext.Purchases.Where(p => p.UserId == userId).Select(p => p.GameId).ToList();
+        var navUser = await DbContext.Users.FindAsync(userId);
+        if (navUser != null) navBalance = navUser.Balance;
+    }
 
     // Genre emoji map
     var genreEmoji = new Dictionary<string, string>
@@ -792,42 +803,8 @@
                        onblur="hideDropdown()" />
             </div>
 
-            <!-- Filter button -->
-            <button class="filter-btn" id="filterBtn" onclick="toggleFilter()">
-                ⚙️ Filter
-            </button>
-
             <!-- Search results dropdown -->
             <div class="search-dropdown" id="searchDropdown"></div>
-
-            <!-- Filter panel -->
-            <div class="filter-panel" id="filterPanel">
-
-                <div class="filter-section">
-                    <h4>Search By</h4>
-                    <div class="filter-options">
-                        <button class="filter-chip selected" id="chip-name" onclick="toggleChip('name')">By Name</button>
-                        <button class="filter-chip selected" id="chip-category" onclick="toggleChip('category')">By Category</button>
-                        <button class="filter-chip" id="chip-price" onclick="toggleChip('price')">By Price</button>
-                    </div>
-                </div>
-
-                <div class="filter-section">
-                    <h4>Sort By</h4>
-                    <div class="filter-options">
-                        <button class="filter-chip" id="sort-newest" onclick="selectSort('newest')">🆕 Newest</button>
-                        <button class="filter-chip" id="sort-az" onclick="selectSort('az')">🔤 A → Z</button>
-                        <button class="filter-chip" id="sort-priceasc" onclick="selectSort('priceasc')">💲 Price ↑</button>
-                        <button class="filter-chip" id="sort-pricedesc" onclick="selectSort('pricedesc')">💰 Price ↓</button>
-                    </div>
-                </div>
-
-                <div class="filter-actions">
-                    <button class="btn-apply-filter" onclick="applyFilter()">Apply</button>
-                    <button class="btn-clear-filter" onclick="clearFilter()">Clear</button>
-                </div>
-
-            </div>
         </div>
 
         <div class="navbar-actions">
@@ -859,6 +836,9 @@
         }
         else
         {
+            <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981; font-weight:800; display:flex; align-items:center; gap:6px;">
+                <span>💰</span> $@navBalance.ToString("0.00")
+            </a>
             <a href="/Customer/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
                 <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
                     @if (!string.IsNullOrEmpty(navProfileImg))
@@ -883,6 +863,15 @@
     }
 </div>
     </nav>
+
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            window.onload = function() {
+                alert('@TempData["Error"]');
+            }
+        </script>
+    }
 
     <!-- ── Hero Slider ─────────────────────────────────────────── -->
     @if (Model.Count == 0)
@@ -961,9 +950,36 @@
     <!-- ── Games By Category ───────────────────────────────────── -->
     <section id="games" class="games-section">
 
-        <div class="section-header">
-            <h2>Browse Games</h2>
-            <p>Explore our full collection by category</p>
+        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; position:relative;">
+            <div>
+                <h2>Browse Games</h2>
+                <p>Explore our full collection by category</p>
+            </div>
+            <div>
+                <!-- Filter button -->
+                <button class="filter-btn" id="filterBtn" onclick="toggleFilter()" style="background:var(--card-bg);">
+                    ⚙️ Filter
+                </button>
+
+                <!-- Filter panel -->
+                <div class="filter-panel" id="filterPanel" style="top:calc(100% + 10px); right:0; text-align:left;">
+
+                    <div class="filter-section">
+                        <h4>Sort By</h4>
+                        <div class="filter-options">
+                            <button class="filter-chip" id="sort-newest" onclick="selectSort('newest')">🆕 Newest</button>
+                            <button class="filter-chip" id="sort-az" onclick="selectSort('az')">🔤 A → Z</button>
+                            <button class="filter-chip" id="sort-priceasc" onclick="selectSort('priceasc')">💲 Price ↑</button>
+                            <button class="filter-chip" id="sort-pricedesc" onclick="selectSort('pricedesc')">💰 Price ↓</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button class="btn-apply-filter" onclick="applyFilter()">Apply</button>
+                        <button class="btn-clear-filter" onclick="clearFilter()">Clear</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         @if (Model.Count == 0)
@@ -978,85 +994,57 @@
 }
         else
         {
-            <!-- Category tabs - built from actual genres in database -->
-            <div class="category-tabs">
-                <button class="tab-btn active" onclick="filterCategory('all', this)">🎮 All</button>
-                @foreach (var genre in genres)
+            <!-- Single Grid for All Games -->
+            <div id="gamesGrid" style="display: flex; flex-wrap: wrap; gap: 18px;">
+                @foreach (var game in Model)
                 {
-                    var emoji = genreEmoji.ContainsKey(genre) ? genreEmoji[genre] : "🎮";
-                    <button class="tab-btn" onclick="filterCategory('@genre.ToLower()', this)">@emoji @genre</button>
-                }
-            </div>
-
-            <!-- One block per genre -->
-            @foreach (var genre in genres)
-            {
-                var genreGames = Model.Where(g => g.Genre == genre).ToList();
-                var emoji      = genreEmoji.ContainsKey(genre) ? genreEmoji[genre] : "🎮";
-                var color      = genreTheme.ContainsKey(genre) ? genreTheme[genre] : "#6366f1";
-                var rowId      = "row-" + genre.ToLower();
-                var catId      = "cat-" + genre.ToLower();
-
-                <div class="category-block visible" id="@catId">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <span>@emoji</span> @genre
-                            <span style="font-size:13px; color:var(--text-muted); font-weight:400;">
-                                (@genreGames.Count game@(genreGames.Count != 1 ? "s" : ""))
-                            </span>
-                        </div>
-                        <div class="row-arrows">
-                            <button class="row-arrow" onclick="scrollRow('@rowId', -300)">&#8592;</button>
-                            <button class="row-arrow" onclick="scrollRow('@rowId', 300)">&#8594;</button>
-                        </div>
-                    </div>
-
-                    <div class="games-row-wrapper">
-                        <div class="games-row" id="@rowId">
-
-                            @foreach (var game in genreGames)
+                    var color = genreTheme.ContainsKey(game.Genre) ? genreTheme[game.Genre] : "#6366f1";
+                    <div class="game-card" data-name="@game.Title" data-category="@game.Genre" data-price="@game.Price" onclick="window.location='/Home/GameDetail/@game.Id'"
+                         style="cursor:pointer;">
+                        <div style="position:relative;">
+                            @if (!string.IsNullOrEmpty(game.ImageFileName))
                             {
-                                <div class="game-card" onclick="window.location='/Home/GameDetail/@game.Id'"
-                                     style="cursor:pointer;">
-                                    @if (!string.IsNullOrEmpty(game.ImageFileName))
-                                    {
-                                        <img class="game-card-thumb"
-                                             src="/uploads/games/@game.ImageFileName"
-                                             alt="@game.Title" />
-                                    }
-                                    else
-                                    {
-                                        var cardEmoji = genreEmoji.ContainsKey(game.Genre) ? genreEmoji[game.Genre] : "🎮";
-                                        <div class="game-card-thumb-placeholder"
-                                             style="background: linear-gradient(135deg, @(color)33, #1a1a2e);">
-                                            <span class="emoji">@cardEmoji</span>
-                                        </div>
-                                    }
-                                    <div class="game-card-body">
-                                        <div class="game-card-name" title="@game.Title">@game.Title</div>
-                                        <div class="game-card-footer">
-                                            <span class="game-card-price">$@game.Price.ToString("F2")</span>
-                                            <span class="game-card-genre">@game.Genre</span>
-                                        </div>
-                                        <div class="game-card-actions">
-                                            @if (Context.Session.GetString("UserId") != null)
-                                            {
-                                                <a href="/Purchase/Pay/@game.Id" class="btn-card-buy">🛒 Buy</a>
-                                            }
-                                            else
-                                            {
-                                                <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
-                                            }
-                                            <button onclick="toggleWishlist(@game.Id, this); event.stopPropagation();" class="btn-card-fav">❤️</button>
-                                        </div>
-                                    </div>
+                                <img class="game-card-thumb"
+                                     src="/uploads/games/@game.ImageFileName"
+                                     alt="@game.Title" />
+                            }
+                            else
+                            {
+                                var cardEmoji = genreEmoji.ContainsKey(game.Genre) ? genreEmoji[game.Genre] : "🎮";
+                                <div class="game-card-thumb-placeholder"
+                                     style="background: linear-gradient(135deg, @(color)33, #1a1a2e);">
+                                    <span class="emoji">@cardEmoji</span>
                                 </div>
                             }
-
+                            <div style="position:absolute; top:8px; left:8px; display:flex; gap:6px;">
+                                <span style="background:rgba(0,0,0,0.7); color:#fff; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700;">@game.Genre</span>
+                                @if(ownedGameIds.Contains(game.Id))
+                                {
+                                    <span style="background:rgba(16,185,129,0.9); color:#fff; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700;">Owned</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="game-card-body">
+                            <div class="game-card-name" title="@game.Title">@game.Title</div>
+                            <div class="game-card-footer">
+                                <span class="game-card-price">$@game.Price.ToString("F2")</span>
+                                <span class="game-card-genre">@game.Genre</span>
+                            </div>
+                            <div class="game-card-actions">
+                                @if (Context.Session.GetString("UserId") != null)
+                                {
+                                    <a href="/Purchase/Pay/@game.Id" class="btn-card-buy">🛒 Buy</a>
+                                }
+                                else
+                                {
+                                    <a href="/Account/Register" class="btn-card-buy">🛒 Buy</a>
+                                }
+                                <button onclick="toggleWishlist(@game.Id, this); event.stopPropagation();" class="btn-card-fav">❤️</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         }
 
     </section>
@@ -1121,22 +1109,7 @@
         // ═══════════════════════════════════════════════════
         // FILTER STATE
         // ═══════════════════════════════════════════════════
-        let searchByName     = true;   // Search by name ON by default
-        let searchByCategory = true;   // Search by category ON by default
-        let searchByPrice    = false;  // Search by price OFF by default
-        let currentSort      = '';     // No sort selected by default
-
-        // Toggle search field chip (by name / by category / by price)
-        function toggleChip(type) {
-            if (type === 'name')     searchByName     = !searchByName;
-            if (type === 'category') searchByCategory = !searchByCategory;
-            if (type === 'price')    searchByPrice    = !searchByPrice;
-
-            // Update chip appearance
-            document.getElementById('chip-name').classList.toggle('selected', searchByName);
-            document.getElementById('chip-category').classList.toggle('selected', searchByCategory);
-            document.getElementById('chip-price').classList.toggle('selected', searchByPrice);
-        }
+        let currentSort = '';     // No sort selected by default
 
         // Select a sort option (only one at a time)
         function selectSort(sort) {
@@ -1145,19 +1118,48 @@
             ['newest','az','priceasc','pricedesc'].forEach(s => {
                 document.getElementById('sort-' + s).classList.toggle('selected', currentSort === s);
             });
+            // Auto apply sort
+            applySortToAllRows();
         }
 
         // Apply filter — re-render game cards in page
         function applyFilter() {
             toggleFilter(); // close panel
+            const query = document.getElementById('searchInput').value;
+            filterGrid(query);
+        }
+
+        function filterGrid(query = '') {
+            const q = query.toLowerCase();
+            const grid = document.getElementById('gamesGrid');
+            if (!grid) return;
+            
+            const cards = grid.querySelectorAll('.game-card');
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                const category = card.getAttribute('data-category').toLowerCase();
+                const price = card.getAttribute('data-price');
+                
+                const nameMatch = name.includes(q);
+                const categoryMatch = category.includes(q);
+                const priceMatch = price.includes(q);
+                
+                if (q === '' || nameMatch || categoryMatch || priceMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
             applySortToAllRows();
         }
 
         // Sort all visible game rows
         function applySortToAllRows() {
-            if (!currentSort) return;
-            document.querySelectorAll('.games-row').forEach(row => {
-                const cards = Array.from(row.querySelectorAll('.game-card'));
+            const grid = document.getElementById('gamesGrid');
+            if (!grid) return;
+            
+            const cards = Array.from(grid.querySelectorAll('.game-card'));
+            if (currentSort) {
                 cards.sort((a, b) => {
                     const nameA  = a.querySelector('.game-card-name').textContent.trim();
                     const nameB  = b.querySelector('.game-card-name').textContent.trim();
@@ -1167,23 +1169,22 @@
                     if (currentSort === 'az')        return nameA.localeCompare(nameB);
                     if (currentSort === 'priceasc')  return priceA - priceB;
                     if (currentSort === 'pricedesc') return priceB - priceA;
-                    return 0; // newest = server order (already newest first)
+                    return 0;
                 });
-                // Re-append sorted cards
-                cards.forEach(card => row.appendChild(card));
-            });
+            }
+            
+            // Re-append sorted cards
+            cards.forEach(card => grid.appendChild(card));
         }
 
         // Clear all filters
         function clearFilter() {
-            searchByName = true; searchByCategory = true; searchByPrice = false;
             currentSort = '';
-            document.getElementById('chip-name').classList.add('selected');
-            document.getElementById('chip-category').classList.add('selected');
-            document.getElementById('chip-price').classList.remove('selected');
             ['newest','az','priceasc','pricedesc'].forEach(s => {
                 document.getElementById('sort-' + s).classList.remove('selected');
             });
+            document.getElementById('searchInput').value = '';
+            filterGrid('');
             toggleFilter();
         }
 
@@ -1212,6 +1213,10 @@
 
         function handleSearch(query) {
             clearTimeout(searchTimeout);
+            
+            // Auto filter grid
+            filterGrid(query);
+
             searchTimeout = setTimeout(() => {
                 const dropdown = document.getElementById('searchDropdown');
                 const q = query.trim().toLowerCase();
@@ -1219,9 +1224,9 @@
                 if (q === '') { dropdown.classList.remove('open'); return; }
 
                 const results = allGames.filter(game => {
-                    const nameMatch     = searchByName     && game.name.toLowerCase().includes(q);
-                    const categoryMatch = searchByCategory && game.category.toLowerCase().includes(q);
-                    const priceMatch    = searchByPrice    && game.price.toString().includes(q);
+                    const nameMatch     = game.name.toLowerCase().includes(q);
+                    const categoryMatch = game.category.toLowerCase().includes(q);
+                    const priceMatch    = game.price.toString().includes(q);
                     return nameMatch || categoryMatch || priceMatch;
                 });
 
@@ -1276,13 +1281,16 @@
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
 
-            const blocks = document.querySelectorAll('.category-block');
-            if (category === 'all') {
-                blocks.forEach(b => b.classList.add('visible'));
-            } else {
-                blocks.forEach(b => b.classList.remove('visible'));
-                const target = document.getElementById('cat-' + category);
-                if (target) target.classList.add('visible');
+            const grid = document.getElementById('gamesGrid');
+            if (grid) {
+                const cards = grid.querySelectorAll('.game-card');
+                cards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category').toLowerCase() === category.toLowerCase()) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
             }
 
             document.getElementById('games').scrollIntoView({ behavior: 'smooth' });

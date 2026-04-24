@@ -1,4 +1,4 @@
-﻿@model Glitch.ViewModels.LoginViewModel
+@model Glitch.ViewModels.LoginViewModel
 
 @{
     ViewData["Title"] = "Login";
@@ -143,6 +143,8 @@
                 font-size: 13px;
                 margin-bottom: 16px;
             }
+            .validation-summary-valid { display: none; }
+            .validation-summary-errors ul { list-style: none; padding-left: 0; }
 
             .remember-row {
                 display: flex;
@@ -180,12 +182,7 @@
         }
 
         <!-- General errors like wrong password -->
-        @if (!ViewData.ModelState.IsValid)
-        {
-            <div class="alert-danger">
-                @Html.ValidationSummary(false, "", new { @class = "" })
-            </div>
-        }
+        <div asp-validation-summary="ModelOnly" class="alert-danger"></div>
 
         <!-- Login form -->
         <form asp-action="Login" asp-controller="Account" method="post">

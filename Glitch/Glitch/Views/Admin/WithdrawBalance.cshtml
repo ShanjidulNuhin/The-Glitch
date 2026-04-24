@@ -1,0 +1,193 @@
+@model Glitch.ViewModels.Admin.WithdrawViewModel
+@{
+    ViewData["Title"] = "Withdraw Balance";
+    ViewData["Subtitle"] = "Manage your admin earnings and withdraw funds";
+    ViewData["ActivePage"] = "WithdrawBalance";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .withdraw-container {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .withdraw-card {
+        flex: 1;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .info-card {
+        flex: 1;
+        background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(16,185,129,0.05));
+        border: 1px solid rgba(99,102,241,0.2);
+        border-radius: 14px;
+        padding: 30px;
+    }
+
+    .balance-display {
+        background: rgba(15,15,26,0.6);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .balance-label {
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .balance-amount {
+        font-size: 36px;
+        font-weight: 900;
+        color: #fff;
+    }
+
+    .withdrawable-amount {
+        color: var(--success);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #ccc;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        background: rgba(15,15,26,0.6);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 15px;
+        font-family: inherit;
+        transition: all 0.2s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+    }
+
+    .btn-withdraw {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    }
+
+    .btn-withdraw:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+    }
+
+    .text-danger {
+        color: var(--danger);
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .info-list {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    .info-list li {
+        margin-bottom: 15px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #ccc;
+    }
+
+    .info-icon {
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+</style>
+
+<div class="withdraw-container">
+    
+    <div class="withdraw-card">
+        <h2 style="font-size:22px; font-weight:800; margin-bottom:24px;">Withdraw Funds</h2>
+
+        <div class="balance-display">
+            <div class="balance-label">Total Available Balance</div>
+            <div class="balance-amount">$@Model.AvailableBalance.ToString("F2")</div>
+        </div>
+
+        <div class="balance-display" style="border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.05);">
+            <div class="balance-label" style="color:var(--success);">Withdrawable Balance (50%)</div>
+            <div class="balance-amount withdrawable-amount">$@Model.WithdrawableBalance.ToString("F2")</div>
+        </div>
+
+        <form asp-action="WithdrawBalance" method="post">
+            <div class="form-group">
+                <label>Amount to Withdraw (USD)</label>
+                <div style="position:relative;">
+                    <span style="position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:16px; font-weight:700;">$</span>
+                    <input asp-for="Amount" class="form-control" style="padding-left:35px;" placeholder="0.00" type="number" step="0.01" />
+                </div>
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-withdraw">Confirm Withdrawal</button>
+        </form>
+    </div>
+
+    <div class="info-card">
+        <h3 style="font-size:18px; font-weight:700; margin-bottom:20px; color:#fff;">ℹ️ Withdrawal Information</h3>
+        <p style="color:var(--muted); font-size:14px; line-height:1.6;">
+            Please read the following rules before proceeding with your withdrawal. These rules ensure platform stability and refund availability.
+        </p>
+
+        <ul class="info-list">
+            <li>
+                <div class="info-icon">💵</div>
+                <div><strong>50% Reserve Limit:</strong> You can only withdraw up to 50% of your total available balance. The remaining 50% must be kept in reserve.</div>
+            </li>
+            <li>
+                <div class="info-icon">🔄</div>
+                <div><strong>Refund Buffer:</strong> The reserved balance acts as a buffer. This ensures that if a customer requests a refund for a game, there are enough funds available to process the return.</div>
+            </li>
+            <li>
+                <div class="info-icon">⏱️</div>
+                <div><strong>Processing Time:</strong> Withdrawals are processed immediately and your platform balance is updated in real-time.</div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

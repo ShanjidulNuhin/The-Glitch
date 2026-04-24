@@ -247,6 +247,69 @@
                 </div>
             </div>
 
+            <!-- Screenshots -->
+            <div class="form-group full">
+                <label>Screenshots</label>
+                
+                @if (Model.ExistingScreenshots != null && Model.ExistingScreenshots.Count > 0)
+                {
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+                        @foreach(var ss in Model.ExistingScreenshots)
+                        {
+                            <div class="current-image" style="margin-bottom:0; flex-direction:column; padding:10px; position:relative;" id="ss-@ss">
+                                <img src="/uploads/games/@ss" alt="Screenshot" style="width:100px; height:60px;" />
+                                <button type="button" onclick="deleteScreenshot(@Model.Id, '@ss')" style="background:var(--danger); color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer; width:100%;">Delete</button>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="image-upload-area" style="border-color: rgba(99,102,241,0.3);">
+                    <input type="file"
+                           id="screenshotsInput"
+                           name="ScreenshotFiles"
+                           accept=".jpg,.jpeg,.png,.webp" multiple />
+                    <div class="upload-icon">📸</div>
+                    <p>Click to upload additional screenshots</p>
+                    <span>JPG, PNG or WEBP — max 5MB each</span>
+                    <span id="screenshotsNames" style="color:#a5b4fc; margin-top:6px; display:none;"></span>
+                </div>
+            </div>
+
+            <div class="form-group full" style="margin-top:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+                <h3 style="font-size:16px; color:#fff;">⚙️ System Requirements (Optional)</h3>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReqSize">Game Size</label>
+                <input asp-for="ReqSize" placeholder="e.g. 50 GB" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReqOS">Operating System</label>
+                <input asp-for="ReqOS" placeholder="e.g. Windows 10/11 64-bit" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReqProcessor">Processor</label>
+                <input asp-for="ReqProcessor" placeholder="e.g. Intel Core i5 / AMD Ryzen 5" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReqMemory">Memory</label>
+                <input asp-for="ReqMemory" placeholder="e.g. 16 GB RAM" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReqGraphics">Graphics</label>
+                <input asp-for="ReqGraphics" placeholder="e.g. NVIDIA RTX 3060 / AMD RX 6600" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReqStorage">Storage Type</label>
+                <input asp-for="ReqStorage" placeholder="e.g. SSD recommended" />
+            </div>
+
         </div>
 
         <div class="form-actions">
@@ -278,5 +341,38 @@
             label.style.display = 'block';
         }
     });
+
+    document.getElementById('screenshotsInput')?.addEventListener('change', function() {
+        const label = document.getElementById('screenshotsNames');
+        if (this.files && this.files.length > 0) {
+            label.textContent = '✅ Selected ' + this.files.length + ' image(s)';
+            label.style.display = 'block';
+        } else {
+            label.style.display = 'none';
+        }
+    });
+
+    function deleteScreenshot(gameId, filename) {
+        if (confirm("Are you sure you want to delete this screenshot?")) {
+            fetch('/Admin/DeleteScreenshot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `gameId=${gameId}&filename=${encodeURIComponent(filename)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('ss-' + filename).remove();
+                } else {
+                    alert("Failed to delete screenshot.");
+                }
+            })
+            .catch(err => {
+                alert("Error deleting screenshot.");
+            });
+        }
+    }
 </script>
 }

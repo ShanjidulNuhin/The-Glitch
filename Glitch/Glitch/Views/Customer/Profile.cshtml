@@ -1,10 +1,12 @@
-﻿@model Glitch.ViewModels.CustomerProfileViewModel
+@model Glitch.ViewModels.CustomerProfileViewModel
 
 @{
     ViewData["Title"] = "My Profile";
     Layout = null;
     var username = Context.Session.GetString("Username") ?? "";
+    var userIdStr = Context.Session.GetString("UserId");
 }
+@inject Glitch.Data.AppDbContext DbContext
 
 <!DOCTYPE html>
 <html lang="en">
@@ -269,22 +271,33 @@
     <nav class="navbar">
         <a href="/" class="navbar-logo">🎮 The<span>Glitch</span></a>
         <div class="navbar-actions">
-            <a href="/Customer/Profile" class="user-btn">
-                <div class="user-avatar-small">
-                    @{
-                        var profileImg = Context.Session.GetString("ProfileImage");
-                    }
-                    @if (!string.IsNullOrEmpty(profileImg))
+            @{
+                decimal navBalance = 0;
+                if (!string.IsNullOrEmpty(userIdStr))
+                {
+                    var navUser = await DbContext.Users.FindAsync(int.Parse(userIdStr));
+                    if (navUser != null) navBalance = navUser.Balance;
+                }
+                var navUsername = Context.Session.GetString("Username") ?? "";
+                var navProfileImg = Context.Session.GetString("ProfileImage");
+            }
+            <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981; font-weight:800; display:flex; align-items:center; gap:6px;">
+                <span>💰</span> $@navBalance.ToString("0.00")
+            </a>
+            <a href="/Customer/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
+                <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
+                    @if (!string.IsNullOrEmpty(navProfileImg))
                     {
-                        <img src="/uploads/profiles/@profileImg" alt="@username" />
+                        <img src="/uploads/profiles/@navProfileImg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
                     }
                     else
                     {
-                        @username.Substring(0, 1).ToUpper()
+                        @navUsername.Substring(0, 1).ToUpper()
                     }
                 </div>
-                @username
+                @navUsername
             </a>
+            <a href="/Customer/Library" class="btn-outline">📚 Library</a>
             <a href="/Account/Logout" class="btn-outline">Logout</a>
         </div>
     </nav>
@@ -311,37 +324,62 @@
 
             <div class="profile-layout">
 
-                <!-- Avatar card -->
-                <div class="avatar-card">
-                    <div class="big-avatar" id="avatarPreview">
-                        @if (!string.IsNullOrEmpty(Model.ProfileImage))
-                        {
-                            <img id="avatarImg"
-                                 src="/uploads/profiles/@Model.ProfileImage"
-                                 alt="@username" />
-                        }
-                        else
-                        {
-                            <span id="avatarInitial">
-                                @username.Substring(0, 1).ToUpper()
-                            </span>
-                        }
+                <!-- Left Column -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Avatar card -->
+                    <div class="avatar-card">
+                        <div class="big-avatar" id="avatarPreview">
+                            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+                            {
+                                <img id="avatarImg"
+                                     src="/uploads/profiles/@Model.ProfileImage"
+                                     alt="@username" />
+                            }
+                            else
+                            {
+                                <span id="avatarInitial">
+                                    @username.Substring(0, 1).ToUpper()
+                                </span>
+                            }
+                        </div>
+
+                        <div class="avatar-name">@username</div>
+                        <div class="avatar-role">👤 Customer</div>
+
+                        <div class="avatar-upload">
+                            <input type="file"
+                                   name="ImageFile"
+                                   accept=".jpg,.jpeg,.png,.webp"
+                                   onchange="previewAvatar(this)" />
+                            📷 Change Photo
+                        </div>
+
+                        <span style="font-size:11px; color:var(--muted);">
+                            JPG, PNG or WEBP · Max 3MB
+                        </span>
                     </div>
 
-                    <div class="avatar-name">@username</div>
-                    <div class="avatar-role">👤 Customer</div>
-
-                    <div class="avatar-upload">
-                        <input type="file"
-                               name="ImageFile"
-                               accept=".jpg,.jpeg,.png,.webp"
-                               onchange="previewAvatar(this)" />
-                        📷 Change Photo
+                    <!-- Achievements card -->
+                    <div class="achievements-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 20px;">
+                        <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;">🏆 Achievements</h3>
+                        <div style="display:flex; flex-direction:column; gap:16px;">
+                            <div style="background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2); border-radius:12px; padding:16px; text-align:center;">
+                                <div style="font-size:28px; margin-bottom:4px;">🎮</div>
+                                <div style="font-size:20px; font-weight:800; color:var(--primary);">@Model.PurchasedGamesCount</div>
+                                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Purchased Games</div>
+                            </div>
+                            <div style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.2); border-radius:12px; padding:16px; text-align:center;">
+                                <div style="font-size:28px; margin-bottom:4px;">⭐</div>
+                                <div style="font-size:20px; font-weight:800; color:#8b5cf6;">@Model.AchievementPoints</div>
+                                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Achievement Points</div>
+                            </div>
+                            <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.2); border-radius:12px; padding:16px; text-align:center;">
+                                <div style="font-size:28px; margin-bottom:4px;">💰</div>
+                                <div style="font-size:20px; font-weight:800; color:#10b981;">$@Model.Balance.ToString("0.00")</div>
+                                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Total Balance</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <span style="font-size:11px; color:var(--muted);">
-                        JPG, PNG or WEBP · Max 3MB
-                    </span>
                 </div>
 
                 <!-- Form card -->
@@ -394,6 +432,8 @@
 
                         <button type="submit" class="btn-save">🔒 Update Password</button>
                     </div>
+
+
 
                 </div>
             </div>

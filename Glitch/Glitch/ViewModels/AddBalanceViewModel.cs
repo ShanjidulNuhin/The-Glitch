@@ -1,0 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Glitch.ViewModels
+{
+    public class AddBalanceViewModel
+    {
+        [Required(ErrorMessage = "Please enter an amount")]
+        [Range(1, 10000, ErrorMessage = "Amount must be between $1 and $10,000")]
+        public decimal Amount { get; set; }
+    }
+}

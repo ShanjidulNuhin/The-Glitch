@@ -1,0 +1,305 @@
+@model Glitch.ViewModels.AddBalanceViewModel
+@inject Glitch.Data.AppDbContext DbContext
+
+@{
+    ViewData["Title"] = "Add Balance";
+    Layout = null;
+    var username = Context.Session.GetString("Username") ?? "";
+    var userIdStr = Context.Session.GetString("UserId");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Balance — Glitch</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg: #0f0f1a;
+            --card: #1a1a2e;
+            --border: #2a2a4a;
+            --text: #fff;
+            --muted: #888;
+            --success: #10b981;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000;
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 14px 40px;
+            background: rgba(15,15,26,0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-logo {
+            font-size: 20px; font-weight: 800;
+            color: var(--primary); text-decoration: none;
+        }
+
+        .navbar-logo span { color: #fff; }
+
+        .navbar-actions { display: flex; gap: 10px; align-items: center; }
+
+        .user-btn {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 14px;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 50px;
+            text-decoration: none; color: #fff;
+            font-size: 13px; font-weight: 600;
+        }
+
+        .user-avatar-small {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; overflow: hidden;
+        }
+
+        .user-avatar-small img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        .btn-outline {
+            padding: 8px 18px;
+            border: 1px solid var(--primary); color: var(--primary);
+            background: transparent; border-radius: 8px;
+            font-size: 13px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s;
+        }
+
+        .btn-outline:hover { background: var(--primary); color: #fff; }
+
+        /* Page content */
+        .page-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 30px 60px;
+        }
+
+        .balance-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decoration */
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+        }
+
+        .balance-icon {
+            width: 72px; height: 72px;
+            background: rgba(16,185,129,0.15);
+            border: 1px solid rgba(16,185,129,0.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+            box-shadow: 0 0 20px rgba(16,185,129,0.2);
+        }
+
+        .balance-title {
+            text-align: center;
+            font-size: 28px; font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .balance-subtitle {
+            text-align: center;
+            font-size: 14px; color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .form-group { margin-bottom: 24px; }
+
+        .form-group label {
+            display: block; font-size: 13px; font-weight: 700;
+            color: var(--muted); text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 8px;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex; align-items: center;
+        }
+
+        .currency-symbol {
+            position: absolute; left: 16px;
+            font-size: 20px; font-weight: 800; color: var(--success);
+        }
+
+        .form-group input {
+            width: 100%; padding: 14px 16px 14px 44px;
+            background: rgba(15,15,26,0.6);
+            border: 2px solid var(--border);
+            border-radius: 12px; color: #fff;
+            font-size: 20px; font-weight: 800;
+            outline: none; transition: all 0.2s;
+        }
+
+        .form-group input:focus { border-color: var(--success); box-shadow: 0 0 0 4px rgba(16,185,129,0.1); }
+        .form-group input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .field-error { color: #f87171; font-size: 13px; margin-top: 6px; display: block; }
+
+        .quick-amounts {
+            display: flex; gap: 10px; margin-bottom: 30px;
+        }
+
+        .quick-btn {
+            flex: 1; padding: 10px;
+            background: transparent; border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text);
+            font-size: 14px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
+            text-align: center;
+        }
+
+        .quick-btn:hover { background: rgba(16,185,129,0.1); border-color: var(--success); color: var(--success); }
+
+        .actions {
+            display: flex; gap: 16px;
+        }
+
+        .btn-cancel {
+            flex: 1; padding: 14px;
+            background: transparent; border: 1px solid var(--border);
+            border-radius: 10px; color: var(--text);
+            font-size: 15px; font-weight: 700;
+            cursor: pointer; text-decoration: none; text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
+
+        .btn-add {
+            flex: 1; padding: 14px;
+            background: var(--success); color: #000;
+            border: none; border-radius: 10px;
+            font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(16,185,129,0.3);
+        }
+
+        .btn-add:hover { background: #059669; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.4); }
+
+        /* Toast */
+        .alert-success {
+            background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+            color: #6ee7b7; padding: 14px;
+            border-radius: 10px; font-size: 14px; font-weight: 600;
+            margin-bottom: 24px; text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-logo">🎮 The<span>Glitch</span></a>
+        <div class="navbar-actions">
+            @{
+                decimal navBalance = 0;
+                var userIdStr = Context.Session.GetString("UserId");
+                if (!string.IsNullOrEmpty(userIdStr))
+                {
+                    var navUser = await DbContext.Users.FindAsync(int.Parse(userIdStr));
+                    if (navUser != null) navBalance = navUser.Balance;
+                }
+                var navUsername = Context.Session.GetString("Username") ?? "";
+                var navProfileImg = Context.Session.GetString("ProfileImage");
+            }
+            <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981; font-weight:800; display:flex; align-items:center; gap:6px;">
+                <span>💰</span> $@navBalance.ToString("0.00")
+            </a>
+            <a href="/Customer/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
+                <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
+                    @if (!string.IsNullOrEmpty(navProfileImg))
+                    {
+                        <img src="/uploads/profiles/@navProfileImg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+                    }
+                    else
+                    {
+                        @navUsername.Substring(0, 1).ToUpper()
+                    }
+                </div>
+                @navUsername
+            </a>
+            <a href="/Customer/Library" class="btn-outline">📚 Library</a>
+            <a href="/Account/Logout" class="btn-outline">Logout</a>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+        <div class="balance-card">
+            <div class="balance-icon">💰</div>
+            <h2 class="balance-title">Add Funds</h2>
+            <p class="balance-subtitle">Top up your wallet to buy new games instantly</p>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert-success">✅ @TempData["Success"]</div>
+            }
+
+            <form asp-action="AddBalance" asp-controller="Customer" method="post">
+                <div class="form-group">
+                    <label asp-for="Amount">Amount to Add</label>
+                    <div class="input-wrap">
+                        <span class="currency-symbol">$</span>
+                        <input asp-for="Amount" id="amountInput" type="number" step="0.01" min="1" max="10000" placeholder="0.00" />
+                    </div>
+                    <span asp-validation-for="Amount" class="field-error"></span>
+                </div>
+
+                <div class="quick-amounts">
+                    <button type="button" class="quick-btn" onclick="setAmount(10)">$10</button>
+                    <button type="button" class="quick-btn" onclick="setAmount(25)">$25</button>
+                    <button type="button" class="quick-btn" onclick="setAmount(50)">$50</button>
+                    <button type="button" class="quick-btn" onclick="setAmount(100)">$100</button>
+                </div>
+
+                <div class="actions">
+                    <a href="/Customer/Profile" class="btn-cancel">Cancel / Back</a>
+                    <button type="submit" class="btn-add">Add Funds</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function setAmount(val) {
+            document.getElementById('amountInput').value = val.toFixed(2);
+        }
+    </script>
+</body>
+</html>

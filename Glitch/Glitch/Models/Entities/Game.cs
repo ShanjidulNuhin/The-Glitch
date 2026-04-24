@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Glitch.Models.Entities
@@ -42,9 +42,21 @@ namespace Glitch.Models.Entities
         // When was this game added?
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+        // System Requirements
+        public string? ReqSize { get; set; }
+        public string? ReqOS { get; set; }
+        public string? ReqProcessor { get; set; }
+        public string? ReqMemory { get; set; }
+        public string? ReqGraphics { get; set; }
+        public string? ReqStorage { get; set; }
+
+        // Navigation properties
+        public ICollection<GameScreenshot> Screenshots { get; set; } = new List<GameScreenshot>();
+
         // Navigation properties
         public ICollection<Cart> CartItems { get; set; } = new List<Cart>();
         public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
         public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
+        public ICollection<GameRating> Ratings { get; set; } = new List<GameRating>();
     }
 }

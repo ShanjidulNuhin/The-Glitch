@@ -18,8 +18,11 @@ namespace Glitch.Controllers
         }
 
         // ── Auth Check ────────────────────────────────────────
-        private bool IsCustomer() =>
-            HttpContext.Session.GetString("Role") == "Customer";
+        private bool IsCustomer()
+        {
+            var role = HttpContext.Session.GetString("Role");
+            return role == "Customer" || role == "Admin";
+        }
 
         private IActionResult? RedirectIfNotCustomer()
         {
@@ -43,11 +46,16 @@ namespace Glitch.Controllers
 
             if (user == null) return RedirectToAction("Login", "Account");
 
+            var purchasedCount = await _context.Purchases.CountAsync(p => p.UserId == userId);
+
             var model = new CustomerProfileViewModel
             {
                 Username = user.Username,
                 Email = user.Email,
-                ProfileImage = user.ProfileImage
+                ProfileImage = user.ProfileImage,
+                PurchasedGamesCount = purchasedCount,
+                AchievementPoints = purchasedCount * 5,
+                Balance = user.Balance
             };
 
             return View(model);
@@ -192,6 +200,148 @@ namespace Glitch.Controllers
 
             await _context.SaveChangesAsync();
             return Json(new { success = true, added = added });
+        }
+
+        // POST: /Customer/RefundGame
+        [HttpPost]
+        public async Task<IActionResult> RefundGame(int gameId)
+        {
+            var check = RedirectIfNotCustomer();
+            if (check != null) return check;
+
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            var userId = int.Parse(userIdStr!);
+
+            var purchase = await _context.Purchases
+                .Include(p => p.Game)
+                .FirstOrDefaultAsync(p => p.UserId == userId && p.GameId == gameId);
+
+            if (purchase == null)
+            {
+                TempData["RefundError"] = "Purchase not found.";
+                return RedirectToAction("Library");
+            }
+
+            var adminUser = await _context.Users.FirstOrDefaultAsync(u => u.Role == "Admin");
+            // The prompt requests "when admin balance is 0. then show a message" 
+            if (adminUser == null || adminUser.Balance == 0 || adminUser.Balance < purchase.PricePaid)
+            {
+                TempData["RefundError"] = "You can not refunt this game now";
+                return RedirectToAction("Library");
+            }
+
+            var customer = await _context.Users.FindAsync(userId);
+            if (customer != null)
+            {
+                customer.Balance += purchase.PricePaid;
+            }
+
+            adminUser.Balance -= purchase.PricePaid;
+
+            _context.Purchases.Remove(purchase);
+
+            // Remove from wishlist if it exists
+            var favorite = await _context.Favorites.FirstOrDefaultAsync(f => f.UserId == userId && f.GameId == gameId);
+            if (favorite != null)
+            {
+                _context.Favorites.Remove(favorite);
+            }
+
+            // Remove rating if it exists
+            var rating = await _context.GameRatings.FirstOrDefaultAsync(r => r.UserId == userId && r.GameId == gameId);
+            if (rating != null)
+            {
+                _context.GameRatings.Remove(rating);
+            }
+
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Game refunded successfully!";
+            return RedirectToAction("Library");
+        }
+
+        // POST: /Customer/RateGame
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RateGame(int gameId, int score)
+        {
+            var check = RedirectIfNotCustomer();
+            if (check != null) return check;
+
+            var userId = int.Parse(HttpContext.Session.GetString("UserId")!);
+
+            // Ensure the user actually bought the game
+            var ownsGame = await _context.Purchases.AnyAsync(p => p.UserId == userId && p.GameId == gameId);
+            if (!ownsGame)
+            {
+                TempData["Error"] = "You must purchase the game before rating it.";
+                return RedirectToAction("GameDetail", "Home", new { id = gameId });
+            }
+
+            // Ensure valid score
+            if (score < 1 || score > 5)
+            {
+                TempData["Error"] = "Invalid rating score.";
+                return RedirectToAction("GameDetail", "Home", new { id = gameId });
+            }
+
+            // Check if already rated
+            var existingRating = await _context.GameRatings.FirstOrDefaultAsync(r => r.UserId == userId && r.GameId == gameId);
+            if (existingRating != null)
+            {
+                existingRating.Score = score;
+                existingRating.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                _context.GameRatings.Add(new Models.Entities.GameRating
+                {
+                    UserId = userId,
+                    GameId = gameId,
+                    Score = score
+                });
+            }
+
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Thanks for rating this game!";
+            return RedirectToAction("GameDetail", "Home", new { id = gameId });
+        }
+
+        // ══════════════════════════════════════════════════════
+        // ADD BALANCE
+        // ══════════════════════════════════════════════════════
+
+        [HttpGet]
+        public IActionResult AddBalance()
+        {
+            var check = RedirectIfNotCustomer();
+            if (check != null) return check;
+
+            return View(new AddBalanceViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddBalance(AddBalanceViewModel model)
+        {
+            var check = RedirectIfNotCustomer();
+            if (check != null) return check;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = int.Parse(HttpContext.Session.GetString("UserId")!);
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null) return RedirectToAction("Login", "Account");
+
+            user.Balance += model.Amount;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"Successfully added ${model.Amount:F2} to your balance!";
+            return RedirectToAction("AddBalance");
         }
 
         // ══════════════════════════════════════════════════════

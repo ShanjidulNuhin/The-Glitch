@@ -1,4 +1,4 @@
-﻿namespace Glitch.ViewModels.Admin
+namespace Glitch.ViewModels.Admin
 {
     public class AdminDashboardViewModel
     {
@@ -11,6 +11,24 @@
         // Recent activity
         public List<RecentUserRow> RecentUsers { get; set; } = new();
         public List<RecentPurchaseRow> RecentPurchases { get; set; } = new();
+        // New fields
+        public decimal TotalBalance { get; set; }
+        public decimal WeeklySales { get; set; }
+        
+        public List<MostSellGameRow> MostSellGames { get; set; } = new();
+        public List<MostRatedGameRow> MostRatedGames { get; set; } = new();
+    }
+
+    public class MostSellGameRow
+    {
+        public string Title { get; set; } = string.Empty;
+        public int SalesCount { get; set; }
+    }
+
+    public class MostRatedGameRow
+    {
+        public string Title { get; set; } = string.Empty;
+        public double AverageScore { get; set; }
     }
 
     public class RecentUserRow

@@ -6,6 +6,7 @@
     var username = Context.Session.GetString("Username") ?? "";
     var profileImg = Context.Session.GetString("ProfileImage");
 }
+@inject Glitch.Data.AppDbContext DbContext
 
 <!DOCTYPE html>
 <html lang="en">
@@ -157,19 +158,38 @@
     <nav class="navbar">
         <a href="/" class="navbar-logo">🎮 The<span>Glitch</span></a>
         <div class="navbar-actions">
-            <a href="/Customer/Profile" class="user-btn">
-                <div class="user-avatar-small">
-                    @if (!string.IsNullOrEmpty(profileImg))
+            @{
+                decimal navBalance = 0;
+                var userIdStr = Context.Session.GetString("UserId");
+                if (!string.IsNullOrEmpty(userIdStr))
+                {
+                    var navUser = await DbContext.Users.FindAsync(int.Parse(userIdStr));
+                    if (navUser != null) navBalance = navUser.Balance;
+                }
+                var navUsername = Context.Session.GetString("Username") ?? "";
+                var navProfileImg = Context.Session.GetString("ProfileImage");
+            }
+            <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981; font-weight:800; display:flex; align-items:center; gap:6px;">
+                <span>💰</span> $@navBalance.ToString("0.00")
+            </a>
+            <a href="/Customer/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
+                <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
+                    @if (!string.IsNullOrEmpty(navProfileImg))
                     {
-                        <img src="/uploads/profiles/@profileImg" alt="@username" />
+                        <img src="/uploads/profiles/@navProfileImg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
                     }
                     else
                     {
-                        @username.Substring(0, 1).ToUpper()
+                        @navUsername.Substring(0, 1).ToUpper()
                     }
                 </div>
-                @username
+                @navUsername
             </a>
+            @if (Context.Session.GetString("Role") == "Admin")
+            {
+                <a href="/Admin/Index" class="btn-outline">⚙️ Admin Panel</a>
+            }
+            <a href="/Customer/Library" class="btn-outline">📚 Library</a>
             <a href="/Account/Logout" class="btn-outline">Logout</a>
         </div>
     </nav>
@@ -184,6 +204,19 @@
         </div>
 
         <div id="downloads" class="tab-content active">
+            @if (TempData["RefundError"] != null)
+            {
+                <div style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#f87171; padding:12px 20px; border-radius:8px; margin-bottom:20px;">
+                    @TempData["RefundError"]
+                </div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#34d399; padding:12px 20px; border-radius:8px; margin-bottom:20px;">
+                    @TempData["Success"]
+                </div>
+            }
+
             @if (Model.PurchasedGames.Any())
             {
                 <div class="game-grid">
@@ -203,6 +236,11 @@
                                 <div class="game-genre">@game.Genre</div>
                                 <div class="game-actions">
                                     <a href="/Home/GameDetail/@game.Id" class="btn-action btn-play" style="background: rgba(99,102,241,0.1); color: var(--primary); border: 1px solid var(--primary);">View Details</a>
+                                    <form action="/Customer/RefundGame" method="post" style="flex: 1; display: flex;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="gameId" value="@game.Id" />
+                                        <button type="submit" class="btn-action btn-remove" style="width: 100%;">Refund</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Glitch.ViewModels.Admin
 {
@@ -32,5 +32,19 @@ namespace Glitch.ViewModels.Admin
         public string? ExistingGameFile { get; set; }
 
         public bool IsAvailable { get; set; } = true;
+
+        // Multiple screenshots
+        public List<IFormFile> ScreenshotFiles { get; set; } = new List<IFormFile>();
+        
+        // For displaying in edit mode
+        public List<string> ExistingScreenshots { get; set; } = new List<string>();
+
+        // System Requirements
+        public string? ReqSize { get; set; }
+        public string? ReqOS { get; set; }
+        public string? ReqProcessor { get; set; }
+        public string? ReqMemory { get; set; }
+        public string? ReqGraphics { get; set; }
+        public string? ReqStorage { get; set; }
     }
 }

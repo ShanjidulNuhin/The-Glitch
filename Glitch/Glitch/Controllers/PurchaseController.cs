@@ -1,4 +1,4 @@
-﻿using Glitch.Data;
+using Glitch.Data;
 using Glitch.Helpers;
 using Glitch.Models.Entities;
 using Glitch.ViewModels;
@@ -19,10 +19,10 @@ namespace Glitch.Controllers
         }
 
         // ── Auth check ────────────────────────────────────────
-        // Only logged in customers can purchase
         private bool IsCustomer()
         {
-            return HttpContext.Session.GetString("Role") == "Customer";
+            var role = HttpContext.Session.GetString("Role");
+            return role == "Customer" || role == "Admin";
         }
 
         // ══════════════════════════════════════════════════════
@@ -54,6 +54,13 @@ namespace Glitch.Controllers
                 // Already bought - go to game detail
                 TempData["Info"] = "You already own this game!";
                 return RedirectToAction("GameDetail", "Home", new { id });
+            }
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null && user.Balance < game.Price)
+            {
+                TempData["Error"] = "Your current balance is low.";
+                return RedirectToAction("Index", "Home");
             }
 
             // Build payment model
@@ -105,12 +112,10 @@ namespace Glitch.Controllers
                 return View(model);
             }
 
-            // ── Verify exact price entered ────────────────────
-            // User must type the exact price e.g. 29.99
             if (model.AmountEntered != game.Price)
             {
                 ModelState.AddModelError("AmountEntered",
-                    $"Incorrect amount. The exact price is ${game.Price:F2}");
+                    "please enter the currect amount");
                 return View(model);
             }
 
@@ -122,6 +127,23 @@ namespace Glitch.Controllers
             {
                 TempData["Info"] = "You already own this game!";
                 return RedirectToAction("GameDetail", "Home", new { id = game.Id });
+            }
+
+            // ── Check balance ─────────────────────────────────
+            if (user.Balance < game.Price)
+            {
+                ModelState.AddModelError("", "Your current balance is low.");
+                return View(model);
+            }
+
+            // Deduct balance from user
+            user.Balance -= game.Price;
+
+            // Add balance to Admin
+            var adminUser = await _context.Users.FirstOrDefaultAsync(u => u.Role == "Admin");
+            if (adminUser != null)
+            {
+                adminUser.Balance += game.Price;
             }
 
             // ── Save purchase to database ─────────────────────

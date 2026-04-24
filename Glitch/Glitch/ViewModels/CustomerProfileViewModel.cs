@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Glitch.ViewModels
 {
@@ -26,5 +26,9 @@ namespace Glitch.ViewModels
         public IFormFile? ImageFile { get; set; }
 
         public string? ProfileImage { get; set; }
+
+        public int PurchasedGamesCount { get; set; }
+        public int AchievementPoints { get; set; }
+        public decimal Balance { get; set; }
     }
 }
