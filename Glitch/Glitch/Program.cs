@@ -7,8 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+var connectionString = builder.Environment.IsDevelopment()
+    ? builder.Configuration.GetConnectionString("The-Glitch")
+    : builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("The-Glitch")));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddHttpContextAccessor();
 
