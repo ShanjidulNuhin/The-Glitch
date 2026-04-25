@@ -1,5 +1,5 @@
 # 💫 About Me:
-Hi, I'm MD. Shanjidul Islam, a Computer Science student passionate about web development. I work with some programing language, and I’m currently building projects with ASP.NET Core. Always learning and improving 🚀<br>
+Hi, I'm MD. Shanjidul Islam, a Computer Science student passionate about web development. I work with some programing language, and I’m currently building projects with ASP.NET Core MVC. Always learning and improving 🚀<br>
 
 
 ## 🌐 Socials:
