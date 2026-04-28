@@ -312,12 +312,21 @@ namespace Glitch.Controllers
         // ══════════════════════════════════════════════════════
 
         [HttpGet]
-        public IActionResult AddBalance()
+        public async Task<IActionResult> AddBalance()
         {
             var check = RedirectIfNotCustomer();
             if (check != null) return check;
 
-            return View(new AddBalanceViewModel());
+            var userId = int.Parse(HttpContext.Session.GetString("UserId")!);
+            var user = await _context.Users.FindAsync(userId);
+
+            var model = new AddBalanceViewModel();
+            if (user != null)
+            {
+                model.DateOfBirth = user.DateOfBirth;
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -338,10 +347,17 @@ namespace Glitch.Controllers
             if (user == null) return RedirectToAction("Login", "Account");
 
             user.Balance += model.Amount;
+
+            // Save DateOfBirth if it was provided (e.g. from Card payment) and user didn't have it
+            if (model.DateOfBirth.HasValue && !user.DateOfBirth.HasValue)
+            {
+                user.DateOfBirth = model.DateOfBirth.Value;
+            }
+
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = $"Successfully added ${model.Amount:F2} to your balance!";
-            return RedirectToAction("AddBalance");
+            TempData["Success"] = "money added to your acount";
+            return RedirectToAction("Index", "Home");
         }
 
         // ══════════════════════════════════════════════════════

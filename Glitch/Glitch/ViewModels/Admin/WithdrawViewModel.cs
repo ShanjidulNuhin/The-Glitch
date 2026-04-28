@@ -10,5 +10,8 @@ namespace Glitch.ViewModels.Admin
         [Required(ErrorMessage = "Please enter an amount to withdraw.")]
         [Range(1, double.MaxValue, ErrorMessage = "Amount must be at least $1.")]
         public decimal Amount { get; set; }
+
+        public string PaymentMethod { get; set; } = "Bank";
+        public DateTime? DateOfBirth { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace glitch.Controllers
         public async Task<IActionResult> Index()
         {
             var games = await _context.Games
+                .Include(g => g.Ratings)
                 .Where(g => g.IsAvailable)
                 .OrderByDescending(g => g.CreatedAt)
                 .ToListAsync();

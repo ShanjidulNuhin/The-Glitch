@@ -783,9 +783,54 @@
         .footer-bottom-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
         .footer-bottom-links a:hover { color: var(--primary); }
 
+        /* ── Toast Notification ───────────────────────────────── */
+        .toast-notification {
+            position: fixed;
+            top: 80px;
+            right: -400px;
+            background: rgba(16, 185, 129, 0.9);
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            font-weight: 700;
+            font-size: 15px;
+            z-index: 9999;
+            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .toast-notification.show {
+            right: 40px;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
     </style>
 </head>
 <body>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast-notification" id="successToast">
+            <span class="toast-icon">✅</span>
+            <span>@TempData["Success"]</span>
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('successToast').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('successToast').classList.remove('show');
+                }, 4000);
+            }, 100);
+        </script>
+    }
 
     <!-- ── Navbar ──────────────────────────────────────────────── -->
     <nav class="navbar">
@@ -897,17 +942,18 @@
                 var emoji   = genreEmoji.ContainsKey(game.Genre) ? genreEmoji[game.Genre] : "🎮";
                 var color   = genreTheme.ContainsKey(game.Genre) ? genreTheme[game.Genre] : "#6366f1";
                 var isFirst = i == 0;
+                var avgRating = game.Ratings != null && game.Ratings.Any() ? game.Ratings.Average(r => r.Score) : 0.0;
 
                 <div class="slide @(isFirst ? "active" : "")" data-index="@i">
 <div class="slide-bg" style="background-image: url('/uploads/games/@game.ImageFileName');"></div> 
 <div class="slide-overlay"></div>
                     <div class="slide-content">
-                        <div class="slide-badge">@emoji @game.Genre</div>
+                        <div class="slide-badge">@game.Genre</div>
                         <h1 class="slide-title">@game.Title</h1>
                         <p class="slide-description">@game.Description</p>
                         <div class="slide-meta">
                             <div class="slide-price">$@game.Price.ToString("F2")</div>
-                            <div class="slide-genre">@game.Genre</div>
+                            <div class="slide-genre">⭐ @avgRating.ToString("F1")</div>
                         </div>
                         <div class="slide-buttons">
                             @if (Context.Session.GetString("UserId") != null)
@@ -999,6 +1045,7 @@
                 @foreach (var game in Model)
                 {
                     var color = genreTheme.ContainsKey(game.Genre) ? genreTheme[game.Genre] : "#6366f1";
+                    var avgRating = game.Ratings != null && game.Ratings.Any() ? game.Ratings.Average(r => r.Score) : 0.0;
                     <div class="game-card" data-name="@game.Title" data-category="@game.Genre" data-price="@game.Price" onclick="window.location='/Home/GameDetail/@game.Id'"
                          style="cursor:pointer;">
                         <div style="position:relative;">
@@ -1028,7 +1075,7 @@
                             <div class="game-card-name" title="@game.Title">@game.Title</div>
                             <div class="game-card-footer">
                                 <span class="game-card-price">$@game.Price.ToString("F2")</span>
-                                <span class="game-card-genre">@game.Genre</span>
+                                <span class="game-card-genre">⭐ @avgRating.ToString("F1")</span>
                             </div>
                             <div class="game-card-actions">
                                 @if (Context.Session.GetString("UserId") != null)

@@ -133,7 +133,7 @@
             }
 
             <div class="game-hero-info">
-                <div style="background:rgba(99,102,241,0.2); color:#a5b4fc; padding:4px 12px; border-radius:50px; display:inline-block; font-size:12px; margin-bottom:10px;">@Model.Genre</div>
+                <div style="background:rgba(99,102,241,0.2); color:#a5b4fc; padding:4px 12px; border-radius:50px; display:inline-block; font-size:12px; margin-bottom:10px;">@Model.Genre ⭐ @(((double)ViewBag.AverageRating).ToString("F1"))</div>
                 <h1 style="font-size:48px; font-weight:900; margin-bottom:10px;">@Model.Title</h1>
                 
                 <div style="font-size:32px; font-weight:900; color:var(--primary); margin-bottom:20px;">$@Model.Price.ToString("F2")</div>

@@ -517,7 +517,8 @@ namespace Glitch.Controllers
             var model = new WithdrawViewModel
             {
                 AvailableBalance = adminUser.Balance,
-                WithdrawableBalance = adminUser.Balance * 0.5m
+                WithdrawableBalance = adminUser.Balance,
+                DateOfBirth = adminUser.DateOfBirth
             };
 
             return View(model);
@@ -536,7 +537,7 @@ namespace Glitch.Controllers
             if (adminUser == null) return RedirectToAction("Login", "Account");
 
             model.AvailableBalance = adminUser.Balance;
-            model.WithdrawableBalance = adminUser.Balance * 0.5m;
+            model.WithdrawableBalance = adminUser.Balance;
 
             if (!ModelState.IsValid)
             {
@@ -545,7 +546,7 @@ namespace Glitch.Controllers
 
             if (model.Amount > model.WithdrawableBalance)
             {
-                ModelState.AddModelError("Amount", "You cannot withdraw more than your withdrawable balance.");
+                ModelState.AddModelError("Amount", "balance is not enough to withdraw");
                 return View(model);
             }
 
@@ -555,12 +556,18 @@ namespace Glitch.Controllers
                 return View(model);
             }
 
+            // Save DateOfBirth if it was provided (e.g. from Card payment) and user didn't have it
+            if (model.DateOfBirth.HasValue && !adminUser.DateOfBirth.HasValue)
+            {
+                adminUser.DateOfBirth = model.DateOfBirth.Value;
+            }
+
             // Deduct the balance
             adminUser.Balance -= model.Amount;
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = $"Successfully withdrew ${model.Amount:F2}.";
-            return RedirectToAction("WithdrawBalance");
+            TempData["Success"] = "money is added in your account";
+            return RedirectToAction("Index");
         }
 
         // --- HELPER METHODS ---

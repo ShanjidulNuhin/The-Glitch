@@ -44,5 +44,8 @@ namespace Glitch.Models.Entities
 
         // Customer's balance
         public decimal Balance { get; set; } = 0m;
+
+        // User's Date of Birth (used for Card payment autofill)
+        public DateTime? DateOfBirth { get; set; }
     }
 }

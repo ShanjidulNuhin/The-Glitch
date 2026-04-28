@@ -115,7 +115,7 @@ namespace Glitch.Controllers
             if (model.AmountEntered != game.Price)
             {
                 ModelState.AddModelError("AmountEntered",
-                    "please enter the currect amount");
+                    "Please enter the correct amount");
                 return View(model);
             }
 

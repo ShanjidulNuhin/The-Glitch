@@ -6,6 +6,8 @@
     Layout = null;
     var username = Context.Session.GetString("Username") ?? "";
     var userIdStr = Context.Session.GetString("UserId");
+    var hasDob = Model.DateOfBirth.HasValue;
+    var dobStr = hasDob ? Model.DateOfBirth?.ToString("yyyy-MM-dd") : "";
 }
 
 <!DOCTYPE html>
@@ -26,6 +28,7 @@
             --text: #fff;
             --muted: #888;
             --success: #10b981;
+            --error: #f87171;
         }
 
         body {
@@ -58,25 +61,6 @@
 
         .navbar-actions { display: flex; gap: 10px; align-items: center; }
 
-        .user-btn {
-            display: flex; align-items: center; gap: 8px;
-            padding: 7px 14px;
-            background: rgba(99,102,241,0.1);
-            border: 1px solid rgba(99,102,241,0.2);
-            border-radius: 50px;
-            text-decoration: none; color: #fff;
-            font-size: 13px; font-weight: 600;
-        }
-
-        .user-avatar-small {
-            width: 26px; height: 26px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 700; overflow: hidden;
-        }
-
-        .user-avatar-small img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-
         .btn-outline {
             padding: 8px 18px;
             border: 1px solid var(--primary); color: var(--primary);
@@ -102,29 +86,17 @@
             border-radius: 20px;
             padding: 40px;
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             position: relative;
             overflow: hidden;
         }
 
-        /* Decoration */
         .balance-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 6px;
             background: linear-gradient(90deg, #10b981, #3b82f6);
-        }
-
-        .balance-icon {
-            width: 72px; height: 72px;
-            background: rgba(16,185,129,0.15);
-            border: 1px solid rgba(16,185,129,0.3);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 36px;
-            margin: 0 auto 24px;
-            box-shadow: 0 0 20px rgba(16,185,129,0.2);
         }
 
         .balance-title {
@@ -139,86 +111,147 @@
             margin-bottom: 32px;
         }
 
-        .form-group { margin-bottom: 24px; }
+        /* Tabs */
+        .method-tabs {
+            display: flex; gap: 10px; margin-bottom: 24px;
+            background: rgba(0,0,0,0.2); padding: 6px; border-radius: 12px;
+        }
 
+        .method-tab {
+            flex: 1; text-align: center; padding: 12px;
+            background: transparent; border: none; border-radius: 8px;
+            color: var(--muted); font-size: 14px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s;
+        }
+
+        .method-tab.active {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        }
+
+        /* Form groups */
+        .form-section { display: none; animation: fadeIn 0.3s ease; }
+        .form-section.active { display: block; }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group { margin-bottom: 20px; }
         .form-group label {
-            display: block; font-size: 13px; font-weight: 700;
+            display: block; font-size: 12px; font-weight: 700;
             color: var(--muted); text-transform: uppercase;
             letter-spacing: 1px; margin-bottom: 8px;
         }
 
-        .input-wrap {
-            position: relative;
-            display: flex; align-items: center;
-        }
-
-        .currency-symbol {
-            position: absolute; left: 16px;
-            font-size: 20px; font-weight: 800; color: var(--success);
-        }
-
-        .form-group input {
-            width: 100%; padding: 14px 16px 14px 44px;
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px 16px;
             background: rgba(15,15,26,0.6);
-            border: 2px solid var(--border);
-            border-radius: 12px; color: #fff;
-            font-size: 20px; font-weight: 800;
-            outline: none; transition: all 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 10px; color: #fff;
+            font-size: 16px; outline: none; transition: all 0.2s;
         }
 
-        .form-group input:focus { border-color: var(--success); box-shadow: 0 0 0 4px rgba(16,185,129,0.1); }
-        .form-group input::placeholder { color: rgba(255,255,255,0.2); }
-
-        .field-error { color: #f87171; font-size: 13px; margin-top: 6px; display: block; }
-
-        .quick-amounts {
-            display: flex; gap: 10px; margin-bottom: 30px;
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
         }
 
-        .quick-btn {
-            flex: 1; padding: 10px;
-            background: transparent; border: 1px solid var(--border);
-            border-radius: 8px; color: var(--text);
-            font-size: 14px; font-weight: 700;
+        .form-group input[readonly] {
+            background: rgba(255,255,255,0.05); color: var(--muted); cursor: not-allowed;
+        }
+
+        .mobile-apps {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        }
+
+        .mobile-app {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px 10px; text-align: center;
             cursor: pointer; transition: all 0.2s;
-            text-align: center;
+            font-weight: 700; font-size: 14px;
         }
 
-        .quick-btn:hover { background: rgba(16,185,129,0.1); border-color: var(--success); color: var(--success); }
-
-        .actions {
-            display: flex; gap: 16px;
+        .mobile-app:hover, .mobile-app.active {
+            border-color: var(--primary); background: rgba(99,102,241,0.1);
         }
 
-        .btn-cancel {
-            flex: 1; padding: 14px;
-            background: transparent; border: 1px solid var(--border);
-            border-radius: 10px; color: var(--text);
-            font-size: 15px; font-weight: 700;
-            cursor: pointer; text-decoration: none; text-align: center;
-            transition: all 0.2s;
-        }
-
-        .btn-cancel:hover { background: rgba(255,255,255,0.05); }
-
-        .btn-add {
-            flex: 1; padding: 14px;
+        .btn-submit {
+            width: 100%; padding: 16px;
             background: var(--success); color: #000;
             border: none; border-radius: 10px;
-            font-size: 15px; font-weight: 800;
+            font-size: 16px; font-weight: 800;
             cursor: pointer; transition: all 0.2s;
             box-shadow: 0 4px 14px rgba(16,185,129,0.3);
+            margin-top: 10px;
         }
 
-        .btn-add:hover { background: #059669; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.4); }
-
-        /* Toast */
-        .alert-success {
-            background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
-            color: #6ee7b7; padding: 14px;
-            border-radius: 10px; font-size: 14px; font-weight: 600;
-            margin-bottom: 24px; text-align: center;
+        .btn-submit:hover {
+            background: #059669; color: #fff; transform: translateY(-2px);
         }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+        }
+
+        .modal-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 30px; width: 100%; max-width: 400px;
+            text-align: center; animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @@keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+        
+        .modal-input {
+            width: 100%; padding: 12px 16px; margin-bottom: 20px;
+            background: rgba(15,15,26,0.6); border: 1px solid var(--border);
+            border-radius: 10px; color: #fff; font-size: 18px; text-align: center;
+            letter-spacing: 2px; outline: none;
+        }
+
+        .modal-input:focus { border-color: var(--primary); }
+        
+        .modal-btn {
+            width: 100%; padding: 14px; background: var(--primary); color: #fff;
+            border: none; border-radius: 10px; font-size: 16px; font-weight: 700;
+            cursor: pointer;
+        }
+
+        .modal-btn:hover { background: var(--primary-dark); }
+        
+        .modal-close {
+            margin-top: 15px; background: transparent; border: none;
+            color: var(--muted); font-size: 14px; cursor: pointer; text-decoration: underline;
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26,26,46,0.9); z-index: 100;
+            display: none; align-items: center; justify-content: center; flex-direction: column;
+            border-radius: 20px;
+        }
+
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--success);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @@keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .error-msg { color: var(--error); font-size: 13px; margin-top: 4px; display: none; }
 
     </style>
 </head>
@@ -230,75 +263,276 @@
         <div class="navbar-actions">
             @{
                 decimal navBalance = 0;
-                var userIdStr = Context.Session.GetString("UserId");
                 if (!string.IsNullOrEmpty(userIdStr))
                 {
                     var navUser = await DbContext.Users.FindAsync(int.Parse(userIdStr));
                     if (navUser != null) navBalance = navUser.Balance;
                 }
                 var navUsername = Context.Session.GetString("Username") ?? "";
-                var navProfileImg = Context.Session.GetString("ProfileImage");
             }
-            <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981; font-weight:800; display:flex; align-items:center; gap:6px;">
+            <a href="/Customer/AddBalance" class="btn-outline" style="border-color:#10b981; color:#10b981;">
                 <span>💰</span> $@navBalance.ToString("0.00")
             </a>
-            <a href="/Customer/Profile" style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:50px;text-decoration:none;color:#fff;font-size:13px;font-weight:600;">
-                <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;overflow:hidden;">
-                    @if (!string.IsNullOrEmpty(navProfileImg))
-                    {
-                        <img src="/uploads/profiles/@navProfileImg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-                    }
-                    else
-                    {
-                        @navUsername.Substring(0, 1).ToUpper()
-                    }
-                </div>
-                @navUsername
-            </a>
             <a href="/Customer/Library" class="btn-outline">📚 Library</a>
-            <a href="/Account/Logout" class="btn-outline">Logout</a>
+            <a href="/Customer/Profile" class="btn-outline">Profile</a>
         </div>
     </nav>
 
     <div class="page-wrap">
         <div class="balance-card">
-            <div class="balance-icon">💰</div>
+            
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+                <h3>Processing Payment...</h3>
+            </div>
+
             <h2 class="balance-title">Add Funds</h2>
-            <p class="balance-subtitle">Top up your wallet to buy new games instantly</p>
+            <p class="balance-subtitle">Choose a payment method to add money</p>
 
-            @if (TempData["Success"] != null)
-            {
-                <div class="alert-success">✅ @TempData["Success"]</div>
-            }
+            <div class="method-tabs">
+                <button class="method-tab active" onclick="setMethod('Bank')">Bank</button>
+                <button class="method-tab" onclick="setMethod('Card')">Card</button>
+                <button class="method-tab" onclick="setMethod('Mobile')">Mobile App</button>
+            </div>
 
-            <form asp-action="AddBalance" asp-controller="Customer" method="post">
-                <div class="form-group">
-                    <label asp-for="Amount">Amount to Add</label>
-                    <div class="input-wrap">
-                        <span class="currency-symbol">$</span>
-                        <input asp-for="Amount" id="amountInput" type="number" step="0.01" min="1" max="10000" placeholder="0.00" />
+            <form id="addBalanceForm" asp-action="AddBalance" asp-controller="Customer" method="post" onsubmit="return handleFormSubmit(event)">
+                <input type="hidden" asp-for="PaymentMethod" id="hiddenMethod" value="Bank" />
+                <input type="hidden" asp-for="Amount" id="hiddenAmount" />
+
+                <!-- BANK SECTION -->
+                <div id="sectionBank" class="form-section active">
+                    <div class="form-group">
+                        <label>Bank Account Number</label>
+                        <input type="text" id="bankAcc" placeholder="e.g. 1234567890" />
+                        <div class="error-msg" id="bankAccErr">Required</div>
                     </div>
-                    <span asp-validation-for="Amount" class="field-error"></span>
+                    <div class="form-group">
+                        <label>PIN</label>
+                        <input type="password" id="bankPin" placeholder="****" />
+                        <div class="error-msg" id="bankPinErr">Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount ($)</label>
+                        <input type="number" id="bankAmount" step="0.01" min="1" placeholder="0.00" />
+                        <div class="error-msg" id="bankAmountErr">Please enter a valid amount</div>
+                    </div>
+                    <button type="submit" class="btn-submit">Add Balance</button>
                 </div>
 
-                <div class="quick-amounts">
-                    <button type="button" class="quick-btn" onclick="setAmount(10)">$10</button>
-                    <button type="button" class="quick-btn" onclick="setAmount(25)">$25</button>
-                    <button type="button" class="quick-btn" onclick="setAmount(50)">$50</button>
-                    <button type="button" class="quick-btn" onclick="setAmount(100)">$100</button>
+                <!-- CARD SECTION -->
+                <div id="sectionCard" class="form-section">
+                    <div class="form-group">
+                        <label>Select Card</label>
+                        <select id="cardType">
+                            <option value="Visa">Visa</option>
+                            <option value="Credit">Credit Card</option>
+                            <option value="ATM">ATM Card</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Card Number (12 digits)</label>
+                        <input type="text" id="cardNum" maxlength="12" placeholder="123456789012" />
+                        <div class="error-msg" id="cardNumErr">Must be 12 digits</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        @if (hasDob)
+                        {
+                            <input type="date" asp-for="DateOfBirth" value="@dobStr" readonly />
+                        }
+                        else
+                        {
+                            <input type="date" asp-for="DateOfBirth" id="cardDob" />
+                        }
+                        <div class="error-msg" id="cardDobErr">Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label>PIN</label>
+                        <input type="password" id="cardPin" placeholder="****" />
+                        <div class="error-msg" id="cardPinErr">Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount ($)</label>
+                        <input type="number" id="cardAmount" step="0.01" min="1" placeholder="0.00" />
+                        <div class="error-msg" id="cardAmountErr">Please enter a valid amount</div>
+                    </div>
+                    <button type="submit" class="btn-submit">Add Balance</button>
                 </div>
 
-                <div class="actions">
-                    <a href="/Customer/Profile" class="btn-cancel">Cancel / Back</a>
-                    <button type="submit" class="btn-add">Add Funds</button>
+                <!-- MOBILE SECTION -->
+                <div id="sectionMobile" class="form-section">
+                    <div class="form-group">
+                        <label>Select Mobile Provider</label>
+                        <div class="mobile-apps">
+                            <div class="mobile-app" onclick="startMobileFlow('Bkash')">Bkash</div>
+                            <div class="mobile-app" onclick="startMobileFlow('Nagad')">Nagad</div>
+                            <div class="mobile-app" onclick="startMobileFlow('Rocket')">Rocket</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; color: var(--muted); font-size: 14px; margin-top: 20px;">
+                        Click a provider to proceed
+                    </div>
                 </div>
+
             </form>
         </div>
     </div>
 
+    <!-- Modals for Mobile Flow -->
+    <div class="modal-overlay" id="mobileModal1">
+        <div class="modal-card">
+            <div class="modal-title" id="mobileTitle1">Enter Mobile Number</div>
+            <div style="color: var(--muted); margin-bottom: 10px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Country: Bangladesh</div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <input type="text" value="+880" readonly style="width: 85px; padding: 12px; background: rgba(15,15,26,0.6); border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 16px; font-weight: bold; text-align: center; outline: none; cursor: not-allowed;" />
+                <input type="text" class="modal-input" id="mobileNum" maxlength="11" placeholder="Number" style="margin-bottom: 0; flex: 1;" />
+            </div>
+            <div class="error-msg" id="mobileNumErr" style="margin-top:-10px; margin-bottom:15px;">Invalid number</div>
+            <button class="modal-btn" onclick="nextMobileModal(2)">Confirm</button>
+            <button class="modal-close" onclick="closeModals()">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="mobileModal2">
+        <div class="modal-card">
+            <div class="modal-title" id="mobileTitle2">Enter PIN</div>
+            <input type="password" class="modal-input" id="mobilePin" placeholder="****" />
+            <div class="error-msg" id="mobilePinErr" style="margin-top:-10px; margin-bottom:15px;">Invalid PIN</div>
+            <button class="modal-btn" onclick="nextMobileModal(3)">Confirm</button>
+            <button class="modal-close" onclick="closeModals()">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="mobileModal3">
+        <div class="modal-card">
+            <div class="modal-title">Enter Amount ($)</div>
+            <input type="number" class="modal-input" id="mobileAmount" step="0.01" min="1" placeholder="0.00" />
+            <div class="error-msg" id="mobileAmountErr" style="margin-top:-10px; margin-bottom:15px;">Valid amount required</div>
+            <button class="modal-btn" onclick="submitMobile()">Confirm Payment</button>
+            <button class="modal-close" onclick="closeModals()">Cancel</button>
+        </div>
+    </div>
+
     <script>
-        function setAmount(val) {
-            document.getElementById('amountInput').value = val.toFixed(2);
+        let currentMethod = 'Bank';
+        let currentProvider = '';
+
+        function setMethod(method) {
+            currentMethod = method;
+            document.getElementById('hiddenMethod').value = method;
+            
+            document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section' + method).classList.add('active');
+        }
+
+        // Mobile Flow
+        function startMobileFlow(provider) {
+            currentProvider = provider;
+            document.getElementById('mobileNum').value = '';
+            document.getElementById('mobilePin').value = '';
+            document.getElementById('mobileAmount').value = '';
+            hideErrors();
+            
+            document.getElementById('mobileTitle1').innerText = provider + " - Mobile Number";
+            let pinLength = provider === 'Nagad' ? '4' : '5';
+            document.getElementById('mobileTitle2').innerText = provider + " PIN (" + pinLength + " digits)";
+            
+            document.getElementById('mobileModal1').style.display = 'flex';
+        }
+
+        function nextMobileModal(step) {
+            hideErrors();
+            if (step === 2) {
+                let num = document.getElementById('mobileNum').value;
+                if (!num || isNaN(num) || (num.length !== 10 && num.length !== 11)) {
+                    let err = document.getElementById('mobileNumErr');
+                    err.innerText = "Must be 10 or 11 digits";
+                    err.style.display = 'block';
+                    return;
+                }
+                if (/^(\d)\1+$/.test(num)) {
+                    let err = document.getElementById('mobileNumErr');
+                    err.innerText = "Invalid number";
+                    err.style.display = 'block';
+                    return;
+                }
+                document.getElementById('mobileModal1').style.display = 'none';
+                document.getElementById('mobileModal2').style.display = 'flex';
+            }
+            else if (step === 3) {
+                let pin = document.getElementById('mobilePin').value;
+                let requiredLen = currentProvider === 'Nagad' ? 4 : 5;
+                if (!pin || pin.length !== requiredLen || isNaN(pin)) {
+                    document.getElementById('mobilePinErr').style.display = 'block';
+                    return;
+                }
+                document.getElementById('mobileModal2').style.display = 'none';
+                document.getElementById('mobileModal3').style.display = 'flex';
+            }
+        }
+
+        function submitMobile() {
+            hideErrors();
+            let amt = parseFloat(document.getElementById('mobileAmount').value);
+            if (!amt || amt <= 0) {
+                document.getElementById('mobileAmountErr').style.display = 'block';
+                return;
+            }
+            
+            closeModals();
+            document.getElementById('hiddenAmount').value = amt;
+            processPayment();
+        }
+
+        function closeModals() {
+            document.getElementById('mobileModal1').style.display = 'none';
+            document.getElementById('mobileModal2').style.display = 'none';
+            document.getElementById('mobileModal3').style.display = 'none';
+        }
+
+        function hideErrors() {
+            document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            hideErrors();
+            let isValid = true;
+            let finalAmount = 0;
+
+            if (currentMethod === 'Bank') {
+                if (!document.getElementById('bankAcc').value) { document.getElementById('bankAccErr').style.display = 'block'; isValid = false; }
+                if (!document.getElementById('bankPin').value) { document.getElementById('bankPinErr').style.display = 'block'; isValid = false; }
+                finalAmount = parseFloat(document.getElementById('bankAmount').value);
+                if (!finalAmount || finalAmount <= 0) { document.getElementById('bankAmountErr').style.display = 'block'; isValid = false; }
+            } 
+            else if (currentMethod === 'Card') {
+                let cardNum = document.getElementById('cardNum').value;
+                if (!cardNum || cardNum.length !== 12 || isNaN(cardNum)) { document.getElementById('cardNumErr').style.display = 'block'; isValid = false; }
+                
+                let dobEl = document.getElementById('cardDob');
+                if (dobEl && !dobEl.value) { document.getElementById('cardDobErr').style.display = 'block'; isValid = false; }
+                
+                if (!document.getElementById('cardPin').value) { document.getElementById('cardPinErr').style.display = 'block'; isValid = false; }
+                
+                finalAmount = parseFloat(document.getElementById('cardAmount').value);
+                if (!finalAmount || finalAmount <= 0) { document.getElementById('cardAmountErr').style.display = 'block'; isValid = false; }
+            }
+
+            if (!isValid) return false;
+
+            document.getElementById('hiddenAmount').value = finalAmount;
+            processPayment();
+        }
+
+        function processPayment() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('addBalanceForm').submit();
+            }, 1500); // 1.5s artificial delay for loading animation
         }
     </script>
 </body>
