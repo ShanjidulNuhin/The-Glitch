@@ -423,13 +423,28 @@
     </main>
 
     <script>
-        // Auto hide toast after 3 seconds
-        const toast = document.getElementById('toast');
-        if (toast) {
+        function showToast(message, type) {
+            const existingToast = document.getElementById('toast');
+            if (existingToast) existingToast.remove();
+            const toast = document.createElement('div');
+            toast.id = 'toast';
+            toast.className = `toast ${type}`;
+            toast.innerHTML = type === 'success' ? `✅ ${message}` : `❌ ${message}`;
+            document.body.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transition = 'opacity 0.5s';
                 setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // Auto hide toast after 3 seconds
+        const serverToast = document.getElementById('toast');
+        if (serverToast) {
+            setTimeout(() => {
+                serverToast.style.opacity = '0';
+                serverToast.style.transition = 'opacity 0.5s';
+                setTimeout(() => serverToast.remove(), 500);
             }, 3000);
         }
     </script>

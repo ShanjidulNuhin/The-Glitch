@@ -253,6 +253,24 @@
         
         .error-msg { color: var(--error); font-size: 13px; margin-top: 4px; display: none; }
 
+        .btn-back {
+            width: 100%; padding: 16px;
+            background: transparent; color: var(--muted);
+            border: 1px solid var(--border); border-radius: 10px;
+            font-size: 16px; font-weight: 800;
+            cursor: pointer; transition: all 0.2s;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
     </style>
 </head>
 <body>
@@ -280,7 +298,6 @@
 
     <div class="page-wrap">
         <div class="balance-card">
-            
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="spinner"></div>
                 <h3>Processing Payment...</h3>
@@ -375,6 +392,7 @@
                 </div>
 
             </form>
+            <button type="button" onclick="window.history.back()" class="btn-back">&larr; Back</button>
         </div>
     </div>
 

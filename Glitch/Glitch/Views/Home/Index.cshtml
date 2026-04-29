@@ -812,6 +812,11 @@
             font-size: 20px;
         }
 
+        .toast-notification.error {
+            background: rgba(239, 68, 68, 0.9);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+        }
+
     </style>
 </head>
 <body>
@@ -911,10 +916,17 @@
 
     @if (TempData["Error"] != null)
     {
+        <div class="toast-notification error" id="errorToast">
+            <span class="toast-icon">❌</span>
+            <span>@TempData["Error"]</span>
+        </div>
         <script>
-            window.onload = function() {
-                alert('@TempData["Error"]');
-            }
+            setTimeout(() => {
+                document.getElementById('errorToast').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('errorToast').classList.remove('show');
+                }, 4000);
+            }, 100);
         </script>
     }
 
@@ -1415,12 +1427,28 @@
                     if (data.message === "Not logged in") {
                         window.location.href = '/Account/Login';
                     } else {
-                        alert(data.message);
+                        showToast(data.message, "error");
                     }
                 }
             } catch (err) {
                 console.error(err);
             }
+        }
+
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast-notification ${type}`;
+            toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            document.body.appendChild(toast);
+            
+            // trigger reflow
+            void toast.offsetWidth;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
         }
 
     </script>

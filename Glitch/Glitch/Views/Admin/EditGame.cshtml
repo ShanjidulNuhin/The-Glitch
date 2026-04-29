@@ -366,11 +366,11 @@
                 if (data.success) {
                     document.getElementById('ss-' + filename).remove();
                 } else {
-                    alert("Failed to delete screenshot.");
+                    showToast("Failed to delete screenshot.", "error");
                 }
             })
             .catch(err => {
-                alert("Error deleting screenshot.");
+                showToast("Error deleting screenshot.", "error");
             });
         }
     }
