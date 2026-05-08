@@ -60,7 +60,7 @@ The main goal of this project is to demonstrate practical implementation of:
 ---
 
 ## 📸 Screenshots
-<img width="1917" height="968" alt="Screenshot 2026-05-08 085237" src="https://github.com/user-attachments/assets/d0a2e7f6-1475-44ff-a604-4ca28fde3b08" />
+<img width="190" height="968" alt="Screenshot 2026-05-08 085237" src="https://github.com/user-attachments/assets/d0a2e7f6-1475-44ff-a604-4ca28fde3b08" />
 <img width="1917" height="957" alt="Screenshot 2026-05-08 085257" src="https://github.com/user-attachments/assets/c96e7ab8-0fa0-40ba-9513-697dc4f06fd9" />
 <img width="1917" height="971" alt="Screenshot 2026-05-08 085314" src="https://github.com/user-attachments/assets/26273ea5-7955-4f4e-b9da-d81cf75736ee" />
 <img width="1918" height="967" alt="Screenshot 2026-05-08 085505" src="https://github.com/user-attachments/assets/40055c9e-f33c-4c1e-9d4e-0ca3b722f00c" />
