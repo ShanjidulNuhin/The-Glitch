@@ -47,21 +47,6 @@ Database operations are performed using **Entity Framework Core**, which simplif
 
 ---
 
-## 📂 Project Structure
-
-```bash
-├── Controllers
-├── Models
-├── Views
-├── wwwroot
-├── Data
-├── Migrations
-├── appsettings.json
-└── Program.cs
-```
-
----
-
 ## 🎯 Purpose of the Project
 
 The main goal of this project is to demonstrate practical implementation of:
