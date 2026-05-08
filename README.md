@@ -1,18 +1,98 @@
-# 💫 About Me:
-Hi, I'm MD. Shanjidul Islam, a Computer Science student passionate about web development. I work with some programing language, and I’m currently building projects with ASP.NET Core MVC. Always learning and improving 🚀<br>
+# Advanced ASP.NET Core MVC Project
 
+## 📌 Project Overview
 
-## 🌐 Socials:
-[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?logo=Facebook&logoColor=white)](https://facebook.com/Shanjidul Islam) [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/shanjidul_nuhin) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/Shanjidul Islam) [![Pinterest](https://img.shields.io/badge/Pinterest-%23E60023.svg?logo=Pinterest&logoColor=white)](https://pinterest.com/Shanjidul Islam) [![Reddit](https://img.shields.io/badge/Reddit-%23FF4500.svg?logo=Reddit&logoColor=white)](https://reddit.com/user/Nuhin) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/Shanjidul Nuhin) [![Mastodon](https://img.shields.io/badge/-MASTODON-%232B90D9?logo=mastodon&logoColor=white)](https://mastodon.social/@Shanjidul Islam) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:shanjidshanjidulislam1234@gmail.com) 
+This is an advanced web application developed using **ASP.NET Core MVC** following the **Model-View-Controller (MVC)** architecture pattern. The project is designed to provide a clean, scalable, and maintainable structure for building modern web applications.
 
-# 💻 Tech Stack:
-![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white) ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=csharp&logoColor=white) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white) ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white) ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white) ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![nVIDIA](https://img.shields.io/badge/nVIDIA-%2376B900.svg?style=for-the-badge&logo=nVIDIA&logoColor=white) ![Epic Games](https://img.shields.io/badge/epicgames-%23313131.svg?style=for-the-badge&logo=epicgames&logoColor=white) ![EA](https://img.shields.io/badge/ea-%23000000.svg?style=for-the-badge&logo=ea&logoColor=white) ![Steam](https://img.shields.io/badge/steam-%23000000.svg?style=for-the-badge&logo=steam&logoColor=white) ![Unity](https://img.shields.io/badge/unity-%23000000.svg?style=for-the-badge&logo=unity&logoColor=white)
-# 📊 GitHub Stats:
-![](https://github-readme-stats.shion.dev/api?username=coughyyee &theme=dark&hide_border=false&include_all_commits=false&count_private=false)<br/>
-![](https://streak-stats.demolab.com/?user=coughyyee &theme=dark&hide_border=false)<br/>
-![](https://github-readme-stats.shion.dev/api/top-langs/?username=coughyyee &theme=dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
+For database management, **SQL Server Management Studio 2022 (SSMS 22)** has been used with **Microsoft SQL Server** to handle data storage, retrieval, and relational database operations efficiently.
+
+The application includes secure authentication, database connectivity, CRUD operations, and responsive UI features, making it suitable for real-world business or management systems.
 
 ---
-[![](https://komarev.com/ghpvc/?username=coughyyee &icon=0&color=0)](https://visitcount.itsvg.in)
 
-<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
+## 🚀 Technologies Used
+
+* **ASP.NET Core MVC**
+* **C#**
+* **Entity Framework Core**
+* **SQL Server**
+* **SSMS 2022**
+* **HTML5**
+* **CSS3**
+* **Bootstrap**
+* **JavaScript**
+* **Razor Views**
+
+---
+
+## ✨ Features
+
+* User Authentication & Authorization
+* CRUD Operations (Create, Read, Update, Delete)
+* SQL Server Database Integration
+* Responsive User Interface
+* MVC Architecture Implementation
+* Entity Framework Core ORM
+* Form Validation
+* Error Handling & Exception Management
+* Clean and Maintainable Code Structure
+
+---
+
+## 🗄️ Database
+
+The project uses **Microsoft SQL Server** as the relational database and is managed through **SQL Server Management Studio 2022 (SSMS 22)**.
+
+Database operations are performed using **Entity Framework Core**, which simplifies data access and management.
+
+---
+
+## 📂 Project Structure
+
+```bash
+├── Controllers
+├── Models
+├── Views
+├── wwwroot
+├── Data
+├── Migrations
+├── appsettings.json
+└── Program.cs
+```
+
+---
+
+## 🎯 Purpose of the Project
+
+The main goal of this project is to demonstrate practical implementation of:
+
+* ASP.NET Core MVC Architecture
+* Database Management with SQL Server
+* Backend Development using C#
+* Full Stack Web Application Development
+* Clean Coding Practices
+
+---
+
+## 📸 Screenshots
+<img width="1917" height="968" alt="Screenshot 2026-05-08 085237" src="https://github.com/user-attachments/assets/d0a2e7f6-1475-44ff-a604-4ca28fde3b08" />
+<img width="1917" height="957" alt="Screenshot 2026-05-08 085257" src="https://github.com/user-attachments/assets/c96e7ab8-0fa0-40ba-9513-697dc4f06fd9" />
+<img width="1917" height="971" alt="Screenshot 2026-05-08 085314" src="https://github.com/user-attachments/assets/26273ea5-7955-4f4e-b9da-d81cf75736ee" />
+<img width="1918" height="967" alt="Screenshot 2026-05-08 085505" src="https://github.com/user-attachments/assets/40055c9e-f33c-4c1e-9d4e-0ca3b722f00c" />
+<img width="1918" height="967" alt="Screenshot 2026-05-08 085331" src="https://github.com/user-attachments/assets/29895676-d364-48f0-b94e-cbb57394574e" />
+<img width="1918" height="966" alt="Screenshot 2026-05-08 085359" src="https://github.com/user-attachments/assets/b4296dea-68c8-4492-a22b-42d7f5a3ca9b" />
+<img width="1918" height="968" alt="Screenshot 2026-05-08 085409" src="https://github.com/user-attachments/assets/f7cc3a56-0294-47b0-a5e5-9eef0e8a56d4" />
+<img width="1918" height="971" alt="Screenshot 2026-05-08 085420" src="https://github.com/user-attachments/assets/24f42585-8eef-44dd-83d3-c5d7e3d7a7df" />
+<img width="1918" height="971" alt="Screenshot 2026-05-08 085439" src="https://github.com/user-attachments/assets/da542463-4bd7-4d90-a67b-8446333c40df" />
+<img width="1918" height="970" alt="Screenshot 2026-05-08 085452" src="https://github.com/user-attachments/assets/04b637a6-3248-4fa4-b43a-ac8e6e811493" />
+<img width="1918" height="966" alt="Screenshot 2026-05-08 085606" src="https://github.com/user-attachments/assets/cb2f6e9c-4960-4c15-b7b0-1ae16f6f1fae" />
+<img width="1918" height="967" alt="Screenshot 2026-05-08 085630" src="https://github.com/user-attachments/assets/ab5fdacb-9c92-4967-8f6b-150bcd943720" />
+<img width="1918" height="970" alt="Screenshot 2026-05-08 085732" src="https://github.com/user-attachments/assets/2904598a-7225-444e-9753-112307164b5e" />
+<img width="1918" height="967" alt="Screenshot 2026-05-08 085756" src="https://github.com/user-attachments/assets/b08f9883-eb02-40b7-a5c7-6152cd17c1b7" />
+
+---
+
+## 👨‍💻 Author
+
+**Shanjidul Islam**
+ASP.NET Core MVC Developer | CSE Student
