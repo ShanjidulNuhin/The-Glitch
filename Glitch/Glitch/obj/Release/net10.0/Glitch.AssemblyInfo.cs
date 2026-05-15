@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Glitch")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4920394980df90a4cd0a7523f791710fbbbd821")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74113aa83b39cb60e118599c1108bfa3d95892f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Glitch")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Glitch")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -236,13 +236,13 @@ namespace Glitch.Controllers
                 return View(model);
             }
 
-            // Find user by email and username combination
+            // Find user by email
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == model.Email && u.Username == model.Username);
+                .FirstOrDefaultAsync(u => u.Email == model.Email);
 
             if (user == null)
             {
-                ModelState.AddModelError("", "No account found with this email and username combination.");
+                ModelState.AddModelError("", "No account found with this email address.");
                 return View(model);
             }
 
