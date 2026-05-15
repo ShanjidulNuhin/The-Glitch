@@ -1,0 +1,66 @@
+@model IEnumerable<Glitch.Models.Entities.Notification>
+@{
+    var unreadCount = Model.Count(n => !n.IsRead);
+}
+
+<style>
+    .notif-dropdown { position: relative; display: inline-flex; align-items: center; margin-right: 15px; }
+    .notif-btn { background: none; border: none; cursor: pointer; font-size: 1.4rem; position: relative; padding: 5px; outline: none; }
+    .notif-badge { position: absolute; top: 0px; right: -2px; background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.65rem; font-weight: bold; line-height: 1; border: 2px solid white; }
+    .notif-menu { display: none; position: absolute; right: 0; top: 120%; background: white; min-width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border-radius: 12px; z-index: 1050; max-height: 400px; overflow-y: auto; color: #333; text-align: left; }
+    .notif-menu.show { display: block; animation: slideDown 0.2s ease; }
+    .notif-header { padding: 15px 20px; border-bottom: 1px solid #eee; font-weight: 700; font-size: 1rem; color: #111; }
+    .notif-item { padding: 12px 20px; border-bottom: 1px solid #f5f5f5; display: block; text-decoration: none; color: #333; transition: background 0.2s; }
+    .notif-item:hover { background: #f9f9f9; color: #333; }
+    .notif-item.unread { background: #f4f6ff; }
+    .notif-item.unread:hover { background: #eaedff; }
+    .notif-time { font-size: 0.75rem; color: #888; margin-bottom: 5px; display: block; font-weight: 500; }
+    .notif-msg { font-size: 0.9rem; line-height: 1.4; display: block; }
+    
+    @@keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="notif-dropdown" id="notifDropdown">
+    <button class="notif-btn" onclick="toggleNotif(event)">
+        🔔
+        @if (unreadCount > 0)
+        {
+            <span class="notif-badge">@unreadCount</span>
+        }
+    </button>
+    <div class="notif-menu" id="notifMenu">
+        <div class="notif-header">Notifications</div>
+        @if (!Model.Any())
+        {
+            <div style="padding: 30px; text-align: center; color: #888; font-size: 0.95rem;">No new notifications</div>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                var unreadCls = item.IsRead ? "" : "unread";
+                <a href="/Notification/Read/@item.Id" class="notif-item @unreadCls">
+                    <span class="notif-time">@item.CreatedAt.ToString("MMM dd, HH:mm")</span>
+                    <span class="notif-msg">@item.Message</span>
+                </a>
+            }
+        }
+    </div>
+</div>
+
+<script>
+    function toggleNotif(e) {
+        e.stopPropagation();
+        document.getElementById('notifMenu').classList.toggle('show');
+    }
+    document.addEventListener('click', function(e) {
+        var menu = document.getElementById('notifMenu');
+        var btn = document.querySelector('.notif-btn');
+        if (menu && menu.classList.contains('show') && !menu.contains(e.target) && !btn.contains(e.target)) {
+            menu.classList.remove('show');
+        }
+    });
+</script>

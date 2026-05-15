@@ -41,6 +41,7 @@ namespace Glitch.Models.Entities
         public ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
         public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
         public ICollection<GameRating> Ratings { get; set; } = new List<GameRating>();
+        public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
         // Customer's balance
         public decimal Balance { get; set; } = 0m;

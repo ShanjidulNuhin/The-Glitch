@@ -401,6 +401,7 @@
             <p>@ViewData["Subtitle"]</p>
         </div>
         <div class="topbar-right">
+            @await Component.InvokeAsync("Notification")
             <div class="topbar-badge">🛡️ Admin Mode</div>
         </div>
     </header>

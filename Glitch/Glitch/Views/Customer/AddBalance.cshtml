@@ -292,6 +292,7 @@
                 <span>💰</span> $@navBalance.ToString("0.00")
             </a>
             <a href="/Customer/Library" class="btn-outline">📚 Library</a>
+            @await Component.InvokeAsync("Notification")
             <a href="/Customer/Profile" class="btn-outline">Profile</a>
         </div>
     </nav>

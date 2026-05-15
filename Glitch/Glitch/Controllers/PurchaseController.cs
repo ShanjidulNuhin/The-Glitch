@@ -4,6 +4,7 @@ using Glitch.Models.Entities;
 using Glitch.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Glitch.Services;
 
 namespace Glitch.Controllers
 {
@@ -158,6 +159,20 @@ namespace Glitch.Controllers
 
             _context.Purchases.Add(purchase);
             await _context.SaveChangesAsync();
+
+            // ── Add notification for Admin ────────────────────
+            if (adminUser != null)
+            {
+                var notification = new Notification
+                {
+                    UserId = adminUser.Id,
+                    Message = $"Customer '{user.Username}' purchased '{game.Title}' for ${game.Price}!",
+                    LinkUrl = "/Admin/Index",
+                    CreatedAt = DateTime.Now
+                };
+                _context.Notifications.Add(notification);
+                await _context.SaveChangesAsync();
+            }
 
             // ── Success → go to game detail ───────────────────
             TempData["Success"] = $"🎉 Purchase successful! You can now download {game.Title}!";

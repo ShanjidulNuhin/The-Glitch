@@ -20,6 +20,7 @@ namespace Glitch.Data
         public DbSet<AlternativeEmail> AlternativeEmails { get; set; }
         public DbSet<GameRating> GameRatings { get; set; }
         public DbSet<GameScreenshot> GameScreenshots { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         // OnModelCreating = fine-tune table rules that
         // cannot be expressed with data annotations alone
@@ -120,6 +121,15 @@ namespace Glitch.Data
                 entity.HasOne(gs => gs.Game)
                       .WithMany(g => g.Screenshots)
                       .HasForeignKey(gs => gs.GameId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ── Notification rules ────────────────────────────────
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.HasOne(n => n.User)
+                      .WithMany(u => u.Notifications)
+                      .HasForeignKey(n => n.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }

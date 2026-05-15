@@ -51,6 +51,9 @@
                             }
                             if (!string.IsNullOrEmpty(uIdStr))
                             {
+                                <li class="nav-item d-flex align-items-center">
+                                    @await Component.InvokeAsync("Notification")
+                                </li>
                                 <li class="nav-item d-flex align-items-center ms-3">
                                     <a href="/Account/Logout" class="btn btn-sm btn-outline-danger">Logout</a>
                                 </li>

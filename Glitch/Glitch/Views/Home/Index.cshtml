@@ -904,6 +904,7 @@
             </a>
             <a href="/Customer/Library" class="btn-outline">📚 Library</a>
         }
+        @await Component.InvokeAsync("Notification")
         <a href="/Account/Logout" class="btn-outline">Logout</a>
     }
     else

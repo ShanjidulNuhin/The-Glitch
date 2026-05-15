@@ -159,6 +159,21 @@ namespace Glitch.Controllers
 
             _context.Games.Add(game);
             await _context.SaveChangesAsync();
+            
+            // Notify all customers
+            var customers = await _context.Users.Where(u => u.Role == "Customer").ToListAsync();
+            foreach (var customer in customers)
+            {
+                _context.Notifications.Add(new Notification
+                {
+                    UserId = customer.Id,
+                    Message = $"A new game '{game.Title}' has been added to the store!",
+                    LinkUrl = $"/Home/GameDetail/{game.Id}",
+                    CreatedAt = DateTime.Now
+                });
+            }
+            await _context.SaveChangesAsync();
+            
             TempData["Success"] = "Game added successfully!";
             return RedirectToAction(nameof(Games));
         }
@@ -251,6 +266,21 @@ namespace Glitch.Controllers
             }
 
             await _context.SaveChangesAsync();
+            
+            // Notify all customers
+            var customers = await _context.Users.Where(u => u.Role == "Customer").ToListAsync();
+            foreach (var customer in customers)
+            {
+                _context.Notifications.Add(new Notification
+                {
+                    UserId = customer.Id,
+                    Message = $"The game '{game.Title}' has been updated!",
+                    LinkUrl = $"/Home/GameDetail/{game.Id}",
+                    CreatedAt = DateTime.Now
+                });
+            }
+            await _context.SaveChangesAsync();
+            
             TempData["Success"] = "Game updated!";
             return RedirectToAction(nameof(Games));
         }

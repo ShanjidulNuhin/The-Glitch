@@ -29,6 +29,8 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
     options.MultipartBodyLengthLimit = 2L * 1024 * 1024 * 1024; // 2GB
 });
 
+builder.Services.AddScoped<Glitch.Services.IEmailService, Glitch.Services.EmailService>();
+
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Limits.MaxRequestBodySize = 2L * 1024 * 1024 * 1024; // 2GB

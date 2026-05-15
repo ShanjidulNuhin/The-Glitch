@@ -248,7 +248,7 @@
               "RelativeDocumentMoniker": "Glitch\\ViewModels\\AdminDashboardViewModel.cs",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\AdminDashboardViewModel.cs",
               "RelativeToolTip": "Glitch\\ViewModels\\AdminDashboardViewModel.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAmwAAAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAA6wAAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-23T09:15:07.498Z"
             },
@@ -290,10 +290,6 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Program.cs",
@@ -325,7 +321,7 @@
               "RelativeDocumentMoniker": "Glitch\\Views\\Admin\\EditGame.cshtml",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Admin\\EditGame.cshtml",
               "RelativeToolTip": "Glitch\\Views\\Admin\\EditGame.cshtml",
-              "ViewState": "AgIAAKgAAAAAAAAAAAAAAL0AAABGAAAAAAAAAA==",
+              "ViewState": "AgIAAKUAAAAAAAAAAIBPwL0AAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T09:21:59.432Z"
             },
@@ -349,7 +345,7 @@
               "RelativeDocumentMoniker": "Glitch\\Views\\Account\\Register.cshtml",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Register.cshtml",
               "RelativeToolTip": "Glitch\\Views\\Account\\Register.cshtml",
-              "ViewState": "AgIAAJEAAAAAAAAAAAASwKcAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAJEAAAAAAAAAAAASwKcAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T08:10:22.873Z"
             },
@@ -361,7 +357,7 @@
               "RelativeDocumentMoniker": "Glitch\\Views\\Account\\Login.cshtml",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Account\\Login.cshtml",
               "RelativeToolTip": "Glitch\\Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAJoAAAAAAAAAAAAcwKsAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAcwKsAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T08:19:04.6Z"
             },
@@ -421,7 +417,7 @@
               "RelativeDocumentMoniker": "Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
               "RelativeToolTip": "Glitch\\ViewModels\\Admin\\GameFormViewModel.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwB4AAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwB4AAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-23T09:16:08.403Z"
             },
@@ -565,7 +561,7 @@
               "RelativeDocumentMoniker": "Glitch\\Migrations\\AppDbContextModelSnapshot.cs",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\AppDbContextModelSnapshot.cs",
               "RelativeToolTip": "Glitch\\Migrations\\AppDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAAkBAAAAAAAAAAAAAAwAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAAYBAAAAAAAAAIBPwAwAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-23T08:58:58.562Z"
             },
@@ -613,7 +609,7 @@
               "RelativeDocumentMoniker": "Glitch\\Controllers\\CustomerController.cs",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\CustomerController.cs",
               "RelativeToolTip": "Glitch\\Controllers\\CustomerController.cs",
-              "ViewState": "AgIAAMkAAAAAAAAAAAA+wNAAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAMoAAAAAAAAAAAAiwNAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-23T10:34:12.709Z"
             },
@@ -625,7 +621,7 @@
               "RelativeDocumentMoniker": "Glitch\\Controllers\\AccountController.cs",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Controllers\\AccountController.cs",
               "RelativeToolTip": "Glitch\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAANEAAAAAAAAAAAAAAN0AAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAM4AAAAAAAAAAIBPwN0AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-23T07:24:12.364Z"
             },
@@ -685,7 +681,7 @@
               "RelativeDocumentMoniker": "Glitch\\Views\\Customer\\Profile.cshtml",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Views\\Customer\\Profile.cshtml",
               "RelativeToolTip": "Glitch\\Views\\Customer\\Profile.cshtml",
-              "ViewState": "AgIAAPwAAAAAAAAAAAAcwA0BAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAPwAAAAAAAAAAAAcwA0BAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-04-23T10:36:31.427Z"
             },
@@ -733,7 +729,6 @@
               "RelativeDocumentMoniker": "Glitch\\Migrations\\20260423070057_InitialCreate.cs",
               "ToolTip": "F:\\.Net\\The-Glitch\\Glitch\\Glitch\\Migrations\\20260423070057_InitialCreate.cs",
               "RelativeToolTip": "Glitch\\Migrations\\20260423070057_InitialCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-23T07:00:57.858Z"
             }
