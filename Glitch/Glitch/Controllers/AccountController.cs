@@ -217,6 +217,44 @@ namespace Glitch.Controllers
             }
         }
 
+        // ── FORGOT PASSWORD ──────────────────────────────────────
+
+        // GET: /Account/ForgotPassword
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View(new ForgotPasswordViewModel());
+        }
+
+        // POST: /Account/ForgotPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Find user by email and username combination
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == model.Email && u.Username == model.Username);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "No account found with this email and username combination.");
+                return View(model);
+            }
+
+            // Update password
+            user.PasswordHash = PasswordHelper.HashPassword(model.NewPassword);
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Password has been reset successfully! Please login with your new password.";
+            return RedirectToAction("Login");
+        }
+
         // ── LOGOUT ───────────────────────────────────────────────
 
         // POST: /Account/Logout
