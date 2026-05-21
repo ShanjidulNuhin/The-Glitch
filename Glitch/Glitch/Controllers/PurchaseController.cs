@@ -71,7 +71,8 @@ namespace Glitch.Controllers
                 GameTitle = game.Title,
                 GameGenre = game.Genre,
                 GamePrice = game.Price,
-                GameImage = game.ImageFileName
+                GameImage = game.ImageFileName,
+                AmountEntered = game.Price
             };
 
             return View(model);
